@@ -60,7 +60,7 @@ void CTransceiver_Autorization::ExecuteAutorization(CDocument_Main *cDocument_Ma
  SUser sUser;
  if (cDocument_Main_Ptr->FindUserByLoginAndPassword(sClient.Login,sClient.Password,sUser)==true)
  {
-  sClient.UserGUID=sUser.UserGUID;
+  sClient.UserGUID=sUser.UserGUID;  
   SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
   if (on_exit==true) return;
   SServerAnswer::SHeader sServerAnswer_sHeader;

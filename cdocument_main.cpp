@@ -68,11 +68,6 @@ CDocument_Main::CDocument_Main(void)
  fclose(file);
 */
 
-
- 
-
- 
-
  cThreadServer.Start();
 }
 //====================================================================================================
@@ -265,6 +260,34 @@ bool CDocument_Main::FindUserByLoginAndPassword(const CString& login,const CStri
 	 {
       cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
   	  if (sUser.Login.Compare(login)==0 && sUser.Password.Compare(password)==0) return(true);    
+      cRAIICRecordset_UserList.GetMainObject().MoveNext();
+	 }
+	}
+   } 
+  }
+ }
+ return(false);
+}
+//----------------------------------------------------------------------------------------------------
+//найти пользователя по GUID
+//----------------------------------------------------------------------------------------------------
+bool CDocument_Main::FindUserByGUID(const CString& guid,SUser& sUser)
+{ 
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   CRAIICDatabase cRAIICDatabase(&sProtectedVariables.cDatabase_UserList,sProtectedVariables.UserListBaseInitString);
+   {
+    if (cRAIICDatabase.IsOpen()==false) return(false);
+	{
+     CRAIICRecordset_UserList cRAIICRecordset_UserList(&sProtectedVariables.cDatabase_UserList,sProtectedVariables.UserListTableName);
+     if (cRAIICRecordset_UserList.IsOk()==false) return(false);
+     if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
+     cRAIICRecordset_UserList.GetMainObject().MoveFirst();
+     while(cRAIICRecordset_UserList.GetMainObject().IsEOF()==FALSE)
+	 {
+      cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
+  	  if (sUser.UserGUID.Compare(guid)==0) return(true);    
       cRAIICRecordset_UserList.GetMainObject().MoveNext();
 	 }
 	}

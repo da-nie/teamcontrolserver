@@ -29,7 +29,7 @@ struct SClient
  SOCKET Socket;//сокет клиента
  CString Login;//логин
  CString Password;//пароль
- CString UserGUID;//назначенный по результатам активации по логину и паролю GUID
+ CString UserGUID;//назначенный по результатам активации по логину и паролю GUID 
  bool StuffingEnabled;//включён ли байтстаффинг
  vector<unsigned char> vector_Data;//принятые данные
 };

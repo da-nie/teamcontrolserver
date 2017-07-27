@@ -125,6 +125,17 @@ void CTransceiver_Project::AddProject(CDocument_Main *cDocument_Main_Ptr,SClient
  SProject sProject;
  size_t offset=sizeof(SServerCommand::SHeader);
  ReadSProjectInArray(ptr,offset,sClient.vector_Data.size(),sProject);
+ SUser sUser;
+ if (cDocument_Main_Ptr->FindUserByGUID(sClient.UserGUID,sUser)==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+ if (sUser.Leader==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
  //выполняем действия с заданием
  if (cDocument_Main_Ptr->AddProject(sProject)==false) SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
  //отвечаем
