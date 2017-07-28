@@ -21,6 +21,7 @@
 #include "ctransceiver_task.h"
 #include "ctransceiver_project.h"
 #include "ctransceiver_autorization.h"
+#include "ctransceiver_file.h"
 
 using namespace std;
 
@@ -63,6 +64,7 @@ class CThreadServerUnit
   CTransceiver_User cTransceiver_User;//класс приёмо-передатчика данных пользователя
   CTransceiver_Task cTransceiver_Task;//класс приёмо-передатчика данных задания
   CTransceiver_Project cTransceiver_Project;//класс приёмо-передатчика данных проектов
+  CTransceiver_File cTransceiver_File;//класс приёмо-передатчика файлов программы
   CTransceiver_Autorization cTransceiver_Autorization;//класс приёмо-передатчика данных авторизации
  public:  
   //конструктор
@@ -94,6 +96,8 @@ class CThreadServerUnit
   void LinkProcessing(SClient &sClient,bool &on_exit);//обработка связи
 
   void NewDataFromClient(SClient& sClient,char *data,unsigned long length,bool &on_exit);//приняты данные от клиента
+  void ExecuteCommand_GetClientProgrammCRC(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения CRC клиентской программы
+  void ExecuteCommand_GetClientProgrammAndLoader(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения файлов клиентской программы и загрузчика
   void ExecuteCommand_Autorization(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды авторизации
   void ExecuteCommand_GetUserBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения данных пользователей
   void ExecuteCommand_GetTaskBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения заданий пользователя

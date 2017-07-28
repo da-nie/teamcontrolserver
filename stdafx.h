@@ -23,4 +23,7 @@
 
 #define WM_SYSTEM_TRAY_ICON WM_USER+1
 
+#define CLIENT_PROGRAMM_FILE_NAME "TeamControlClient.exe"
+#define LOADER_FILE_NAME "TeamControlLoader.exe"
+
 #endif

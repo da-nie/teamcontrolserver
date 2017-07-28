@@ -39,26 +39,30 @@ enum SERVER_COMMAND
 {
  //нет команды
  SERVER_COMMAND_NOTHING=0,
+ //запрос CRC файла клиентской программы
+ SERVER_COMMAND_GET_CLIENT_PROGRAMM_CRC=1,
+ //запрос клиентской программы и загрузчика для обновления
+ SERVER_COMMAND_GET_CLIENT_PROGRAMM_AND_LOADER=2,
  //авторизация
- SERVER_COMMAND_AUTORIZATION=1,
+ SERVER_COMMAND_AUTORIZATION=3,
  //получение базы пользователей
- SERVER_COMMAND_GET_USER_BOOK=2,
+ SERVER_COMMAND_GET_USER_BOOK=4,
  //получение базы заданий
- SERVER_COMMAND_GET_TASK_BOOK=3,
+ SERVER_COMMAND_GET_TASK_BOOK=5,
  //получение базы проектов
- SERVER_COMMAND_GET_PROJECT_BOOK=4,
+ SERVER_COMMAND_GET_PROJECT_BOOK=6,
  //новое задание
- SERVER_COMMAND_ADDED_TASK=5,
+ SERVER_COMMAND_ADDED_TASK=7,
  //задание удалено
- SERVER_COMMAND_DELETED_TASK=6,
+ SERVER_COMMAND_DELETED_TASK=8,
  //задание изменено
- SERVER_COMMAND_CHANGED_TASK=7,
+ SERVER_COMMAND_CHANGED_TASK=9,
  //новый проект
- SERVER_COMMAND_ADDED_PROJECT=8,
+ SERVER_COMMAND_ADDED_PROJECT=10,
  //проект удален
- SERVER_COMMAND_DELETED_PROJECT=9,
+ SERVER_COMMAND_DELETED_PROJECT=11,
  //проект изменен
- SERVER_COMMAND_CHANGED_PROJECT=10
+ SERVER_COMMAND_CHANGED_PROJECT=12
 };
 
 //ответы сервера
@@ -70,33 +74,36 @@ enum SERVER_ANSWER
  SERVER_ANSWER_ERROR=1,
  //команда авторизации выполнена успешно и не требует ответа
  SERVER_ANSWER_AUTORIZATION_OK=2,
-
+ //передача CRC файла клиентской программы
+ SERVER_ANSWER_CLIENT_PROGRAMM_CRC=3,
+ //передача клиентской программы для обновления
+ SERVER_ANSWER_CLIENT_PROGRAMM_AND_LOADER=4,
  //передаётся база пользователей
- SERVER_ANSWER_USER_BOOK=3,
+ SERVER_ANSWER_USER_BOOK=5,
  //передаётся удалённый пользователь
- SERVER_ANSWER_DELETED_USER=4,
+ SERVER_ANSWER_DELETED_USER=6,
  //передаётся добавленный пользователь
- SERVER_ANSWER_ADDED_USER=5,
+ SERVER_ANSWER_ADDED_USER=7,
  //передаётся изменённый пользователь
- SERVER_ANSWER_CHANGED_USER=6,
+ SERVER_ANSWER_CHANGED_USER=8,
 
  //передаётся база заданий пользователя
- SERVER_ANSWER_TASK_BOOK=7,
+ SERVER_ANSWER_TASK_BOOK=9,
  //передаётся удалённое задание
- SERVER_ANSWER_DELETED_TASK=8,
+ SERVER_ANSWER_DELETED_TASK=10,
  //передаётся добавленное задание
- SERVER_ANSWER_ADDED_TASK=9,
+ SERVER_ANSWER_ADDED_TASK=11,
  //передаётся изменённое задание
- SERVER_ANSWER_CHANGED_TASK=10,
+ SERVER_ANSWER_CHANGED_TASK=12,
 
  //передаётся база проектов
- SERVER_ANSWER_PROJECT_BOOK=11,
+ SERVER_ANSWER_PROJECT_BOOK=13,
  //передаётся удалённый проект
- SERVER_ANSWER_DELETED_PROJECT=12,
+ SERVER_ANSWER_DELETED_PROJECT=14,
  //передаётся добавленный проект
- SERVER_ANSWER_ADDED_PROJECT=13,
+ SERVER_ANSWER_ADDED_PROJECT=15,
  //передаётся изменённый проект
- SERVER_ANSWER_CHANGED_PROJECT=14
+ SERVER_ANSWER_CHANGED_PROJECT=16
 
 };
 
@@ -172,11 +179,25 @@ struct SServerAnswer
   unsigned long CommandID;//идентификатор команды на которую выдаётся ответ
  };
  //ответ
- //кодирование заголовка данные при авторизации
+ //кодирование заголовка данных при авторизации
  struct SAutorizationDataHeader
  {
   unsigned long UserGUIDSize;//размер GUID
  };
+ //кодирование заголовка данных при передаче CRC файла клиентской программы
+ struct SClientProgrammCRCHeader
+ {
+  unsigned long CRC;//контрольная сумма
+ };
+ //кодирование заголовка данных при передаче файла клиентской программы и загрузчика
+ struct SClientProgrammAndLoaderDataHeader
+ {
+  unsigned long LoaderCRC;//контрольная сумма загрузчика
+  unsigned long ProgrammCRC;//контрольная сумма программы
+  unsigned long LoaderSize;//размер загрузчика
+  unsigned long ProgrammSize;//размер программы
+ };
+
  //кодирование заголовка данные при передаче параметров пользователя
  struct SUserDataHeader
  {

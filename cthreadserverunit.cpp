@@ -439,6 +439,8 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
    {
 	sServerCommand_sHeader=*(reinterpret_cast<SServerCommand::SHeader*>(&sClient.vector_Data[0]));
     //расшифровываем принятую команду
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_CRC) ExecuteCommand_GetClientProgrammCRC(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_AND_LOADER) ExecuteCommand_GetClientProgrammAndLoader(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_AUTORIZATION) ExecuteCommand_Autorization(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_TASK_BOOK) ExecuteCommand_GetTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
@@ -464,9 +466,25 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
   //добавляем байт в буфер
   sClient.vector_Data.push_back(byte);
   size_t cmd_length=sClient.vector_Data.size();
-  if (cmd_length>=MAX_PACKAGE_LENGTH) sClient.vector_Data.clear();//превысили размер команды  
+  //if (cmd_length>=MAX_PACKAGE_LENGTH) sClient.vector_Data.clear();//превысили размер команды  
  }
 }
+//----------------------------------------------------------------------------------------------------
+//обработка команды получения CRC клиентской программы
+//----------------------------------------------------------------------------------------------------
+void CThreadServerUnit::ExecuteCommand_GetClientProgrammCRC(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
+{
+ cTransceiver_File.SendCRCClientProgrammFileToClient(sClient,command,CLIENT_PROGRAMM_FILE_NAME,cEvent_Exit,on_exit);
+}
+//----------------------------------------------------------------------------------------------------
+//обработка команды получения файлов клиентской программы и загрузчика
+//----------------------------------------------------------------------------------------------------
+void CThreadServerUnit::ExecuteCommand_GetClientProgrammAndLoader(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
+{
+ cTransceiver_File.SendClientProgrammAndLoaderFileToClient(sClient,command,CLIENT_PROGRAMM_FILE_NAME,LOADER_FILE_NAME,cEvent_Exit,on_exit);
+}
+
+
 //----------------------------------------------------------------------------------------------------
 //обработка команды авторизации
 //----------------------------------------------------------------------------------------------------

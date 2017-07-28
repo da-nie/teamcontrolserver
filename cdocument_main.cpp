@@ -492,11 +492,36 @@ bool CDocument_Main::AddTask(STask &sTask)
       cRAIICRecordset_TaskList.GetMainObject().AddNew();
       cRAIICRecordset_TaskList.GetMainObject().SetRecord(sTask);
       cRAIICRecordset_TaskList.GetMainObject().Update();
-	  //считаем задание заново, так как там есть автоинкрементное поле
-	  cRAIICRecordset_TaskList.GetMainObject().GetRecord(sTask);
 	 }
 	}
    }
+  }
+ }
+ //считаем задание заново, так как там есть автоинкрементное поле
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   CRAIICDatabase cRAIICDatabase(&sProtectedVariables.cDatabase_TaskList,sProtectedVariables.TaskListBaseInitString);
+   {
+    if (cRAIICDatabase.IsOpen()==false) return(false);
+	{
+     CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&sProtectedVariables.cDatabase_TaskList,sProtectedVariables.TaskListTableName);
+     if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
+     if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
+     cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
+     while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
+	 {
+      STask sTask_Read;
+      cRAIICRecordset_TaskList.GetMainObject().GetRecord(sTask_Read);
+      cRAIICRecordset_TaskList.GetMainObject().MoveNext();
+      if (sTask_Read.TaskGUID.Compare(sTask.TaskGUID)==0)
+	  {
+       sTask=sTask_Read;
+       break;
+	  }
+	 }
+	}
+   } 
   }
  }
  STask sTask_Added=sTask;
