@@ -492,6 +492,8 @@ bool CDocument_Main::AddTask(STask &sTask)
       cRAIICRecordset_TaskList.GetMainObject().AddNew();
       cRAIICRecordset_TaskList.GetMainObject().SetRecord(sTask);
       cRAIICRecordset_TaskList.GetMainObject().Update();
+	  //считаем задание заново, так как там есть автоинкрементное поле
+	  cRAIICRecordset_TaskList.GetMainObject().GetRecord(sTask);
 	 }
 	}
    }
@@ -599,10 +601,6 @@ bool CDocument_Main::ChangeTask(const STask &sTask)
 }
 
 
-
-
-
-
 //----------------------------------------------------------------------------------------------------
 //добавить проект
 //----------------------------------------------------------------------------------------------------
@@ -624,6 +622,8 @@ bool CDocument_Main::AddProject(SProject &sProject)
       cRAIICRecordset_ProjectList.GetMainObject().AddNew();
       cRAIICRecordset_ProjectList.GetMainObject().SetRecord(sProject);
       cRAIICRecordset_ProjectList.GetMainObject().Update();
+	  //считаем проект заново, так как там есть автоинкрементное поле
+	  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject);
 	 }
 	}
    }

@@ -138,6 +138,7 @@ struct SServerCommand
  //кодирование заголовка данных при передаче задания
  struct STaskDataHeader
  {
+  long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
   unsigned long ForUserGUIDSize;//для пользователя
   unsigned long ProjectGUIDSize;//по проекту
@@ -146,7 +147,7 @@ struct SServerCommand
   long State;//состояние
   long Year;//год
   long Month;//месяц
-  long Day;//число 
+  long Day;//число   
  };
  //кодирование заголовка данных при передаче проекта
  struct SProjectDataHeader
@@ -189,6 +190,7 @@ struct SServerAnswer
  //кодирование заголовка данных при передаче параметров задания
  struct STaskDataHeader
  {
+  long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
   unsigned long ForUserGUIDSize;//для пользователя
   unsigned long ProjectGUIDSize;//по проекту

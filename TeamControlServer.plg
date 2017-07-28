@@ -6,6 +6,38 @@
 --------------------Configuration: TeamControlServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP3A2.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/TeamControlServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Working\TeamControl\TeamControlServer\cdocument_main.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP3A2.tmp" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP3A3.tmp" with contents
+[
+ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlServer.pdb" /machine:I386 /out:"Release/TeamControlServer.exe" 
+.\Release\cdialog_serversettings.obj
+.\Release\cdialog_usersettings.obj
+.\Release\cdocument_main.obj
+.\Release\cframewnd_main.obj
+.\Release\clistview_main.obj
+.\Release\crecordset_projectlist.obj
+.\Release\crecordset_tasklist.obj
+.\Release\crecordset_userlist.obj
+.\Release\cthreadserver.obj
+.\Release\cthreadserverunit.obj
+.\Release\ctransceiver.obj
+.\Release\ctransceiver_autorization.obj
+.\Release\ctransceiver_project.obj
+.\Release\ctransceiver_task.obj
+.\Release\ctransceiver_user.obj
+.\Release\Main.obj
+.\Release\Resource.res
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP3A3.tmp"
+<h3>Output Window</h3>
+Compiling...
+cdocument_main.cpp
+Linking...
 
 
 

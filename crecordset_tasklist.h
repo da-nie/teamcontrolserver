@@ -21,6 +21,7 @@ using namespace std;
 
 struct STask
 {
+ long Index;//индекс задани€
  CString FromUserGUID;//от пользовател€
  CString ForUserGUID;//дл€ пользовател€
  CString ProjectGUID;//по проекту
@@ -39,6 +40,7 @@ class CRecordset_TaskList:public CRecordset
 {
  protected:
   //-ѕеременные класса-------------------------------------------------------
+  long Index;//индекс задани€
   CString FromUserGUID;//от кого
   CString ForUserGUID;//дл€ кого
   CString ProjectGUID;//по проекту
@@ -47,7 +49,7 @@ class CRecordset_TaskList:public CRecordset
   long Year;//год
   long Month;//мес€ц
   long Day;//число
-  CString TaskGUID;//идентификатор задани€
+  CString TaskGUID;//идентификатор задани€  
  public:
   //- онструктор класса------------------------------------------------------
   CRecordset_TaskList(CDatabase* pDatabase=NULL);

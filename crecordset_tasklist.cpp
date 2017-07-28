@@ -5,6 +5,7 @@
 //====================================================================================================
 CRecordset_TaskList::CRecordset_TaskList(CDatabase* pDatabase):CRecordset(pDatabase)
 {
+ Index=0;
  ForUserGUID="";
  FromUserGUID="";
  ProjectGUID="";
@@ -49,7 +50,10 @@ void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
  RFX_Long(pFX,_T("[State]"),State);  
  RFX_Long(pFX,_T("[Year]"),Year);  
  RFX_Long(pFX,_T("[Month]"),Month);
- RFX_Long(pFX,_T("[Day]"),Day); 
+ RFX_Long(pFX,_T("[Day]"),Day);  
+ //автоинкрементное поле нельзя добавлять или модифицировать
+ if (pFX->m_nOperation==CFieldExchange::MarkForUpdate || pFX->m_nOperation==CFieldExchange::MarkForAddNew) return;
+ RFX_Long(pFX,_T("[Index]"),Index);
 }
 //----------------------------------------------------------------------------------------------------
 //задать запись
@@ -65,6 +69,7 @@ void CRecordset_TaskList::SetRecord(const STask& sTask)
  Month=sTask.Month;
  Day=sTask.Day;
  Task=sTask.Task;
+ Index=sTask.Index;
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись
@@ -80,6 +85,7 @@ void CRecordset_TaskList::GetRecord(STask& sTask)
  sTask.Year=Year;
  sTask.Month=Month;
  sTask.Day=Day;
+ sTask.Index=Index;
 }
 
 
