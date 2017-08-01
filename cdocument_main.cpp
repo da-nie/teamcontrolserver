@@ -28,13 +28,13 @@ CDocument_Main::CDocument_Main(void)
 
    //настраиваем подключение к базам данных
    sProtectedVariables.UserListTableName="UserBase";
-   sProtectedVariables.UserListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ=UserBase";
+   sProtectedVariables.UserListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+sProtectedVariables.UserListTableName;
 
    sProtectedVariables.TaskListTableName="TaskBase";
-   sProtectedVariables.TaskListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ=TaskBase";
+   sProtectedVariables.TaskListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+sProtectedVariables.TaskListTableName;
 
    sProtectedVariables.ProjectListTableName="ProjBase";
-   sProtectedVariables.ProjectListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ=ProjBase";
+   sProtectedVariables.ProjectListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+sProtectedVariables.ProjectListTableName;
 
    cThreadServer.SetDocument(this);
   }
