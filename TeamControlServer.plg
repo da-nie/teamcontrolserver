@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x419 /fo"Release/Resource.res" /d "NDEBUG" /d "_AFXDLL" "E:\TeamControl\TeamControlServer\Resource.rc"" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP309.tmp" with contents
+Creating temporary file "C:\WINDOWS\TEMP\RSP40B.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/TeamControlServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\TeamControl\TeamControlServer\cdialog_serversettings.cpp"
@@ -27,10 +27,12 @@ Creating temporary file "C:\WINDOWS\TEMP\RSP309.tmp" with contents
 "E:\TeamControl\TeamControlServer\ctransceiver_task.cpp"
 "E:\TeamControl\TeamControlServer\ctransceiver_user.cpp"
 "E:\TeamControl\TeamControlServer\Main.cpp"
-"E:\TeamControl\TeamControlServer\cdatabaseengine_software.cpp"
+"E:\TeamControl\TeamControlServer\cprojectdatabaseengine_software.cpp"
+"E:\TeamControl\TeamControlServer\ctaskdatabaseengine_software.cpp"
+"E:\TeamControl\TeamControlServer\cuserdatabaseengine_software.cpp"
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP309.tmp" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP30A.tmp" with contents
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP40B.tmp" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP40C.tmp" with contents
 [
 ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlServer.pdb" /machine:I386 /out:"Release/TeamControlServer.exe" 
 .\Release\cdialog_serversettings.obj
@@ -51,9 +53,11 @@ ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlS
 .\Release\ctransceiver_user.obj
 .\Release\Main.obj
 .\Release\Resource.res
-.\Release\cdatabaseengine_software.obj
+.\Release\cprojectdatabaseengine_software.obj
+.\Release\ctaskdatabaseengine_software.obj
+.\Release\cuserdatabaseengine_software.obj
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSP30A.tmp"
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP40C.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -74,7 +78,9 @@ ctransceiver_project.cpp
 ctransceiver_task.cpp
 ctransceiver_user.cpp
 Main.cpp
-cdatabaseengine_software.cpp
+cprojectdatabaseengine_software.cpp
+ctaskdatabaseengine_software.cpp
+cuserdatabaseengine_software.cpp
 Linking...
 
 

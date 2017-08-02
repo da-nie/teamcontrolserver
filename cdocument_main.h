@@ -23,7 +23,9 @@
 #include <CString>
 #include "stdafx.h"
 #include "craiiccriticalsection.h"
-#include "cdatabaseengine_software.h"
+#include "cuserdatabaseengine_software.h"
+#include "ctaskdatabaseengine_software.h"
+#include "cprojectdatabaseengine_software.h"
 
 using namespace std;
 
@@ -49,7 +51,9 @@ class CDocument_Main:public CDocument
   //защищённые переменные класса
   struct SProtectedVariables
   {
-   CIDatabaseEngine *cIDatabaseEngine_Ptr;//указатель на класс работы с базами данных
+   CIUserDatabaseEngine *cIUserDatabaseEngine_Ptr;//указатель на класс работы с базой данных пользователей
+   CIProjectDatabaseEngine *cIProjectDatabaseEngine_Ptr;//указатель на класс работы с базой данных проектов
+   CITaskDatabaseEngine *cITaskDatabaseEngine_Ptr;//указатель на класс работы с базой данных заданий
 
    SServerSettings sServerSettings;//настройки сервера
    CCriticalSection cCriticalSection;//критическая секция для доступа к классу

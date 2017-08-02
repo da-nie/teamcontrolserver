@@ -25,7 +25,9 @@ CDocument_Main::CDocument_Main(void)
    {
     sProtectedVariables.sServerSettings.Port=THREAD_SERVER_PORT_DEFAULT;
    }
-   sProtectedVariables.cIDatabaseEngine_Ptr=new CDatabaseEngine_Software("UserBase","TaskBase","ProjBase");
+   sProtectedVariables.cIUserDatabaseEngine_Ptr=new CUserDatabaseEngine_Software("UserBase");
+   sProtectedVariables.cIProjectDatabaseEngine_Ptr=new CProjectDatabaseEngine_Software("ProjBase");
+   sProtectedVariables.cITaskDatabaseEngine_Ptr=new CTaskDatabaseEngine_Software("TaskBase");
    cThreadServer.SetDocument(this);
   }
  }
@@ -38,7 +40,9 @@ CDocument_Main::~CDocument_Main()
 {
  cThreadServer.Stop();
  SaveState();
- if (sProtectedVariables.cIDatabaseEngine_Ptr=NULL) delete(sProtectedVariables.cIDatabaseEngine_Ptr);
+ delete(sProtectedVariables.cIUserDatabaseEngine_Ptr);
+ delete(sProtectedVariables.cIProjectDatabaseEngine_Ptr);
+ delete(sProtectedVariables.cITaskDatabaseEngine_Ptr);
 }
 //====================================================================================================
 //функции класса
@@ -76,7 +80,7 @@ bool CDocument_Main::AddUser(SUser& sUser)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->AddUser(sUser)==false) return(false);
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->AddUser(sUser)==false) return(false);
   }
  }
  SUser sUser_Added=sUser;
@@ -91,7 +95,7 @@ bool CDocument_Main::ChangeUser(long index,const SUser& sUser)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->ChangeUser(index,sUser)==false) return(false);
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->ChangeUser(index,sUser)==false) return(false);
   }
  }
  SUser sUser_Changed=sUser;
@@ -106,7 +110,7 @@ bool CDocument_Main::GetUser(long index,SUser &sUser)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->GetUser(index,sUser)==false) return(false);
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->GetUser(index,sUser)==false) return(false);
   }
  }
  return(true);
@@ -121,7 +125,7 @@ void CDocument_Main::DeleteUser(long index)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->DeleteUser(index)==false) return;
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->DeleteUser(index)==false) return;
   }
  }
  cThreadServer.OnUserDeleted(sUser_Deleted);//указываем потоку, что произошло удаление пользователя
@@ -135,7 +139,7 @@ list<SUser> CDocument_Main::GetAllUser(void)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(list_SUser_Local=sProtectedVariables.cIDatabaseEngine_Ptr->GetAllUser());
+   return(sProtectedVariables.cIUserDatabaseEngine_Ptr->GetAllUser());
   }
  }
  return(list_SUser_Local);
@@ -148,7 +152,7 @@ bool CDocument_Main::FindUserByLoginAndPassword(const CString& login,const CStri
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->FindUserByLoginAndPassword(login,password,sUser));
+   return(sProtectedVariables.cIUserDatabaseEngine_Ptr->FindUserByLoginAndPassword(login,password,sUser));
   }
  }
  return(false);
@@ -161,7 +165,7 @@ bool CDocument_Main::FindUserByGUID(const CString& guid,SUser& sUser)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->FindUserByGUID(guid,sUser));
+   return(sProtectedVariables.cIUserDatabaseEngine_Ptr->FindUserByGUID(guid,sUser));
   }
  }
  return(false);
@@ -174,7 +178,7 @@ bool CDocument_Main::FindTaskByGUID(const CString &guid,STask &sTask)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->FindTaskByGUID(guid,sTask));
+   return(sProtectedVariables.cITaskDatabaseEngine_Ptr->FindTaskByGUID(guid,sTask));
   }
  }
  return(false);
@@ -187,7 +191,7 @@ bool CDocument_Main::FindProjectByGUID(const CString &guid,SProject &sProject)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->FindProjectByGUID(guid,sProject));
+   return(sProtectedVariables.cIProjectDatabaseEngine_Ptr->FindProjectByGUID(guid,sProject));
   }
  }
  return(false);
@@ -228,7 +232,7 @@ list<STask> CDocument_Main::GetAllTaskForUserGUID(const CString &guid)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->GetAllTaskForUserGUID(guid));
+   return(sProtectedVariables.cITaskDatabaseEngine_Ptr->GetAllTaskForUserGUID(guid));
   }
  }
  return(list_STask_Local);
@@ -242,7 +246,7 @@ list<STask> CDocument_Main::GetAllTask(void)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->GetAllTask());
+   return(sProtectedVariables.cITaskDatabaseEngine_Ptr->GetAllTask());
   }
  }
  return(list_STask_Local);
@@ -257,7 +261,7 @@ list<SProject> CDocument_Main::GetAllProject(void)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   return(sProtectedVariables.cIDatabaseEngine_Ptr->GetAllProject());
+   return(sProtectedVariables.cIProjectDatabaseEngine_Ptr->GetAllProject());
   }
  }
  return(list_SProject_Local);
@@ -272,7 +276,7 @@ bool CDocument_Main::AddTask(STask &sTask)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->AddTask(sTask)==false) return(false);
+   if (sProtectedVariables.cITaskDatabaseEngine_Ptr->AddTask(sTask)==false) return(false);
   }
  }
  STask sTask_Added=sTask;
@@ -287,7 +291,7 @@ bool CDocument_Main::DeleteTask(const STask &sTask)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->DeleteTask(sTask)==false) return(false);
+   if (sProtectedVariables.cITaskDatabaseEngine_Ptr->DeleteTask(sTask)==false) return(false);
   }
  }
  STask sTask_Deleted=sTask;
@@ -305,7 +309,7 @@ bool CDocument_Main::ChangeTask(const STask &sTask)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->ChangeTask(sTask,for_user_change,sTask_Deleted,sTask_Added)==false) return(false);
+   if (sProtectedVariables.cITaskDatabaseEngine_Ptr->ChangeTask(sTask,for_user_change,sTask_Deleted,sTask_Added)==false) return(false);
   }
  }
  if (for_user_change==true)//измение с заменой адресата
@@ -329,7 +333,7 @@ bool CDocument_Main::AddProject(SProject &sProject)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->AddProject(sProject)==false) return(false);
+   if (sProtectedVariables.cIProjectDatabaseEngine_Ptr->AddProject(sProject)==false) return(false);
   }
  }
  SProject sProject_Added=sProject;
@@ -344,7 +348,7 @@ bool CDocument_Main::DeleteProject(const SProject &sProject)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->DeleteProject(sProject)==false) return(false);
+   if (sProtectedVariables.cIProjectDatabaseEngine_Ptr->DeleteProject(sProject)==false) return(false);
   }
  }
  SProject sProject_Deleted=sProject;
@@ -359,7 +363,7 @@ bool CDocument_Main::ChangeProject(const SProject &sProject)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cIDatabaseEngine_Ptr->ChangeProject(sProject)==false) return(false);
+   if (sProtectedVariables.cIProjectDatabaseEngine_Ptr->ChangeProject(sProject)==false) return(false);
   }
  }
  SProject sProject_Changed=sProject;

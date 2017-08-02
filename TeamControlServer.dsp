@@ -91,10 +91,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\cdatabaseengine_software.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdialog_serversettings.cpp
 # End Source File
 # Begin Source File
@@ -115,6 +111,10 @@ SOURCE=.\clistview_main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cprojectdatabaseengine_software.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\crecordset_projectlist.cpp
 # End Source File
 # Begin Source File
@@ -124,6 +124,10 @@ SOURCE=.\crecordset_tasklist.cpp
 # Begin Source File
 
 SOURCE=.\crecordset_userlist.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
 
@@ -159,6 +163,10 @@ SOURCE=.\ctransceiver_user.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cuserdatabaseengine_software.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Main.cpp
 # End Source File
 # Begin Source File
@@ -169,10 +177,6 @@ SOURCE=.\Resource.rc
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\cdatabaseengine_software.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\cdialog_serversettings.h
@@ -191,11 +195,23 @@ SOURCE=.\cframewnd_main.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\cidatabaseengine.h
+SOURCE=.\ciprojectdatabaseengine.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\citaskdatabaseengine.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ciuserdatabaseengine.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\clistview_main.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cprojectdatabaseengine_software.h
 # End Source File
 # Begin Source File
 
@@ -216,6 +232,10 @@ SOURCE=.\crecordset_tasklist.h
 # Begin Source File
 
 SOURCE=.\crecordset_userlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskdatabaseengine_software.h
 # End Source File
 # Begin Source File
 
@@ -248,6 +268,10 @@ SOURCE=.\ctransceiver_task.h
 # Begin Source File
 
 SOURCE=.\ctransceiver_user.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cuserdatabaseengine_software.h
 # End Source File
 # Begin Source File
 
