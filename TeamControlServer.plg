@@ -6,13 +6,31 @@
 --------------------Configuration: TeamControlServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\WINDOWS\TEMP\RSP220.tmp" with contents
+Creating command line "rc.exe /l 0x419 /fo"Release/Resource.res" /d "NDEBUG" /d "_AFXDLL" "E:\TeamControl\TeamControlServer\Resource.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP309.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/TeamControlServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\TeamControl\TeamControlServer\cdialog_serversettings.cpp"
+"E:\TeamControl\TeamControlServer\cdialog_usersettings.cpp"
 "E:\TeamControl\TeamControlServer\cdocument_main.cpp"
+"E:\TeamControl\TeamControlServer\cframewnd_main.cpp"
+"E:\TeamControl\TeamControlServer\clistview_main.cpp"
+"E:\TeamControl\TeamControlServer\crecordset_projectlist.cpp"
+"E:\TeamControl\TeamControlServer\crecordset_tasklist.cpp"
+"E:\TeamControl\TeamControlServer\crecordset_userlist.cpp"
+"E:\TeamControl\TeamControlServer\cthreadserver.cpp"
+"E:\TeamControl\TeamControlServer\cthreadserverunit.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver_autorization.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver_file.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver_project.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver_task.cpp"
+"E:\TeamControl\TeamControlServer\ctransceiver_user.cpp"
+"E:\TeamControl\TeamControlServer\Main.cpp"
+"E:\TeamControl\TeamControlServer\cdatabaseengine_software.cpp"
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP220.tmp" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP221.tmp" with contents
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP309.tmp" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP30A.tmp" with contents
 [
 ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlServer.pdb" /machine:I386 /out:"Release/TeamControlServer.exe" 
 .\Release\cdialog_serversettings.obj
@@ -33,11 +51,30 @@ ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlS
 .\Release\ctransceiver_user.obj
 .\Release\Main.obj
 .\Release\Resource.res
+.\Release\cdatabaseengine_software.obj
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSP221.tmp"
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP30A.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+cdialog_serversettings.cpp
+cdialog_usersettings.cpp
 cdocument_main.cpp
+cframewnd_main.cpp
+clistview_main.cpp
+crecordset_projectlist.cpp
+crecordset_tasklist.cpp
+crecordset_userlist.cpp
+cthreadserver.cpp
+cthreadserverunit.cpp
+ctransceiver.cpp
+ctransceiver_autorization.cpp
+ctransceiver_file.cpp
+ctransceiver_project.cpp
+ctransceiver_task.cpp
+ctransceiver_user.cpp
+Main.cpp
+cdatabaseengine_software.cpp
 Linking...
 
 

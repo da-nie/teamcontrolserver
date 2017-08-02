@@ -91,6 +91,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\cdatabaseengine_software.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdialog_serversettings.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +171,10 @@ SOURCE=.\Resource.rc
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\cdatabaseengine_software.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdialog_serversettings.h
 # End Source File
 # Begin Source File
@@ -180,6 +188,10 @@ SOURCE=.\cdocument_main.h
 # Begin Source File
 
 SOURCE=.\cframewnd_main.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cidatabaseengine.h
 # End Source File
 # Begin Source File
 

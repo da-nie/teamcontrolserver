@@ -407,7 +407,6 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
   cTransceiver_Project.SendProjectDataToClientInPackage(sClient,sProject,SERVER_ANSWER_CHANGED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
-
 }
 
 
