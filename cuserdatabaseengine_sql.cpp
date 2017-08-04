@@ -100,7 +100,11 @@ list<SUser> CUserDatabaseEngine_SQL::GetAllUser(void)
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
+  CString sql_request="";
+  sql_request+="SELECT * FROM ";
+  sql_request+=UserListTableName;
+  sql_request+=" ORDER BY Name";
+  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,sql_request);
   if (cRAIICRecordset_UserList.IsOk()==false) return(list_SUser_Local);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(list_SUser_Local);
   cRAIICRecordset_UserList.GetMainObject().MoveFirst();

@@ -36,6 +36,7 @@ class CRecordset_ProjectList:public CRecordset
   //-Переменные класса-------------------------------------------------------
   CString ProjectName;//имя
   CString ProjectGUID;//идентификатор
+  long Index;//индекс проекта
  public:
   //-Конструктор класса------------------------------------------------------
   CRecordset_ProjectList(CDatabase* pDatabase=NULL);

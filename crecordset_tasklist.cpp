@@ -42,11 +42,10 @@ CString CRecordset_TaskList::GetDefaultSQL(void)
 void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
 { 
  pFX->SetFieldType(CFieldExchange::outputColumn);
- //автоинкрементное поле нельзя добавлять или модифицировать
- if (!(pFX->m_nOperation==CFieldExchange::MarkForUpdate || pFX->m_nOperation==CFieldExchange::MarkForAddNew)) RFX_Long(pFX,_T("[Index]"),Index);
+ RFX_Long(pFX,_T("[Index]"),Index);
  RFX_Text(pFX,_T("[TaskGUID]"),TaskGUID);
- RFX_Text(pFX,_T("[ForUserGUID]"),ForUserGUID); 
  RFX_Text(pFX,_T("[FromUserGUID]"),FromUserGUID);
+ RFX_Text(pFX,_T("[ForUserGUID]"),ForUserGUID); 
  RFX_Text(pFX,_T("[ProjectGUID]"),ProjectGUID);
  RFX_Text(pFX,_T("[Task]"),Task);
  RFX_Long(pFX,_T("[State]"),State);  
@@ -67,8 +66,7 @@ void CRecordset_TaskList::SetRecord(const STask& sTask)
  Year=sTask.Year;
  Month=sTask.Month;
  Day=sTask.Day;
- Task=sTask.Task;
- Index=sTask.Index;
+ Task=sTask.Task; 
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись

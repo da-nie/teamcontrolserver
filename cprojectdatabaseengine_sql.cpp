@@ -130,8 +130,6 @@ bool CProjectDatabaseEngine_SQL::ChangeProject(const SProject &sProject)
   if (cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==TRUE) return(false);
   SProject sProject_Local;
   cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject_Local);
-  MessageBox(NULL,sProject_Local.ProjectName,sProject_Local.ProjectGUID,MB_OK);
-
   cRAIICRecordset_ProjectList.GetMainObject().Edit();
   cRAIICRecordset_ProjectList.GetMainObject().SetRecord(sProject);   
   cRAIICRecordset_ProjectList.GetMainObject().Update();

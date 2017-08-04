@@ -7,6 +7,7 @@ CRecordset_ProjectList::CRecordset_ProjectList(CDatabase* pDatabase):CRecordset(
 {
  ProjectName="";
  ProjectGUID="";
+ Index=0;
  m_nFields=3;
  m_nDefaultType=snapshot;
 }
@@ -33,8 +34,8 @@ CString CRecordset_ProjectList::GetDefaultSQL(void)
 //----------------------------------------------------------------------------------------------------
 void CRecordset_ProjectList::DoFieldExchange(CFieldExchange* pFX)
 { 
- pFX->SetFieldType(CFieldExchange::outputColumn);
- ::RFX_
+ pFX->SetFieldType(CFieldExchange::outputColumn);  
+ RFX_Long(pFX,_T("[Index]"),Index);
  RFX_Text(pFX,_T("[ProjectName]"),ProjectName); 
  RFX_Text(pFX,_T("[ProjectGUID]"),ProjectGUID);
 }
@@ -44,7 +45,7 @@ void CRecordset_ProjectList::DoFieldExchange(CFieldExchange* pFX)
 void CRecordset_ProjectList::SetRecord(const SProject& sProject)
 {
  ProjectName=sProject.ProjectName;
- ProjectGUID=sProject.ProjectGUID;
+ ProjectGUID=sProject.ProjectGUID; 
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись

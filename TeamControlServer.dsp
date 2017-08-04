@@ -135,6 +135,10 @@ SOURCE=.\ctaskdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ctaskdatabaseengine_sql.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cthreadserver.cpp
 # End Source File
 # Begin Source File
@@ -248,6 +252,10 @@ SOURCE=.\crecordset_userlist.h
 # Begin Source File
 
 SOURCE=.\ctaskdatabaseengine_software.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskdatabaseengine_sql.h
 # End Source File
 # Begin Source File
 
