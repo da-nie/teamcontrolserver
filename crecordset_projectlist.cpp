@@ -34,6 +34,7 @@ CString CRecordset_ProjectList::GetDefaultSQL(void)
 void CRecordset_ProjectList::DoFieldExchange(CFieldExchange* pFX)
 { 
  pFX->SetFieldType(CFieldExchange::outputColumn);
+ ::RFX_
  RFX_Text(pFX,_T("[ProjectName]"),ProjectName); 
  RFX_Text(pFX,_T("[ProjectGUID]"),ProjectGUID);
 }

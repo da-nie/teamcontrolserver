@@ -48,6 +48,7 @@ class CListView_Main:public CListView
   afx_msg void OnCommand_Menu_List_SetLeader(void);//назначить руководителем
   afx_msg void OnCommand_Menu_List_ResetLeader(void);//назначить сотрудником
   afx_msg void OnCommand_Menu_Main_Settings(void);//настройка сервера
+  afx_msg void OnCommand_Menu_Main_ExportTask(void);//экспорт базы заданий
   DECLARE_MESSAGE_MAP()
  public:
   //-Функции класса----------------------------------------------------------

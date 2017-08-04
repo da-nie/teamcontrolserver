@@ -68,7 +68,12 @@ END
 
 IDR_MENU_MAIN MENU DISCARDABLE 
 BEGIN
-    MENUITEM "Настройка",                   IDC_MENU_MAIN_SETTINGS
+    POPUP "TeamControlServer"
+    BEGIN
+        MENUITEM "Настройка",                   IDC_MENU_MAIN_SETTINGS
+        MENUITEM "Экспортировать задания в текстовом файл", 
+                                                IDC_MENU_MAIN_EXPORT_TASK
+    END
 END
 
 
@@ -80,7 +85,7 @@ END
 IDD_DIALOG_USER_SETTINGS DIALOGEX 0, 0, 387, 201
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
 CAPTION "Свойства пользователя"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "ФИО",IDC_STATIC,5,5,150,30,BS_CENTER
     EDITTEXT        IDC_EDIT_DIALOG_USER_SETTINGS_NAME,10,15,140,14,
@@ -110,7 +115,7 @@ END
 IDD_DIALOG_SERVER_SETTINGS DIALOGEX 0, 0, 137, 61
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
 CAPTION "Параметры сервера"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Порт сервера",IDC_STATIC,5,5,65,12,SS_CENTERIMAGE,
                     WS_EX_CLIENTEDGE
@@ -160,7 +165,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON_MAIN               ICON    DISCARDABLE     "icon.ico"
+IDI_ICON_MAIN           ICON    DISCARDABLE     "icon.ico"
 #endif    // Russian resources
 /////////////////////////////////////////////////////////////////////////////
 

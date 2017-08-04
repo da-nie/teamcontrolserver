@@ -1,9 +1,9 @@
-#include "cuserdatabaseengine_software.h"
+#include "cuserdatabaseengine_sql.h"
 
 //====================================================================================================
 //конструктор класса
 //====================================================================================================
-CUserDatabaseEngine_Software::CUserDatabaseEngine_Software(const CString &user_list_table_name) 
+CUserDatabaseEngine_SQL::CUserDatabaseEngine_SQL(const CString &user_list_table_name) 
 {
  //настраиваем подключение к базам данных
  UserListTableName=user_list_table_name;
@@ -12,7 +12,7 @@ CUserDatabaseEngine_Software::CUserDatabaseEngine_Software(const CString &user_l
 //====================================================================================================
 //деструктор класса
 //====================================================================================================
-CUserDatabaseEngine_Software::~CUserDatabaseEngine_Software() 
+CUserDatabaseEngine_SQL::~CUserDatabaseEngine_SQL() 
 {
 }
 //====================================================================================================
@@ -22,7 +22,7 @@ CUserDatabaseEngine_Software::~CUserDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 //добавить пользователя
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::AddUser(SUser& sUser)
+bool CUserDatabaseEngine_SQL::AddUser(SUser& sUser)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -42,7 +42,7 @@ bool CUserDatabaseEngine_Software::AddUser(SUser& sUser)
 //----------------------------------------------------------------------------------------------------
 //изменить данные пользователя
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::ChangeUser(long index,const SUser& sUser)
+bool CUserDatabaseEngine_SQL::ChangeUser(long index,const SUser& sUser)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -60,7 +60,7 @@ bool CUserDatabaseEngine_Software::ChangeUser(long index,const SUser& sUser)
 //----------------------------------------------------------------------------------------------------
 //получить пользователя по индексу
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::GetUser(long index,SUser &sUser)
+bool CUserDatabaseEngine_SQL::GetUser(long index,SUser &sUser)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -76,7 +76,7 @@ bool CUserDatabaseEngine_Software::GetUser(long index,SUser &sUser)
 //----------------------------------------------------------------------------------------------------
 //удалить пользователя по индексу
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::DeleteUser(long index)
+bool CUserDatabaseEngine_SQL::DeleteUser(long index)
 {
  SUser sUser_Deleted; 
  if (GetUser(index,sUser_Deleted)==false) return(false);
@@ -94,7 +94,7 @@ bool CUserDatabaseEngine_Software::DeleteUser(long index)
 //----------------------------------------------------------------------------------------------------
 //получить список всех пользователей
 //----------------------------------------------------------------------------------------------------
-list<SUser> CUserDatabaseEngine_Software::GetAllUser(void)
+list<SUser> CUserDatabaseEngine_SQL::GetAllUser(void)
 { 
  list<SUser> list_SUser_Local; 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
@@ -117,42 +117,44 @@ list<SUser> CUserDatabaseEngine_Software::GetAllUser(void)
 //----------------------------------------------------------------------------------------------------
 //найти пользователя
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)
+bool CUserDatabaseEngine_SQL::FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
+  CString sql_request="";
+  sql_request+="SELECT * FROM ";
+  sql_request+=UserListTableName;
+  sql_request+=" WHERE (Login='"+login+"') AND (Password='"+password+"')";
+  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,sql_request);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_UserList.GetMainObject().MoveFirst();
-  while(cRAIICRecordset_UserList.GetMainObject().IsEOF()==FALSE)
-  {
-   cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
-   if (sUser.Login.Compare(login)==0 && sUser.Password.Compare(password)==0) return(true);    
-   cRAIICRecordset_UserList.GetMainObject().MoveNext();
-  }
+  if (cRAIICRecordset_UserList.GetMainObject().IsEOF()==TRUE) return(false);
+  cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
+  return(true);
  } 
  return(false);
 }
 //----------------------------------------------------------------------------------------------------
 //найти пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_Software::FindUserByGUID(const CString& guid,SUser& sUser)
+bool CUserDatabaseEngine_SQL::FindUserByGUID(const CString& guid,SUser& sUser)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
+  CString sql_request="";
+  sql_request+="SELECT * FROM ";
+  sql_request+=UserListTableName;
+  sql_request+=" WHERE (GUID='"+guid+"')";
+  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,sql_request);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_UserList.GetMainObject().MoveFirst();
-  while(cRAIICRecordset_UserList.GetMainObject().IsEOF()==FALSE)
-  {
-   cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
-   if (sUser.UserGUID.Compare(guid)==0) return(true);    
-   cRAIICRecordset_UserList.GetMainObject().MoveNext();
-  }
+  if (cRAIICRecordset_UserList.GetMainObject().IsEOF()==TRUE) return(false);
+  cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
+  return(true);
  } 
  return(false);
 }

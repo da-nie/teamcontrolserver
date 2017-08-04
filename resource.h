@@ -26,14 +26,15 @@
 #define IDC_MENU_LIST_SET_LEADER        4004
 #define IDC_MENU_LIST_RESET_LEADER      4005
 #define IDC_MENU_MAIN_SETTINGS          4006
-#define IDC_MENU_SYSTRAY_EXIT			4007
+#define IDC_MENU_SYSTRAY_EXIT           4007
+#define IDC_MENU_MAIN_EXPORT_TASK       4008
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        2006
-#define _APS_NEXT_COMMAND_VALUE         4008
+#define _APS_NEXT_COMMAND_VALUE         4009
 #define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           3000
 #endif

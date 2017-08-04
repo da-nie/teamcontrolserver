@@ -14,6 +14,7 @@ BEGIN_MESSAGE_MAP(CListView_Main,CView)
  ON_COMMAND(IDC_MENU_LIST_SET_LEADER,OnCommand_Menu_List_SetLeader)
  ON_COMMAND(IDC_MENU_LIST_RESET_LEADER,OnCommand_Menu_List_ResetLeader)
  ON_COMMAND(IDC_MENU_MAIN_SETTINGS,OnCommand_Menu_Main_Settings)
+ ON_COMMAND(IDC_MENU_MAIN_EXPORT_TASK,OnCommand_Menu_Main_ExportTask)
 END_MESSAGE_MAP()
 
 //====================================================================================================
@@ -195,6 +196,23 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_Settings(void)
  if (cDialog_ServerSettings.Activate(sServerSettings)==true) cDocument_Main_Ptr->SetServerSettings(sServerSettings);
  cDocument_Main_Ptr->SaveState();
 }
+//----------------------------------------------------------------------------------------------------
+//экспорт базы заданий
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnCommand_Menu_Main_ExportTask(void)
+{
+ CDocument_Main *cDocument_Main_Ptr=GetDocument();
+ char Path[MAX_PATH];
+ GetCurrentDirectory(MAX_PATH,Path); 
+ CFileDialog cFileDialog(FALSE,"","",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"*.txt|*.txt||",this);
+ cFileDialog.m_ofn.lpstrInitialDir=Path;
+ char Title[256];
+ strcpy(Title,"Ёкспорт базы заданий");
+ cFileDialog.m_ofn.lpstrTitle=Title;
+ if (cFileDialog.DoModal()!=IDOK) return;
+ cDocument_Main_Ptr->ExportTaskBase(cFileDialog.GetFileName());
+}
+
 //====================================================================================================
 //функции класса
 //====================================================================================================

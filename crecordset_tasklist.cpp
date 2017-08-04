@@ -42,6 +42,8 @@ CString CRecordset_TaskList::GetDefaultSQL(void)
 void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
 { 
  pFX->SetFieldType(CFieldExchange::outputColumn);
+ //автоинкрементное поле нельзя добавлять или модифицировать
+ if (!(pFX->m_nOperation==CFieldExchange::MarkForUpdate || pFX->m_nOperation==CFieldExchange::MarkForAddNew)) RFX_Long(pFX,_T("[Index]"),Index);
  RFX_Text(pFX,_T("[TaskGUID]"),TaskGUID);
  RFX_Text(pFX,_T("[ForUserGUID]"),ForUserGUID); 
  RFX_Text(pFX,_T("[FromUserGUID]"),FromUserGUID);
@@ -51,9 +53,6 @@ void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
  RFX_Long(pFX,_T("[Year]"),Year);  
  RFX_Long(pFX,_T("[Month]"),Month);
  RFX_Long(pFX,_T("[Day]"),Day);  
- //автоинкрементное поле нельзя добавлять или модифицировать
- if (pFX->m_nOperation==CFieldExchange::MarkForUpdate || pFX->m_nOperation==CFieldExchange::MarkForAddNew) return;
- RFX_Long(pFX,_T("[Index]"),Index);
 }
 //----------------------------------------------------------------------------------------------------
 //задать запись

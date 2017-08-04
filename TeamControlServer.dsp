@@ -115,6 +115,10 @@ SOURCE=.\cprojectdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cprojectdatabaseengine_sql.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\crecordset_projectlist.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +171,10 @@ SOURCE=.\cuserdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cuserdatabaseengine_sql.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Main.cpp
 # End Source File
 # Begin Source File
@@ -212,6 +220,10 @@ SOURCE=.\clistview_main.h
 # Begin Source File
 
 SOURCE=.\cprojectdatabaseengine_software.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cprojectdatabaseengine_sql.h
 # End Source File
 # Begin Source File
 
@@ -275,6 +287,10 @@ SOURCE=.\cuserdatabaseengine_software.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\cuserdatabaseengine_sql.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\protocol.h
 # End Source File
 # Begin Source File
@@ -289,6 +305,10 @@ SOURCE=.\stdafx.h
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\icon.ico
+# End Source File
 # Begin Source File
 
 SOURCE=.\icon1.ico

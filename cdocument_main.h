@@ -27,6 +27,10 @@
 #include "ctaskdatabaseengine_software.h"
 #include "cprojectdatabaseengine_software.h"
 
+#include "cuserdatabaseengine_sql.h"
+#include "cprojectdatabaseengine_sql.h"
+
+
 using namespace std;
 
 //====================================================================================================
@@ -87,6 +91,8 @@ class CDocument_Main:public CDocument
   bool AddProject(SProject &sProject);//добавить проект
   bool DeleteProject(const SProject &sProject);//удалить проект
   bool ChangeProject(const SProject &sProject);//изменить проект
+
+  void ExportTaskBase(CString file_name);//экспорт базы заданий
  protected:
   //-Функции класса----------------------------------------------------------  
   bool CreateGUID(CString &cString_GUID);//создать GUID

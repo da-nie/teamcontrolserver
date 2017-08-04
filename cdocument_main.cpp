@@ -25,9 +25,15 @@ CDocument_Main::CDocument_Main(void)
    {
     sProtectedVariables.sServerSettings.Port=THREAD_SERVER_PORT_DEFAULT;
    }
-   sProtectedVariables.cIUserDatabaseEngine_Ptr=new CUserDatabaseEngine_Software("UserBase");
+/*   sProtectedVariables.cIUserDatabaseEngine_Ptr=new CUserDatabaseEngine_Software("UserBase");
    sProtectedVariables.cIProjectDatabaseEngine_Ptr=new CProjectDatabaseEngine_Software("ProjBase");
    sProtectedVariables.cITaskDatabaseEngine_Ptr=new CTaskDatabaseEngine_Software("TaskBase");
+   */
+
+   sProtectedVariables.cIUserDatabaseEngine_Ptr=new CUserDatabaseEngine_SQL("UserBase");
+   sProtectedVariables.cIProjectDatabaseEngine_Ptr=new CProjectDatabaseEngine_SQL("ProjBase");
+   sProtectedVariables.cITaskDatabaseEngine_Ptr=new CTaskDatabaseEngine_Software("TaskBase");
+
    cThreadServer.SetDocument(this);
   }
  }
@@ -370,7 +376,49 @@ bool CDocument_Main::ChangeProject(const SProject &sProject)
  cThreadServer.OnProjectChanged(sProject_Changed);//указываем потоку, что произошло изменение данных проекта
  return(true);
 }
+//----------------------------------------------------------------------------------------------------
+//экспорт базы заданий
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::ExportTaskBase(CString file_name)
+{
+ FILE *file=fopen(file_name,"wb");
+ if (file==NULL)
+ {
+  MessageBox(NULL,"Не могу сохранить файл!","Ошибка",MB_OK);
+  return;
+ }
+ list<STask> list_STask;
+ list<SUser> list_SUser;
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   list_STask=sProtectedVariables.cITaskDatabaseEngine_Ptr->GetAllTask();
+   list_SUser=sProtectedVariables.cIUserDatabaseEngine_Ptr->GetAllUser();
+  }
+ }
 
+ list<STask>::iterator iterator=list_STask.begin();
+ list<STask>::iterator iterator_end=list_STask.end();  
+ while(iterator!=iterator_end)
+ {
+  STask &sTask=*iterator;  
+  SUser sUser_From;
+  SUser sUser_For; 
+  
+  list<SUser>::iterator iterator_user=list_SUser.begin();
+  list<SUser>::iterator iterator_user_end=list_SUser.end();  
+  while(iterator_user!=iterator_user_end)
+  {
+   SUser &sUser=*iterator_user;
+   if (sUser.UserGUID.Compare(sTask.ForUserGUID)==0) sUser_For=sUser;
+   if (sUser.UserGUID.Compare(sTask.FromUserGUID)==0) sUser_From=sUser;
+   iterator_user++;
+  }
+  fprintf(file,"От: %s\tДля:%s\tЗадание:%s\r\n",sUser_From.Name,sUser_For.Name,sTask.Task);
+  iterator++;
+ }
+ fclose(file);
+}
 //----------------------------------------------------------------------------------------------------
 //создать GUID
 //----------------------------------------------------------------------------------------------------
