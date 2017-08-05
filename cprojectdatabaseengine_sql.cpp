@@ -50,8 +50,11 @@ list<SProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
  list<SProject> list_SProject_Local; 
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_SProject_Local);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CString sql_request="";
+  sql_request+="SELECT * FROM ";
+  sql_request+=ProjectListTableName;
+  sql_request+=" ORDER BY ProjectName";
+  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,sql_request);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(list_SProject_Local);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(list_SProject_Local);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
@@ -62,7 +65,7 @@ list<SProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
    cRAIICRecordset_ProjectList.GetMainObject().MoveNext();
    list_SProject_Local.push_back(sProject);
   }
- } 
+ }
  return(list_SProject_Local);
 }
 

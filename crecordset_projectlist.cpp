@@ -36,8 +36,8 @@ void CRecordset_ProjectList::DoFieldExchange(CFieldExchange* pFX)
 { 
  pFX->SetFieldType(CFieldExchange::outputColumn);  
  RFX_Long(pFX,_T("[Index]"),Index);
- RFX_Text(pFX,_T("[ProjectName]"),ProjectName); 
  RFX_Text(pFX,_T("[ProjectGUID]"),ProjectGUID);
+ RFX_Text(pFX,_T("[ProjectName]"),ProjectName); 
 }
 //----------------------------------------------------------------------------------------------------
 //задать запись
