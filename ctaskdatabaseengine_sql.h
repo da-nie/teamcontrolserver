@@ -41,6 +41,7 @@ class CTaskDatabaseEngine_SQL:public CITaskDatabaseEngine
   bool AddTask(STask &sTask);//добавить задание
   bool DeleteTask(const STask &sTask);//удалить задание
   bool ChangeTask(const STask &sTask,bool &for_user_change,STask &sTask_Deleted,STask &sTask_Added);//изменить задание
+  void ResetBase(void);//очистить базу
 };
 
 #endif

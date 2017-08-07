@@ -40,6 +40,7 @@ class CIUserDatabaseEngine
   virtual list<SUser> GetAllUser(void)=0;//получить список всех пользователей
   virtual bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)=0;//найти пользователя по логину и паролю
   virtual bool FindUserByGUID(const CString& guid,SUser& sUser)=0;//найти пользователя по GUID
+  virtual void ResetBase(void)=0;//очистить базу
 };
 
 #endif

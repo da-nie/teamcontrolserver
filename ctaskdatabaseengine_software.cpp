@@ -206,3 +206,16 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const STask &sTask,bool &for_user_
  } 
  return(false);
 }
+//----------------------------------------------------------------------------------------------------
+//очистить базу
+//----------------------------------------------------------------------------------------------------
+void CTaskDatabaseEngine_Software::ResetBase(void)
+{ 
+ CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ {
+  CString sql_request="";
+  sql_request+="DELETE * FROM ";
+  sql_request+=TaskListTableName;
+  cDatabase_TaskList.ExecuteSQL(sql_request);
+ }
+}

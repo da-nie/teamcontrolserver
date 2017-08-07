@@ -15,6 +15,9 @@ BEGIN_MESSAGE_MAP(CListView_Main,CView)
  ON_COMMAND(IDC_MENU_LIST_RESET_LEADER,OnCommand_Menu_List_ResetLeader)
  ON_COMMAND(IDC_MENU_MAIN_SETTINGS,OnCommand_Menu_Main_Settings)
  ON_COMMAND(IDC_MENU_MAIN_EXPORT_TASK,OnCommand_Menu_Main_ExportTask)
+ ON_COMMAND(IDC_MENU_MAIN_RESET_USER_LIST_BASE,OnCommand_Menu_Main_ResetUserListBase)
+ ON_COMMAND(IDC_MENU_MAIN_RESET_TASK_LIST_BASE,OnCommand_Menu_Main_ResetTaskListBase)
+ ON_COMMAND(IDC_MENU_MAIN_RESET_PROJECT_LIST_BASE,OnCommand_Menu_Main_ResetProjectListBase)
 END_MESSAGE_MAP()
 
 //====================================================================================================
@@ -212,6 +215,34 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_ExportTask(void)
  if (cFileDialog.DoModal()!=IDOK) return;
  cDocument_Main_Ptr->ExportTaskBase(cFileDialog.GetFileName());
 }
+//----------------------------------------------------------------------------------------------------
+//очистить базу пользователей
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnCommand_Menu_Main_ResetUserListBase(void)
+{
+ if (MessageBox("Вы уверены, что хотите удалить базу пользователей?","Подтверждение",MB_YESNO|MB_DEFBUTTON2)!=IDYES) return;
+ CDocument_Main *cDocument_Main_Ptr=GetDocument();
+ cDocument_Main_Ptr->ResetUserListBase();
+}
+//----------------------------------------------------------------------------------------------------
+//очистить базу заданий
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnCommand_Menu_Main_ResetTaskListBase(void)
+{
+ if (MessageBox("Вы уверены, что хотите удалить базу заданий?","Подтверждение",MB_YESNO|MB_DEFBUTTON2)!=IDYES) return;
+ CDocument_Main *cDocument_Main_Ptr=GetDocument();
+ cDocument_Main_Ptr->ResetTaskListBase();
+}
+//----------------------------------------------------------------------------------------------------
+//очистить базу проектов
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnCommand_Menu_Main_ResetProjectListBase(void)
+{
+ if (MessageBox("Вы уверены, что хотите удалить базу проектов?","Подтверждение",MB_YESNO|MB_DEFBUTTON2)!=IDYES) return;
+ CDocument_Main *cDocument_Main_Ptr=GetDocument();
+ cDocument_Main_Ptr->ResetProjectListBase();
+}
+
 
 //====================================================================================================
 //функции класса

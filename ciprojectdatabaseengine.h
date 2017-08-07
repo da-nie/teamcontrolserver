@@ -38,6 +38,7 @@ class CIProjectDatabaseEngine
   virtual bool AddProject(SProject &sProject)=0;//добавить проект
   virtual bool DeleteProject(const SProject &sProject)=0;//удалить проект
   virtual bool ChangeProject(const SProject &sProject)=0;//изменить проект
+  virtual void ResetBase(void)=0;//очистить базу
 };
 
 #endif

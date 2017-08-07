@@ -420,6 +420,46 @@ void CDocument_Main::ExportTaskBase(CString file_name)
  fclose(file);
 }
 //----------------------------------------------------------------------------------------------------
+//удаление базы пользователей
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::ResetUserListBase(void)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sProtectedVariables.cIUserDatabaseEngine_Ptr->ResetBase();
+  }
+ }
+ UpdateAllViews(NULL);
+}
+//----------------------------------------------------------------------------------------------------
+//удаление базы заданий
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::ResetTaskListBase(void)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sProtectedVariables.cITaskDatabaseEngine_Ptr->ResetBase();
+  }
+ }
+ UpdateAllViews(NULL);
+}
+//----------------------------------------------------------------------------------------------------
+//удаление базы проектов
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::ResetProjectListBase(void)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sProtectedVariables.cIProjectDatabaseEngine_Ptr->ResetBase();
+  }
+ }
+ UpdateAllViews(NULL);
+}
+
+//----------------------------------------------------------------------------------------------------
 //создать GUID
 //----------------------------------------------------------------------------------------------------
 bool CDocument_Main::CreateGUID(CString &cString_GUID)

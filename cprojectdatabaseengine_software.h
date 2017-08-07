@@ -41,6 +41,7 @@ class CProjectDatabaseEngine_Software:public CIProjectDatabaseEngine
   bool AddProject(SProject &sProject);//добавить проект
   bool DeleteProject(const SProject &sProject);//удалить проект
   bool ChangeProject(const SProject &sProject);//изменить проект
+  void ResetBase(void);//очистить базу
 };
 
 #endif

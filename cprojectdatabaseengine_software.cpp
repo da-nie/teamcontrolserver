@@ -140,4 +140,17 @@ bool CProjectDatabaseEngine_Software::ChangeProject(const SProject &sProject)
  }
  return(false);
 }
+//----------------------------------------------------------------------------------------------------
+//очистить базу
+//----------------------------------------------------------------------------------------------------
+void CProjectDatabaseEngine_Software::ResetBase(void)
+{ 
+ CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
+ {
+  CString sql_request="";
+  sql_request+="DELETE * FROM ";
+  sql_request+=ProjectListTableName;
+  cDatabase_ProjectList.ExecuteSQL(sql_request);
+ }
+}
 

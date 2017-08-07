@@ -97,6 +97,10 @@ class CDocument_Main:public CDocument
   bool ChangeProject(const SProject &sProject);//изменить проект
 
   void ExportTaskBase(CString file_name);//экспорт базы заданий
+
+  void ResetUserListBase(void);//удаление базы пользователей
+  void ResetTaskListBase(void);//удаление базы заданий
+  void ResetProjectListBase(void);//удаление базы проектов
  protected:
   //-‘ункции класса----------------------------------------------------------  
   bool CreateGUID(CString &cString_GUID);//создать GUID

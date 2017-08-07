@@ -39,6 +39,7 @@ class CITaskDatabaseEngine
   virtual bool AddTask(STask &sTask)=0;//добавить задание
   virtual bool DeleteTask(const STask &sTask)=0;//удалить задание
   virtual bool ChangeTask(const STask &sTask,bool &for_user_change,STask &sTask_Deleted,STask &sTask_Added)=0;//изменить задание
+  virtual void ResetBase(void)=0;//очистить базу
 };
 
 #endif

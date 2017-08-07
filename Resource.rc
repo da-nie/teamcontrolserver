@@ -74,6 +74,15 @@ BEGIN
         MENUITEM "Ёкспортировать задани€ в текстовом файл", 
                                                 IDC_MENU_MAIN_EXPORT_TASK
     END
+    POPUP "Ѕазы данных"
+    BEGIN
+        MENUITEM "ќчистить базу пользователей", IDC_MENU_MAIN_RESET_USER_LIST_BASE
+
+        MENUITEM "ќчистить базу заданий",       IDC_MENU_MAIN_RESET_TASK_LIST_BASE
+
+        MENUITEM "ќчистить базу проектов",      IDC_MENU_MAIN_RESET_PROJECT_LIST_BASE
+
+    END
 END
 
 

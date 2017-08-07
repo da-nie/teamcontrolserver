@@ -162,3 +162,16 @@ bool CUserDatabaseEngine_SQL::FindUserByGUID(const CString& guid,SUser& sUser)
  } 
  return(false);
 }
+//----------------------------------------------------------------------------------------------------
+//очистить базу
+//----------------------------------------------------------------------------------------------------
+void CUserDatabaseEngine_SQL::ResetBase(void)
+{ 
+ CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
+ {  
+  CString sql_request="";
+  sql_request+="DELETE * FROM ";
+  sql_request+=UserListTableName;
+  cDatabase_UserList.ExecuteSQL(sql_request);
+ }
+}
