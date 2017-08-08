@@ -177,6 +177,38 @@ bool CDocument_Main::FindUserByGUID(const CString& guid,SUser& sUser)
  return(false);
 }
 //----------------------------------------------------------------------------------------------------
+//изменить пользователя по GUID
+//----------------------------------------------------------------------------------------------------
+bool CDocument_Main::ChangeUserByGUID(const CString& guid,const SUser& sUser)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->ChangeUserByGUID(guid,sUser)==false) return(false);
+  }
+ }
+ SUser sUser_Changed=sUser;
+ cThreadServer.OnUserChanged(sUser_Changed);//указываем потоку, что произошло изменение данных пользователя
+ return(true);
+}
+//----------------------------------------------------------------------------------------------------
+//удалить пользователя по GUID
+//----------------------------------------------------------------------------------------------------
+bool CDocument_Main::DeleteUserByGUID(const CString& guid)
+{
+ SUser sUser_Deleted; 
+ if (FindUserByGUID(guid,sUser_Deleted)==false) return(false);
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   if (sProtectedVariables.cIUserDatabaseEngine_Ptr->DeleteUserByGUID(guid)==false) return(false);
+  }
+ }
+ cThreadServer.OnUserDeleted(sUser_Deleted);//указываем потоку, что произошло удаление пользователя
+ return(true);
+}
+
+//----------------------------------------------------------------------------------------------------
 //найти задание по GUID
 //----------------------------------------------------------------------------------------------------
 bool CDocument_Main::FindTaskByGUID(const CString &guid,STask &sTask)

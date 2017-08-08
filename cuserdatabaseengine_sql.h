@@ -45,6 +45,8 @@ class CUserDatabaseEngine_SQL:public CIUserDatabaseEngine
   list<SUser> GetAllUser(void);//получить список всех пользователей
   bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser);//найти пользователя по логину и паролю
   bool FindUserByGUID(const CString& guid,SUser& sUser);//найти пользователя по GUID
+  bool ChangeUserByGUID(const CString& guid,const SUser& sUser);//изменить пользователя по GUID
+  bool DeleteUserByGUID(const CString& guid);//удалить пользователя по GUID
   void ResetBase(void);//очистить базу
 };
 

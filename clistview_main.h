@@ -13,6 +13,7 @@
 
 #include <list>
 #include <string>
+#include <vector>
 #include "stdafx.h"
 #include "cdocument_main.h"
 #include "cdialog_usersettings.h"
@@ -29,6 +30,7 @@ class CListView_Main:public CListView
  protected: 
   //-ѕеременные класса-------------------------------------------------------
   CMenu cMenu_List;//выпадающее меню в списке пользователей
+  vector<CString> vector_CString_UserGUID;//список GUID пользователей в списке
   //-ѕрочее------------------------------------------------------------------
  public:
   //- онструктор класса------------------------------------------------------

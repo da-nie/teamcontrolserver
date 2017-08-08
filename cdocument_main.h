@@ -80,6 +80,8 @@ class CDocument_Main:public CDocument
   list<SUser> GetAllUser(void);//получить список всех пользователей
   bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser);//найти пользователя по логину и паролю
   bool FindUserByGUID(const CString& guid,SUser& sUser);//найти пользователя по GUID
+  bool ChangeUserByGUID(const CString& guid,const SUser& sUser);//изменить пользователя по GUID
+  bool DeleteUserByGUID(const CString& guid);//удалить пользователя по GUID
   bool FindTaskByGUID(const CString &guid,STask &sTask);//найти задание по GUID
   bool FindProjectByGUID(const CString &guid,SProject &sProject);//найти проект по GUID
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера

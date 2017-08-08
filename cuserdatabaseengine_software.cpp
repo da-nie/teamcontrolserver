@@ -157,6 +157,61 @@ bool CUserDatabaseEngine_Software::FindUserByGUID(const CString& guid,SUser& sUs
  return(false);
 }
 //----------------------------------------------------------------------------------------------------
+//изменить пользователя по GUID
+//----------------------------------------------------------------------------------------------------
+bool CUserDatabaseEngine_Software::ChangeUserByGUID(const CString& guid,const SUser& sUser)
+{
+ CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
+ {
+  if (cRAIICDatabase.IsOpen()==false) return(false);
+  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
+  if (cRAIICRecordset_UserList.IsOk()==false) return(false);
+  if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
+  cRAIICRecordset_UserList.GetMainObject().MoveFirst();
+  while(cRAIICRecordset_UserList.GetMainObject().IsEOF()==FALSE)
+  {
+   SUser sUser_Local;
+   cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser_Local);
+   if (sUser_Local.UserGUID.Compare(guid)==0)
+   {
+    cRAIICRecordset_UserList.GetMainObject().Edit();
+    cRAIICRecordset_UserList.GetMainObject().SetRecord(sUser);   
+    cRAIICRecordset_UserList.GetMainObject().Update();
+	return(true);    
+   }
+   cRAIICRecordset_UserList.GetMainObject().MoveNext();
+  }
+ } 
+ return(false);
+}
+//----------------------------------------------------------------------------------------------------
+//удалить пользователя по GUID
+//----------------------------------------------------------------------------------------------------
+bool CUserDatabaseEngine_Software::DeleteUserByGUID(const CString& guid)
+{
+ CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
+ {
+  if (cRAIICDatabase.IsOpen()==false) return(false);
+  CRAIICRecordset_UserList cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
+  if (cRAIICRecordset_UserList.IsOk()==false) return(false);
+  if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
+  cRAIICRecordset_UserList.GetMainObject().MoveFirst();
+  while(cRAIICRecordset_UserList.GetMainObject().IsEOF()==FALSE)
+  {
+   SUser sUser;
+   cRAIICRecordset_UserList.GetMainObject().GetRecord(sUser);
+   if (sUser.UserGUID.Compare(guid)==0)
+   {
+    cRAIICRecordset_UserList.GetMainObject().Delete();
+	return(true);    
+   }
+   cRAIICRecordset_UserList.GetMainObject().MoveNext();
+  }
+ } 
+ return(false);
+}
+
+//----------------------------------------------------------------------------------------------------
 //очистить базу
 //----------------------------------------------------------------------------------------------------
 void CUserDatabaseEngine_Software::ResetBase(void)
