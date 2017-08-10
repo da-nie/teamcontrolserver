@@ -23,7 +23,6 @@
 //====================================================================================================
 
 #include <list>
-#include <CString>
 #include "stdafx.h"
 #include "craiiccriticalsection.h"
 #include "cuserdatabaseengine_software.h"
@@ -78,15 +77,15 @@ class CDocument_Main:public CDocument
   bool GetUser(long index,SUser &sUser);//получить пользователя по индексу
   void DeleteUser(long index);//удалить пользователя по индексу
   list<SUser> GetAllUser(void);//получить список всех пользователей
-  bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser);//найти пользователя по логину и паролю
-  bool FindUserByGUID(const CString& guid,SUser& sUser);//найти пользователя по GUID
-  bool ChangeUserByGUID(const CString& guid,const SUser& sUser);//изменить пользователя по GUID
-  bool DeleteUserByGUID(const CString& guid);//удалить пользователя по GUID
-  bool FindTaskByGUID(const CString &guid,STask &sTask);//найти задание по GUID
-  bool FindProjectByGUID(const CString &guid,SProject &sProject);//найти проект по GUID
+  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser);//найти пользователя по логину и паролю
+  bool FindUserByGUID(const CSafeString& guid,SUser& sUser);//найти пользователя по GUID
+  bool ChangeUserByGUID(const CSafeString& guid,const SUser& sUser);//изменить пользователя по GUID
+  bool DeleteUserByGUID(const CSafeString& guid);//удалить пользователя по GUID
+  bool FindTaskByGUID(const CSafeString &guid,STask &sTask);//найти задание по GUID
+  bool FindProjectByGUID(const CSafeString &guid,SProject &sProject);//найти проект по GUID
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера
   void SetServerSettings(const SServerSettings &sServerSettings);//установить настройки сервера (сервер будет перезапущен)
-  list<STask> GetAllTaskForUserGUID(const CString &guid);//получить все задания для и от пользователя с заданным GUID
+  list<STask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
   list<STask> GetAllTask(void);//получить все задания
   list<SProject> GetAllProject(void);//получить все проекты
 
@@ -98,14 +97,14 @@ class CDocument_Main:public CDocument
   bool DeleteProject(const SProject &sProject);//удалить проект
   bool ChangeProject(const SProject &sProject);//изменить проект
 
-  void ExportTaskBase(CString file_name);//экспорт базы заданий
+  void ExportTaskBase(const CString &file_name);//экспорт базы заданий
 
   void ResetUserListBase(void);//удаление базы пользователей
   void ResetTaskListBase(void);//удаление базы заданий
   void ResetProjectListBase(void);//удаление базы проектов
  protected:
   //-Функции класса----------------------------------------------------------  
-  bool CreateGUID(CString &cString_GUID);//создать GUID
+  bool CreateGUID(CSafeString &cSafeString_GUID);//создать GUID
   //-Прочее------------------------------------------------------------------
   DECLARE_DYNCREATE(CDocument_Main) 
 };

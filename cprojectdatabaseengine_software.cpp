@@ -22,7 +22,7 @@ CProjectDatabaseEngine_Software::~CProjectDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 //найти проект по GUID
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_Software::FindProjectByGUID(const CString &guid,SProject &sProject)
+bool CProjectDatabaseEngine_Software::FindProjectByGUID(const CSafeString &guid,SProject &sProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
@@ -147,7 +147,7 @@ void CProjectDatabaseEngine_Software::ResetBase(void)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  CString sql_request="";
+  CSafeString sql_request="";
   sql_request+="DELETE * FROM ";
   sql_request+=ProjectListTableName;
   cDatabase_ProjectList.ExecuteSQL(sql_request);

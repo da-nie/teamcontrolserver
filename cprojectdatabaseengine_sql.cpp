@@ -22,7 +22,7 @@ CProjectDatabaseEngine_SQL::~CProjectDatabaseEngine_SQL()
 //----------------------------------------------------------------------------------------------------
 //найти проект по GUID
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CString &guid,SProject &sProject)
+bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,SProject &sProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {

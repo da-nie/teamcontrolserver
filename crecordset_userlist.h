@@ -22,13 +22,13 @@ using namespace std;
 //параметры пользователя
 struct SUser
 {
- CString Name;//имя
- CString Login;//логин
- CString Password;//пароль
- CString JobTitle;//должность
- CString Description;//описание
- CString Telephone;//телефон
- CString UserGUID;//уникальный идентификатор пользователя
+ CSafeString Name;//имя
+ CSafeString Login;//логин
+ CSafeString Password;//пароль
+ CSafeString JobTitle;//должность
+ CSafeString Description;//описание
+ CSafeString Telephone;//телефон
+ CSafeString UserGUID;//уникальный идентификатор пользователя
  bool Leader;//является ли руководителем
 };
 

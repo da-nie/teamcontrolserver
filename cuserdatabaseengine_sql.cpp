@@ -121,7 +121,7 @@ list<SUser> CUserDatabaseEngine_SQL::GetAllUser(void)
 //----------------------------------------------------------------------------------------------------
 //найти пользователя
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_SQL::FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)
+bool CUserDatabaseEngine_SQL::FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -143,7 +143,7 @@ bool CUserDatabaseEngine_SQL::FindUserByLoginAndPassword(const CString& login,co
 //----------------------------------------------------------------------------------------------------
 //найти пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_SQL::FindUserByGUID(const CString& guid,SUser& sUser)
+bool CUserDatabaseEngine_SQL::FindUserByGUID(const CSafeString& guid,SUser& sUser)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -165,7 +165,7 @@ bool CUserDatabaseEngine_SQL::FindUserByGUID(const CString& guid,SUser& sUser)
 //----------------------------------------------------------------------------------------------------
 //изменить пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_SQL::ChangeUserByGUID(const CString& guid,const SUser& sUser)
+bool CUserDatabaseEngine_SQL::ChangeUserByGUID(const CSafeString& guid,const SUser& sUser)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
@@ -188,7 +188,7 @@ bool CUserDatabaseEngine_SQL::ChangeUserByGUID(const CString& guid,const SUser& 
 //----------------------------------------------------------------------------------------------------
 //удалить пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CUserDatabaseEngine_SQL::DeleteUserByGUID(const CString& guid)
+bool CUserDatabaseEngine_SQL::DeleteUserByGUID(const CSafeString& guid)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {

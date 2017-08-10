@@ -12,7 +12,6 @@
 //====================================================================================================
 
 #include <list>
-#include <CString>
 #include "stdafx.h"
 #include "craiicdatabase.h"
 #include "crecordset_tasklist.h"
@@ -33,8 +32,8 @@ class CITaskDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   virtual ~CITaskDatabaseEngine() {};
   //-Функции класса----------------------------------------------------------
-  virtual bool FindTaskByGUID(const CString &guid,STask &sTask)=0;//найти задание по GUID
-  virtual list<STask> GetAllTaskForUserGUID(const CString &guid)=0;//получить все задания для и от пользователя с заданным GUID
+  virtual bool FindTaskByGUID(const CSafeString &guid,STask &sTask)=0;//найти задание по GUID
+  virtual list<STask> GetAllTaskForUserGUID(const CSafeString &guid)=0;//получить все задания для и от пользователя с заданным GUID
   virtual list<STask> GetAllTask(void)=0;//получить все задания
   virtual bool AddTask(STask &sTask)=0;//добавить задание
   virtual bool DeleteTask(const STask &sTask)=0;//удалить задание

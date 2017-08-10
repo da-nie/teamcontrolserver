@@ -28,9 +28,7 @@ class CUserDatabaseEngine_Software:public CIUserDatabaseEngine
  protected:
   //-Переменные класса-------------------------------------------------------
   CString UserListTableName;//имя таблицы базы данных списка пользователей
-
   CString UserListBaseInitString;//строка инициализации базы данных пользователей
-
   CDatabase cDatabase_UserList;//база данных списка пользователей
  public:
   //-Конструктор класса------------------------------------------------------
@@ -43,10 +41,10 @@ class CUserDatabaseEngine_Software:public CIUserDatabaseEngine
   bool GetUser(long index,SUser &sUser);//получить пользователя по индексу
   bool DeleteUser(long index);//удалить пользователя по индексу
   list<SUser> GetAllUser(void);//получить список всех пользователей
-  bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser);//найти пользователя по логину и паролю
-  bool FindUserByGUID(const CString& guid,SUser& sUser);//найти пользователя по GUID
-  bool ChangeUserByGUID(const CString& guid,const SUser& sUser);//изменить пользователя по GUID
-  bool DeleteUserByGUID(const CString& guid);//удалить пользователя по GUID
+  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser);//найти пользователя по логину и паролю
+  bool FindUserByGUID(const CSafeString& guid,SUser& sUser);//найти пользователя по GUID
+  bool ChangeUserByGUID(const CSafeString& guid,const SUser& sUser);//изменить пользователя по GUID
+  bool DeleteUserByGUID(const CSafeString& guid);//удалить пользователя по GUID
   void ResetBase(void);//очистить базу
 };
 

@@ -22,7 +22,7 @@ CTaskDatabaseEngine_SQL::~CTaskDatabaseEngine_SQL()
 //----------------------------------------------------------------------------------------------------
 //найти задание по GUID
 //----------------------------------------------------------------------------------------------------
-bool CTaskDatabaseEngine_SQL::FindTaskByGUID(const CString &guid,STask &sTask)
+bool CTaskDatabaseEngine_SQL::FindTaskByGUID(const CSafeString &guid,STask &sTask)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
@@ -44,7 +44,7 @@ bool CTaskDatabaseEngine_SQL::FindTaskByGUID(const CString &guid,STask &sTask)
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<STask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CString &guid)
+list<STask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
  list<STask> list_STask_Local;  
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);

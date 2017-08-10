@@ -12,7 +12,6 @@
 //====================================================================================================
 
 #include <list>
-#include <CString>
 #include "stdafx.h"
 #include "craiicdatabase.h"
 #include "crecordset_projectlist.h"
@@ -33,7 +32,7 @@ class CIProjectDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   virtual ~CIProjectDatabaseEngine() {};
   //-Функции класса----------------------------------------------------------
-  virtual bool FindProjectByGUID(const CString &guid,SProject &sProject)=0;//найти проект по GUID
+  virtual bool FindProjectByGUID(const CSafeString &guid,SProject &sProject)=0;//найти проект по GUID
   virtual list<SProject> GetAllProject(void)=0;//получить все проекты
   virtual bool AddProject(SProject &sProject)=0;//добавить проект
   virtual bool DeleteProject(const SProject &sProject)=0;//удалить проект

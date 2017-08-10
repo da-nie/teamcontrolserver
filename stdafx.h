@@ -18,6 +18,7 @@
 #include <ws2tcpip.h>
 
 #include "resource.h"
+#include "csafestring.h"
 
 #define ID_TIMER_FRAMEWND_MAIN 1000
 

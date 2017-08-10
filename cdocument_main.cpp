@@ -153,7 +153,7 @@ list<SUser> CDocument_Main::GetAllUser(void)
 //----------------------------------------------------------------------------------------------------
 //найти пользователя
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)
+bool CDocument_Main::FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser)
 { 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -166,7 +166,7 @@ bool CDocument_Main::FindUserByLoginAndPassword(const CString& login,const CStri
 //----------------------------------------------------------------------------------------------------
 //найти пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::FindUserByGUID(const CString& guid,SUser& sUser)
+bool CDocument_Main::FindUserByGUID(const CSafeString& guid,SUser& sUser)
 { 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -179,7 +179,7 @@ bool CDocument_Main::FindUserByGUID(const CString& guid,SUser& sUser)
 //----------------------------------------------------------------------------------------------------
 //изменить пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::ChangeUserByGUID(const CString& guid,const SUser& sUser)
+bool CDocument_Main::ChangeUserByGUID(const CSafeString& guid,const SUser& sUser)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -194,7 +194,7 @@ bool CDocument_Main::ChangeUserByGUID(const CString& guid,const SUser& sUser)
 //----------------------------------------------------------------------------------------------------
 //удалить пользователя по GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::DeleteUserByGUID(const CString& guid)
+bool CDocument_Main::DeleteUserByGUID(const CSafeString& guid)
 {
  SUser sUser_Deleted; 
  if (FindUserByGUID(guid,sUser_Deleted)==false) return(false);
@@ -211,7 +211,7 @@ bool CDocument_Main::DeleteUserByGUID(const CString& guid)
 //----------------------------------------------------------------------------------------------------
 //найти задание по GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::FindTaskByGUID(const CString &guid,STask &sTask)
+bool CDocument_Main::FindTaskByGUID(const CSafeString &guid,STask &sTask)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -224,7 +224,7 @@ bool CDocument_Main::FindTaskByGUID(const CString &guid,STask &sTask)
 //----------------------------------------------------------------------------------------------------
 //найти проект по GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::FindProjectByGUID(const CString &guid,SProject &sProject)
+bool CDocument_Main::FindProjectByGUID(const CSafeString &guid,SProject &sProject)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -264,7 +264,7 @@ void CDocument_Main::SetServerSettings(const SServerSettings &sServerSettings)
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<STask> CDocument_Main::GetAllTaskForUserGUID(const CString &guid)
+list<STask> CDocument_Main::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
  list<STask> list_STask_Local;  
  {
@@ -411,7 +411,7 @@ bool CDocument_Main::ChangeProject(const SProject &sProject)
 //----------------------------------------------------------------------------------------------------
 //экспорт базы заданий
 //----------------------------------------------------------------------------------------------------
-void CDocument_Main::ExportTaskBase(CString file_name)
+void CDocument_Main::ExportTaskBase(const CString &file_name)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL)
@@ -494,9 +494,9 @@ void CDocument_Main::ResetProjectListBase(void)
 //----------------------------------------------------------------------------------------------------
 //создать GUID
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::CreateGUID(CString &cString_GUID)
+bool CDocument_Main::CreateGUID(CSafeString &cSafeString_GUID)
 {
- cString_GUID="";
+ cSafeString_GUID="";
  //вычисляем GUID
  GUID guid;
  HRESULT hr=CoCreateGuid(&guid);
@@ -506,7 +506,7 @@ bool CDocument_Main::CreateGUID(CString &cString_GUID)
  long length=WideCharToMultiByte(CP_UTF8,0,szGUID,-1,0,0,0,0);
  char *guid_name=new char[length+1];
  WideCharToMultiByte(CP_ACP,0,szGUID,-1,guid_name,length,0,0);
- cString_GUID=guid_name;
+ cSafeString_GUID=guid_name;
  delete[](guid_name);
  delete[](szGUID);
  return(true);

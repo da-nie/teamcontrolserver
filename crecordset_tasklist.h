@@ -22,15 +22,15 @@ using namespace std;
 struct STask
 {
  long Index;//индекс задания
- CString FromUserGUID;//от пользователя
- CString ForUserGUID;//для пользователя
- CString ProjectGUID;//по проекту
- CString Task;//задание
+ CSafeString FromUserGUID;//от пользователя
+ CSafeString ForUserGUID;//для пользователя
+ CSafeString ProjectGUID;//по проекту
+ CSafeString Task;//задание
  long State;//состояние
  long Year;//год
  long Month;//месяц
  long Day;//число
- CString TaskGUID;//идентификатор задания
+ CSafeString TaskGUID;//идентификатор задания
 };
 
 //====================================================================================================

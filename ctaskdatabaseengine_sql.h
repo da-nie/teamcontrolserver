@@ -35,8 +35,8 @@ class CTaskDatabaseEngine_SQL:public CITaskDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   ~CTaskDatabaseEngine_SQL();
   //-Функции класса----------------------------------------------------------
-  bool FindTaskByGUID(const CString &guid,STask &sTask);//найти задание по GUID
-  list<STask> GetAllTaskForUserGUID(const CString &guid);//получить все задания для и от пользователя с заданным GUID
+  bool FindTaskByGUID(const CSafeString &guid,STask &sTask);//найти задание по GUID
+  list<STask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
   list<STask> GetAllTask(void);//получить все задания
   bool AddTask(STask &sTask);//добавить задание
   bool DeleteTask(const STask &sTask);//удалить задание

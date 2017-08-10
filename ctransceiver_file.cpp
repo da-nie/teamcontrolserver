@@ -23,7 +23,7 @@ CTransceiver_File::~CTransceiver_File()
 //----------------------------------------------------------------------------------------------------
 //передать клиенту контрольную сумму файла клиентской программы
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVER_COMMAND command,const CString &programm_file_name,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVER_COMMAND command,const CSafeString &programm_file_name,CEvent &cEvent_Exit,bool &on_exit)
 {
  on_exit=false;
  vector<char> vector_programm_data;
@@ -53,7 +53,7 @@ void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVE
 //----------------------------------------------------------------------------------------------------
 //передать клиенту программу и загрузчик
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient,SERVER_COMMAND command,const CString &programm_file_name,const CString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient,SERVER_COMMAND command,const CSafeString &programm_file_name,const CSafeString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
 {
  on_exit=false;
  vector<char> vector_programm_data;
@@ -102,7 +102,7 @@ void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient
 //----------------------------------------------------------------------------------------------------
 //загрузить файл и вычислить CRC
 //----------------------------------------------------------------------------------------------------
-bool CTransceiver_File::LoadFileAndCreateCRC(const CString &file_name,vector<char> &vector_data,unsigned short &crc16)
+bool CTransceiver_File::LoadFileAndCreateCRC(const CSafeString &file_name,vector<char> &vector_data,unsigned short &crc16)
 {
  vector_data.clear();
  crc16=0;

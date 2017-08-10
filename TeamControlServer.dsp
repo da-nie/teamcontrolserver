@@ -131,6 +131,10 @@ SOURCE=.\crecordset_userlist.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\csafestring.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ctaskdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
@@ -248,6 +252,10 @@ SOURCE=.\crecordset_tasklist.h
 # Begin Source File
 
 SOURCE=.\crecordset_userlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\csafestring.h
 # End Source File
 # Begin Source File
 

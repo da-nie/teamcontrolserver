@@ -22,8 +22,8 @@ using namespace std;
 //параметры проекта
 struct SProject
 {
- CString ProjectName;//название проекта
- CString ProjectGUID;//уникальный идентификатор
+ CSafeString ProjectName;//название проекта
+ CSafeString ProjectGUID;//уникальный идентификатор
 };
 
 

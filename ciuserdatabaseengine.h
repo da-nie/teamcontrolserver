@@ -12,7 +12,6 @@
 //====================================================================================================
 
 #include <list>
-#include <CString>
 #include "stdafx.h"
 #include "craiicdatabase.h"
 #include "crecordset_userlist.h"
@@ -38,10 +37,10 @@ class CIUserDatabaseEngine
   virtual bool GetUser(long index,SUser &sUser)=0;//получить пользователя по индексу
   virtual bool DeleteUser(long index)=0;//удалить пользователя по индексу
   virtual list<SUser> GetAllUser(void)=0;//получить список всех пользователей
-  virtual bool FindUserByLoginAndPassword(const CString& login,const CString& password,SUser& sUser)=0;//найти пользователя по логину и паролю
-  virtual bool FindUserByGUID(const CString& guid,SUser& sUser)=0;//найти пользователя по GUID
-  virtual bool ChangeUserByGUID(const CString& guid,const SUser& sUser)=0;//изменить пользователя по GUID
-  virtual bool DeleteUserByGUID(const CString& guid)=0;//удалить пользователя по GUID
+  virtual bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser)=0;//найти пользователя по логину и паролю
+  virtual bool FindUserByGUID(const CSafeString& guid,SUser& sUser)=0;//найти пользователя по GUID
+  virtual bool ChangeUserByGUID(const CSafeString& guid,const SUser& sUser)=0;//изменить пользователя по GUID
+  virtual bool DeleteUserByGUID(const CSafeString& guid)=0;//удалить пользователя по GUID
   virtual void ResetBase(void)=0;//очистить базу
 };
 

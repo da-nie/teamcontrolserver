@@ -22,7 +22,7 @@ CTaskDatabaseEngine_Software::~CTaskDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 //найти задание по GUID
 //----------------------------------------------------------------------------------------------------
-bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CString &guid,STask &sTask)
+bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CSafeString &guid,STask &sTask)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
@@ -45,7 +45,7 @@ bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CString &guid,STask &sTa
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<STask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CString &guid)
+list<STask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
  list<STask> list_STask_Local;  
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
@@ -213,7 +213,7 @@ void CTaskDatabaseEngine_Software::ResetBase(void)
 { 
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  CString sql_request="";
+  CSafeString sql_request="";
   sql_request+="DELETE * FROM ";
   sql_request+=TaskListTableName;
   cDatabase_TaskList.ExecuteSQL(sql_request);
