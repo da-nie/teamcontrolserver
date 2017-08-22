@@ -107,6 +107,10 @@ SOURCE=.\cframewnd_main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\citaskexport.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\clistview_main.cpp
 # End Source File
 # Begin Source File
@@ -140,6 +144,14 @@ SOURCE=.\ctaskdatabaseengine_software.cpp
 # Begin Source File
 
 SOURCE=.\ctaskdatabaseengine_sql.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskexporthtml.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskexporttxt.cpp
 # End Source File
 # Begin Source File
 
@@ -219,6 +231,10 @@ SOURCE=.\citaskdatabaseengine.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\citaskexport.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ciuserdatabaseengine.h
 # End Source File
 # Begin Source File
@@ -264,6 +280,14 @@ SOURCE=.\ctaskdatabaseengine_software.h
 # Begin Source File
 
 SOURCE=.\ctaskdatabaseengine_sql.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskexporthtml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctaskexporttxt.h
 # End Source File
 # Begin Source File
 

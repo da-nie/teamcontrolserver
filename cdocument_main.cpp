@@ -11,6 +11,7 @@ extern CThreadServer cThreadServer;//серверный поток
 //====================================================================================================
 CDocument_Main::CDocument_Main(void) 
 {
+ cITaskExport_Ptr=new CTaskExportHTML;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -49,6 +50,7 @@ CDocument_Main::~CDocument_Main()
  delete(sProtectedVariables.cIUserDatabaseEngine_Ptr);
  delete(sProtectedVariables.cIProjectDatabaseEngine_Ptr);
  delete(sProtectedVariables.cITaskDatabaseEngine_Ptr);
+ delete(cITaskExport_Ptr);
 }
 //====================================================================================================
 //функции класса
@@ -413,12 +415,6 @@ bool CDocument_Main::ChangeProject(const SProject &sProject)
 //----------------------------------------------------------------------------------------------------
 void CDocument_Main::ExportTaskBase(const CString &file_name)
 {
- FILE *file=fopen(file_name,"wb");
- if (file==NULL)
- {
-  MessageBox(NULL,"Не могу сохранить файл!","Ошибка",MB_OK);
-  return;
- }
  list<STask> list_STask;
  list<SUser> list_SUser;
  {
@@ -428,35 +424,7 @@ void CDocument_Main::ExportTaskBase(const CString &file_name)
    list_SUser=sProtectedVariables.cIUserDatabaseEngine_Ptr->GetAllUser();
   }
  }
-
- list<STask>::iterator iterator=list_STask.begin();
- list<STask>::iterator iterator_end=list_STask.end();  
- while(iterator!=iterator_end)
- {
-  STask &sTask=*iterator;  
-  SUser sUser_From;
-  SUser sUser_For; 
-  
-  list<SUser>::iterator iterator_user=list_SUser.begin();
-  list<SUser>::iterator iterator_user_end=list_SUser.end();  
-  while(iterator_user!=iterator_user_end)
-  {
-   SUser &sUser=*iterator_user;
-   if (sUser.UserGUID.Compare(sTask.ForUserGUID)==0) sUser_For=sUser;
-   if (sUser.UserGUID.Compare(sTask.FromUserGUID)==0) sUser_From=sUser;
-   iterator_user++;
-  }
-  const char *from_name=sUser_From.Name;
-  const char *for_name=sUser_For.Name;
-  const char *task=sTask.Task;
-  fprintf(file,"Срок до: %02i.%02i,%04i\r\n",sTask.Day,sTask.Month,sTask.Year);
-  fprintf(file,"От: %s\r\n",from_name);
-  fprintf(file,"Для: %s\r\n",for_name);
-  fprintf(file,"Задание:\r\n%s\r\n",task);
-  fprintf(file,"--------------------------------------------------\r\n");
-  iterator++;
- }
- fclose(file);
+ if (cITaskExport_Ptr->Export(file_name,list_STask,list_SUser)==false) MessageBox(NULL,"Не могу сохранить файл!","Ошибка",MB_OK);
 }
 //----------------------------------------------------------------------------------------------------
 //удаление базы пользователей

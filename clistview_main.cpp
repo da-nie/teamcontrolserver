@@ -208,7 +208,7 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_ExportTask(void)
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
  char Path[MAX_PATH];
  GetCurrentDirectory(MAX_PATH,Path); 
- CFileDialog cFileDialog(FALSE,"","",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"*.txt|*.txt||",this);
+ CFileDialog cFileDialog(FALSE,"","",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"*.htm|*.htm||",this);
  cFileDialog.m_ofn.lpstrInitialDir=Path;
  char Title[256];
  strcpy(Title,"Ёкспорт базы заданий");

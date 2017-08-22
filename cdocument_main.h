@@ -33,6 +33,8 @@
 #include "ctaskdatabaseengine_sql.h"
 #include "cprojectdatabaseengine_sql.h"
 
+#include "ctaskexporthtml.h"
+#include "ctaskexporttxt.h"
 
 using namespace std;
 
@@ -65,6 +67,8 @@ class CDocument_Main:public CDocument
    SServerSettings sServerSettings;//настройки сервера
    CCriticalSection cCriticalSection;//критическая секция для доступа к классу
   } sProtectedVariables;
+
+  CITaskExport *cITaskExport_Ptr;//указатель на класс экспорта заданий
  public:
   //-Конструктор класса------------------------------------------------------
   CDocument_Main(void);
