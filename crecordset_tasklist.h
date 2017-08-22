@@ -31,6 +31,7 @@ struct STask
  long Month;//месяц
  long Day;//число
  CSafeString TaskGUID;//идентификатор задания
+ CSafeString Answer;//ответ
 };
 
 //====================================================================================================
@@ -49,7 +50,8 @@ class CRecordset_TaskList:public CRecordset
   long Year;//год
   long Month;//месяц
   long Day;//число
-  CString TaskGUID;//идентификатор задания  
+  CString TaskGUID;//идентификатор задания 
+  CString Answer;//ответ
  public:
   //-Конструктор класса------------------------------------------------------
   CRecordset_TaskList(CDatabase* pDatabase=NULL);

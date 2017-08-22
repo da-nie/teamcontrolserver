@@ -187,7 +187,7 @@ bool CTaskDatabaseEngine_SQL::ChangeTask(const STask &sTask,bool &for_user_chang
   //если у задания поменялся адресат, то отправляем старому адресату сообщение об удалении задания,
   //а новому о новом задании
   if (sTask_Local.ForUserGUID.Compare(sTask.ForUserGUID)!=0)
-  {
+  {   
    sTask_Deleted=sTask_Local;
    sTask_Added=sTask;
    for_user_change=true;

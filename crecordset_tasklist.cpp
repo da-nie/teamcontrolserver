@@ -15,7 +15,8 @@ CRecordset_TaskList::CRecordset_TaskList(CDatabase* pDatabase):CRecordset(pDatab
  Year=0;
  Month=0;
  Day=0;
- m_nFields=10;
+ Answer="";
+ m_nFields=11;
  m_nDefaultType=snapshot;
 }
 //====================================================================================================
@@ -52,6 +53,7 @@ void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
  RFX_Long(pFX,_T("[Year]"),Year);  
  RFX_Long(pFX,_T("[Month]"),Month);
  RFX_Long(pFX,_T("[Day]"),Day);  
+ RFX_Text(pFX,_T("[Answer]"),Answer);
 }
 //----------------------------------------------------------------------------------------------------
 //задать запись
@@ -66,7 +68,8 @@ void CRecordset_TaskList::SetRecord(const STask& sTask)
  Year=sTask.Year;
  Month=sTask.Month;
  Day=sTask.Day;
- Task=sTask.Task; 
+ Task=sTask.Task;
+ Answer=sTask.Answer;
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись
@@ -83,6 +86,7 @@ void CRecordset_TaskList::GetRecord(STask& sTask)
  sTask.Month=Month;
  sTask.Day=Day;
  sTask.Index=Index;
+ sTask.Answer=Answer;
 }
 
 

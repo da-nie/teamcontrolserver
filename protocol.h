@@ -151,6 +151,7 @@ struct SServerCommand
   unsigned long ProjectGUIDSize;//по проекту
   unsigned long TaskSize;//задание
   unsigned long TaskGUIDSize;//идентификатор задания
+  unsigned long AnswerSize;//ответ
   long State;//состояние
   long Year;//год
   long Month;//месяц
@@ -217,6 +218,7 @@ struct SServerAnswer
   unsigned long ProjectGUIDSize;//по проекту
   unsigned long TaskSize;//задание
   unsigned long TaskGUIDSize;//идентификатор задания
+  unsigned long AnswerSize;//ответ
   long State;//состояние
   long Year;//год
   long Month;//месяц

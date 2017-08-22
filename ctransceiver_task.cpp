@@ -32,6 +32,7 @@ void CTransceiver_Task::SendTaskDataToClient(SClient &sClient,const STask &sTask
  sServerAnswer_sTaskDataHeader.ProjectGUIDSize=sTask.ProjectGUID.GetLength();
  sServerAnswer_sTaskDataHeader.TaskSize=sTask.Task.GetLength();
  sServerAnswer_sTaskDataHeader.TaskGUIDSize=sTask.TaskGUID.GetLength();
+ sServerAnswer_sTaskDataHeader.AnswerSize=sTask.Answer.GetLength();
  sServerAnswer_sTaskDataHeader.Year=sTask.Year;
  sServerAnswer_sTaskDataHeader.Month=sTask.Month;
  sServerAnswer_sTaskDataHeader.Day=sTask.Day;
@@ -48,6 +49,8 @@ void CTransceiver_Task::SendTaskDataToClient(SClient &sClient,const STask &sTask
  SendPart(sClient.Socket,sTask.Task,sTask.Task.GetLength(),cEvent_Exit,on_exit);
  if (on_exit==true) return;
  SendPart(sClient.Socket,sTask.TaskGUID,sTask.TaskGUID.GetLength(),cEvent_Exit,on_exit);
+ if (on_exit==true) return;
+ SendPart(sClient.Socket,sTask.Answer,sTask.Answer.GetLength(),cEvent_Exit,on_exit);
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -85,6 +88,7 @@ bool CTransceiver_Task::ReadSTaskInArray(char *ptr,size_t &offset,size_t max_len
  length+=sServerCommand_sTaskDataHeader_Ptr->ProjectGUIDSize;
  length+=sServerCommand_sTaskDataHeader_Ptr->TaskGUIDSize;
  length+=sServerCommand_sTaskDataHeader_Ptr->TaskSize;
+ length+=sServerCommand_sTaskDataHeader_Ptr->AnswerSize;
  if (length>max_length) return(false);
 
  sTask.Year=sServerCommand_sTaskDataHeader_Ptr->Year;
@@ -107,6 +111,9 @@ bool CTransceiver_Task::ReadSTaskInArray(char *ptr,size_t &offset,size_t max_len
 
  SetString(sTask.TaskGUID,ptr+offset,sServerCommand_sTaskDataHeader_Ptr->TaskGUIDSize);
  offset+=sServerCommand_sTaskDataHeader_Ptr->TaskGUIDSize;
+
+ SetString(sTask.Answer,ptr+offset,sServerCommand_sTaskDataHeader_Ptr->AnswerSize);
+ offset+=sServerCommand_sTaskDataHeader_Ptr->AnswerSize;
  return(true); 
 }
 //----------------------------------------------------------------------------------------------------

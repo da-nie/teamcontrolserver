@@ -352,7 +352,7 @@ bool CDocument_Main::ChangeTask(const STask &sTask)
  }
  if (for_user_change==true)//измение с заменой адресата
  {
-  cThreadServer.OnTaskDeleted(sTask_Deleted);//указываем потоку, что произошло удаление задания
+  cThreadServer.OnTaskDeleted(sTask_Deleted);//указываем потоку, что произошло удаление задания  
   cThreadServer.OnTaskAdded(sTask_Added);//указываем потоку, что произошло добавление задания
   return(true);
  } 
@@ -446,7 +446,14 @@ void CDocument_Main::ExportTaskBase(const CString &file_name)
    if (sUser.UserGUID.Compare(sTask.FromUserGUID)==0) sUser_From=sUser;
    iterator_user++;
   }
-  fprintf(file,"От: %s\tДля:%s\tЗадание:%s\r\n",sUser_From.Name,sUser_For.Name,sTask.Task);
+  const char *from_name=sUser_From.Name;
+  const char *for_name=sUser_For.Name;
+  const char *task=sTask.Task;
+  fprintf(file,"Срок до: %02i.%02i,%04i\r\n",sTask.Day,sTask.Month,sTask.Year);
+  fprintf(file,"От: %s\r\n",from_name);
+  fprintf(file,"Для: %s\r\n",for_name);
+  fprintf(file,"Задание:\r\n%s\r\n",task);
+  fprintf(file,"--------------------------------------------------\r\n");
   iterator++;
  }
  fclose(file);
