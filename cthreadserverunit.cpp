@@ -88,36 +88,36 @@ void CThreadServerUnit::SetDocument(CDocument_Main *cDocument_Main_Set_Ptr)
 //----------------------------------------------------------------------------------------------------
 //был добавлен пользователь
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnUserAdded(const SUser &sUser)
+void CThreadServerUnit::OnUserAdded(const CUser &cUser)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SUser_Added.push_back(sUser);
+   sProtectedVariables.vector_CUser_Added.push_back(cUser);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //был удалён пользователь
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnUserDeleted(const SUser &sUser)
+void CThreadServerUnit::OnUserDeleted(const CUser &cUser)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SUser_Deleted.push_back(sUser);
+   sProtectedVariables.vector_CUser_Deleted.push_back(cUser);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные пользователя
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnUserChanged(const SUser &sUser)
+void CThreadServerUnit::OnUserChanged(const CUser &cUser)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SUser_Changed.push_back(sUser);
+   sProtectedVariables.vector_CUser_Changed.push_back(cUser);
   }
  }
 }
@@ -127,36 +127,36 @@ void CThreadServerUnit::OnUserChanged(const SUser &sUser)
 //----------------------------------------------------------------------------------------------------
 //было добавлено задание
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnTaskAdded(const STask &sTask)
+void CThreadServerUnit::OnTaskAdded(const CTask &cTask)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_STask_Added.push_back(sTask);
+   sProtectedVariables.vector_CTask_Added.push_back(cTask);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //было удалено задание
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnTaskDeleted(const STask &sTask)
+void CThreadServerUnit::OnTaskDeleted(const CTask &cTask)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_STask_Deleted.push_back(sTask);
+   sProtectedVariables.vector_CTask_Deleted.push_back(cTask);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные задания
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnTaskChanged(const STask &sTask)
+void CThreadServerUnit::OnTaskChanged(const CTask &cTask)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_STask_Changed.push_back(sTask);
+   sProtectedVariables.vector_CTask_Changed.push_back(cTask);
   }
  }
 }
@@ -166,36 +166,36 @@ void CThreadServerUnit::OnTaskChanged(const STask &sTask)
 //----------------------------------------------------------------------------------------------------
 //был добавлен проект
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnProjectAdded(const SProject &sProject)
+void CThreadServerUnit::OnProjectAdded(const CProject &cProject)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SProject_Added.push_back(sProject);
+   sProtectedVariables.vector_CProject_Added.push_back(cProject);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //был удален проект
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnProjectDeleted(const SProject &sProject)
+void CThreadServerUnit::OnProjectDeleted(const CProject &cProject)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SProject_Deleted.push_back(sProject);
+   sProtectedVariables.vector_CProject_Deleted.push_back(cProject);
   }
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные проекта
 //----------------------------------------------------------------------------------------------------
-void CThreadServerUnit::OnProjectChanged(const SProject &sProject)
+void CThreadServerUnit::OnProjectChanged(const CProject &cProject)
 {
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   sProtectedVariables.vector_SProject_Changed.push_back(sProject);
+   sProtectedVariables.vector_CProject_Changed.push_back(cProject);
   }
  }
 }
@@ -293,118 +293,118 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
 
  on_exit=false;
  //копируем данные, которые необходимо передать клиенту
- vector<SUser> vector_SUser_Deleted;//удалённые пользователи
- vector<SUser> vector_SUser_Changed;//изменённые пользователи
- vector<SUser> vector_SUser_Added;//добавленные пользователи
+ vector<CUser> vector_CUser_Deleted;//удалённые пользователи
+ vector<CUser> vector_CUser_Changed;//изменённые пользователи
+ vector<CUser> vector_CUser_Added;//добавленные пользователи
 
- vector<STask> vector_STask_Deleted;//удалённые задания
- vector<STask> vector_STask_Changed;//изменённые задания
- vector<STask> vector_STask_Added;//добавленные задания
+ vector<CTask> vector_CTask_Deleted;//удалённые задания
+ vector<CTask> vector_CTask_Changed;//изменённые задания
+ vector<CTask> vector_CTask_Added;//добавленные задания
 
- vector<SProject> vector_SProject_Deleted;//удалённые проекты
- vector<SProject> vector_SProject_Changed;//изменённые проекты
- vector<SProject> vector_SProject_Added;//добавленные проекты
+ vector<CProject> vector_CProject_Deleted;//удалённые проекты
+ vector<CProject> vector_CProject_Changed;//изменённые проекты
+ vector<CProject> vector_CProject_Added;//добавленные проекты
 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   vector_SUser_Deleted=sProtectedVariables.vector_SUser_Deleted;
-   vector_SUser_Added=sProtectedVariables.vector_SUser_Added;
-   vector_SUser_Changed=sProtectedVariables.vector_SUser_Changed;
+   vector_CUser_Deleted=sProtectedVariables.vector_CUser_Deleted;
+   vector_CUser_Added=sProtectedVariables.vector_CUser_Added;
+   vector_CUser_Changed=sProtectedVariables.vector_CUser_Changed;
 
-   sProtectedVariables.vector_SUser_Deleted.clear();
-   sProtectedVariables.vector_SUser_Added.clear();
-   sProtectedVariables.vector_SUser_Changed.clear();
+   sProtectedVariables.vector_CUser_Deleted.clear();
+   sProtectedVariables.vector_CUser_Added.clear();
+   sProtectedVariables.vector_CUser_Changed.clear();
 
-   vector_STask_Deleted=sProtectedVariables.vector_STask_Deleted;
-   vector_STask_Added=sProtectedVariables.vector_STask_Added;
-   vector_STask_Changed=sProtectedVariables.vector_STask_Changed;
+   vector_CTask_Deleted=sProtectedVariables.vector_CTask_Deleted;
+   vector_CTask_Added=sProtectedVariables.vector_CTask_Added;
+   vector_CTask_Changed=sProtectedVariables.vector_CTask_Changed;
 
-   sProtectedVariables.vector_STask_Deleted.clear();
-   sProtectedVariables.vector_STask_Added.clear();
-   sProtectedVariables.vector_STask_Changed.clear();
+   sProtectedVariables.vector_CTask_Deleted.clear();
+   sProtectedVariables.vector_CTask_Added.clear();
+   sProtectedVariables.vector_CTask_Changed.clear();
 
-   vector_SProject_Deleted=sProtectedVariables.vector_SProject_Deleted;
-   vector_SProject_Added=sProtectedVariables.vector_SProject_Added;
-   vector_SProject_Changed=sProtectedVariables.vector_SProject_Changed;
+   vector_CProject_Deleted=sProtectedVariables.vector_CProject_Deleted;
+   vector_CProject_Added=sProtectedVariables.vector_CProject_Added;
+   vector_CProject_Changed=sProtectedVariables.vector_CProject_Changed;
 
-   sProtectedVariables.vector_SProject_Deleted.clear();
-   sProtectedVariables.vector_SProject_Added.clear();
-   sProtectedVariables.vector_SProject_Changed.clear();
+   sProtectedVariables.vector_CProject_Deleted.clear();
+   sProtectedVariables.vector_CProject_Added.clear();
+   sProtectedVariables.vector_CProject_Changed.clear();
   }
  }
  //передаём список удалённых пользователей
- size=vector_SUser_Deleted.size();
+ size=vector_CUser_Deleted.size();
  for(n=0;n<size;n++)
  {
-  SUser &sUser=vector_SUser_Deleted[n];
-  cTransceiver_User.SendUserDataToClientInPackage(sClient,sUser,SERVER_ANSWER_DELETED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CUser &cUser=vector_CUser_Deleted[n];
+  cTransceiver_User.SendUserDataToClientInPackage(sClient,cUser,SERVER_ANSWER_DELETED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список добавленных пользователей
- size=vector_SUser_Added.size();
+ size=vector_CUser_Added.size();
  for(n=0;n<size;n++)
  {
-  SUser &sUser=vector_SUser_Added[n];
-  cTransceiver_User.SendUserDataToClientInPackage(sClient,sUser,SERVER_ANSWER_ADDED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CUser &cUser=vector_CUser_Added[n];
+  cTransceiver_User.SendUserDataToClientInPackage(sClient,cUser,SERVER_ANSWER_ADDED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список изменённых пользователей
- size=vector_SUser_Changed.size();
+ size=vector_CUser_Changed.size();
  for(n=0;n<size;n++)
  {
-  SUser &sUser=vector_SUser_Changed[n];
-  cTransceiver_User.SendUserDataToClientInPackage(sClient,sUser,SERVER_ANSWER_CHANGED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CUser &cUser=vector_CUser_Changed[n];
+  cTransceiver_User.SendUserDataToClientInPackage(sClient,cUser,SERVER_ANSWER_CHANGED_USER,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
 
  //передаём список удалённых заданий
- size=vector_STask_Deleted.size();
+ size=vector_CTask_Deleted.size();
  for(n=0;n<size;n++)
  {
-  STask &sTask=vector_STask_Deleted[n];
-  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,sTask,SERVER_ANSWER_DELETED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CTask &cTask=vector_CTask_Deleted[n];
+  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_DELETED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список добавленных заданий
- size=vector_STask_Added.size();
+ size=vector_CTask_Added.size();
  for(n=0;n<size;n++)
  {
-  STask &sTask=vector_STask_Added[n];
-  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,sTask,SERVER_ANSWER_ADDED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CTask &cTask=vector_CTask_Added[n];
+  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_ADDED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список изменённых заданий
- size=vector_STask_Changed.size();
+ size=vector_CTask_Changed.size();
  for(n=0;n<size;n++)
  {
-  STask &sTask=vector_STask_Changed[n];
-  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,sTask,SERVER_ANSWER_CHANGED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CTask &cTask=vector_CTask_Changed[n];
+  cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_CHANGED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
 
  //передаём список удалённых проектов
- size=vector_SProject_Deleted.size();
+ size=vector_CProject_Deleted.size();
  for(n=0;n<size;n++)
  {
-  SProject &sProject=vector_SProject_Deleted[n];
-  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,sProject,SERVER_ANSWER_DELETED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CProject &cProject=vector_CProject_Deleted[n];
+  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,cProject,SERVER_ANSWER_DELETED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список добавленных проектов
- size=vector_SProject_Added.size();
+ size=vector_CProject_Added.size();
  for(n=0;n<size;n++)
  {
-  SProject &sProject=vector_SProject_Added[n];
-  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,sProject,SERVER_ANSWER_ADDED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CProject &cProject=vector_CProject_Added[n];
+  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,cProject,SERVER_ANSWER_ADDED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
  //передаём список изменённых проектов
- size=vector_SProject_Changed.size();
+ size=vector_CProject_Changed.size();
  for(n=0;n<size;n++)
  {
-  SProject &sProject=vector_SProject_Changed[n];
-  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,sProject,SERVER_ANSWER_CHANGED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  CProject &cProject=vector_CProject_Changed[n];
+  cTransceiver_Project.SendProjectDataToClientInPackage(sClient,cProject,SERVER_ANSWER_CHANGED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
 }

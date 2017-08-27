@@ -50,25 +50,25 @@ afx_msg BOOL CDialog_UserSettings::OnInitDialog(void)
  ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_DESCRIPTION))->SetLimitText(254);
  ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_TELEPHONE))->SetLimitText(254);
 
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_NAME))->SetWindowText(sUser_Local.Name);
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_LOGIN))->SetWindowText(sUser_Local.Login);
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_PASSWORD))->SetWindowText(sUser_Local.Password);
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_JOB_TITLE))->SetWindowText(sUser_Local.JobTitle);
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_DESCRIPTION))->SetWindowText(sUser_Local.Description);
- ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_TELEPHONE))->SetWindowText(sUser_Local.Telephone);
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_NAME))->SetWindowText(cUser_Local.GetName());
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_LOGIN))->SetWindowText(cUser_Local.GetLogin());
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_PASSWORD))->SetWindowText(cUser_Local.GetPassword());
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_JOB_TITLE))->SetWindowText(cUser_Local.GetJobTitle());
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_DESCRIPTION))->SetWindowText(cUser_Local.GetDescription());
+ ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_TELEPHONE))->SetWindowText(cUser_Local.GetTelephone());
 
  return(CDialog::OnInitDialog());
 }
 //----------------------------------------------------------------------------------------------------
 //запуск диалога
 //----------------------------------------------------------------------------------------------------
-bool CDialog_UserSettings::Activate(SUser &sUser)
+bool CDialog_UserSettings::Activate(CUser &cUser)
 {
- sUser_Local=sUser;
+ cUser_Local=cUser;
  long ret=DoModal();
  if (ret==0)
  {
-  sUser=sUser_Local;
+  cUser=cUser_Local;
   return(true);
  }
  return(false);
@@ -102,12 +102,12 @@ afx_msg void CDialog_UserSettings::OnCommand_Button_Ok(void)
  ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_JOB_TITLE))->GetWindowText(job_title,255);
  ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_DESCRIPTION))->GetWindowText(description,255);
  ((CEdit *)GetDlgItem(IDC_EDIT_DIALOG_USER_SETTINGS_TELEPHONE))->GetWindowText(telephone,255);
- sUser_Local.Name=name;
- sUser_Local.Login=login;
- sUser_Local.Password=password;
- sUser_Local.JobTitle=job_title;
- sUser_Local.Description=description;
- sUser_Local.Telephone=telephone;
+ cUser_Local.SetName(name);
+ cUser_Local.SetLogin(login);
+ cUser_Local.SetPassword(password);
+ cUser_Local.SetJobTitle(job_title);
+ cUser_Local.SetDescription(description);
+ cUser_Local.SetTelephone(telephone);
  EndDialog(0);
 }
 //----------------------------------------------------------------------------------------------------

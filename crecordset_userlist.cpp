@@ -52,32 +52,32 @@ void CRecordset_UserList::DoFieldExchange(CFieldExchange* pFX)
 //----------------------------------------------------------------------------------------------------
 //задать запись
 //----------------------------------------------------------------------------------------------------
-void CRecordset_UserList::SetRecord(const SUser& sUser)
+void CRecordset_UserList::SetRecord(const CUser& cUser)
 {
- Name=sUser.Name;
- JobTitle=sUser.JobTitle;
- Login=sUser.Login;
- Password=sUser.Password;
- Description=sUser.Description;
- Telephone=sUser.Telephone;
- UserGUID=sUser.UserGUID;
+ Name=cUser.GetName();
+ JobTitle=cUser.GetJobTitle();
+ Login=cUser.GetLogin();
+ Password=cUser.GetPassword();
+ Description=cUser.GetDescription();
+ Telephone=cUser.GetTelephone();
+ UserGUID=cUser.GetUserGUID();
  Leader=0;
- if (sUser.Leader==true) Leader=1;
+ if (cUser.GetLeader()==true) Leader=1;
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись
 //----------------------------------------------------------------------------------------------------
-void CRecordset_UserList::GetRecord(SUser& sUser)
+void CRecordset_UserList::GetRecord(CUser& cUser)
 {
- sUser.Name=Name;
- sUser.JobTitle=JobTitle;
- sUser.Login=Login;
- sUser.Password=Password;
- sUser.Description=Description;
- sUser.Telephone=Telephone;
- sUser.UserGUID=UserGUID;
- sUser.Leader=false;
- if (Leader!=0) sUser.Leader=true;
+ cUser.SetName(Name);
+ cUser.SetJobTitle(JobTitle);
+ cUser.SetLogin(Login);
+ cUser.SetPassword(Password);
+ cUser.SetDescription(Description);
+ cUser.SetTelephone(Telephone);
+ cUser.SetUserGUID(UserGUID);
+ cUser.SetLeader(false);
+ if (Leader!=0) cUser.SetLeader(true);
 }
 
 

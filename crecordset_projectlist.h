@@ -12,20 +12,9 @@
 //====================================================================================================
 #include "stdafx.h"
 #include <string>
+#include "cproject.h"
 
 using namespace std;
-
-//====================================================================================================
-//структуры
-//====================================================================================================
-
-//параметры проекта
-struct SProject
-{
- CSafeString ProjectName;//название проекта
- CSafeString ProjectGUID;//уникальный идентификатор
-};
-
 
 //====================================================================================================
 //класс записи данных о проектах
@@ -43,8 +32,8 @@ class CRecordset_ProjectList:public CRecordset
   //-Деструктор класса-------------------------------------------------------
   ~CRecordset_ProjectList();
   //-Функции класса----------------------------------------------------------
-  void SetRecord(const SProject& sProject);//задать запись
-  void GetRecord(SProject& sProject);//получить запись
+  void SetRecord(const CProject& cProject);//задать запись
+  void GetRecord(CProject& cProject);//получить запись
   virtual CString GetDefaultConnect(void);
   virtual CString GetDefaultSQL(void);
   virtual void DoFieldExchange(CFieldExchange* pFX);

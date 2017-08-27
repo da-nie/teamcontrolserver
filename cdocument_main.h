@@ -76,30 +76,30 @@ class CDocument_Main:public CDocument
   ~CDocument_Main();
   //-Функции класса----------------------------------------------------------
   void SaveState(void);//сохранение состояния
-  bool AddUser(SUser& sUser);//добавить пользователя
-  bool ChangeUser(long index,const SUser& sUser);//задать пользователя
-  bool GetUser(long index,SUser &sUser);//получить пользователя по индексу
+  bool AddUser(CUser& cUser);//добавить пользователя
+  bool ChangeUser(long index,const CUser& cUser);//задать пользователя
+  bool GetUser(long index,CUser &cUser);//получить пользователя по индексу
   void DeleteUser(long index);//удалить пользователя по индексу
-  list<SUser> GetAllUser(void);//получить список всех пользователей
-  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,SUser& sUser);//найти пользователя по логину и паролю
-  bool FindUserByGUID(const CSafeString& guid,SUser& sUser);//найти пользователя по GUID
-  bool ChangeUserByGUID(const CSafeString& guid,const SUser& sUser);//изменить пользователя по GUID
+  list<CUser> GetAllUser(void);//получить список всех пользователей
+  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser);//найти пользователя по логину и паролю
+  bool FindUserByGUID(const CSafeString& guid,CUser& cUser);//найти пользователя по GUID
+  bool ChangeUserByGUID(const CSafeString& guid,const CUser& cUser);//изменить пользователя по GUID
   bool DeleteUserByGUID(const CSafeString& guid);//удалить пользователя по GUID
-  bool FindTaskByGUID(const CSafeString &guid,STask &sTask);//найти задание по GUID
-  bool FindProjectByGUID(const CSafeString &guid,SProject &sProject);//найти проект по GUID
+  bool FindTaskByGUID(const CSafeString &guid,CTask &cTask);//найти задание по GUID
+  bool FindProjectByGUID(const CSafeString &guid,CProject &cProject);//найти проект по GUID
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера
   void SetServerSettings(const SServerSettings &sServerSettings);//установить настройки сервера (сервер будет перезапущен)
-  list<STask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
-  list<STask> GetAllTask(void);//получить все задания
-  list<SProject> GetAllProject(void);//получить все проекты
+  list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
+  list<CTask> GetAllTask(void);//получить все задания
+  list<CProject> GetAllProject(void);//получить все проекты
 
-  bool AddTask(STask &sTask);//добавить задание
-  bool DeleteTask(const STask &sTask);//удалить задание
-  bool ChangeTask(const STask &sTask);//изменить задание
+  bool AddTask(CTask &cTask);//добавить задание
+  bool DeleteTask(const CTask &cTask);//удалить задание
+  bool ChangeTask(const CTask &cTask);//изменить задание
 
-  bool AddProject(SProject &sProject);//добавить проект
-  bool DeleteProject(const SProject &sProject);//удалить проект
-  bool ChangeProject(const SProject &sProject);//изменить проект
+  bool AddProject(CProject &cProject);//добавить проект
+  bool DeleteProject(const CProject &cProject);//удалить проект
+  bool ChangeProject(const CProject &cProject);//изменить проект
 
   void ExportTaskBase(const CString &file_name);//экспорт базы заданий
 

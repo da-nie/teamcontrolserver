@@ -62,8 +62,8 @@ class CListView_Main:public CListView
  protected:
   //-Функции класса----------------------------------------------------------
   CDocument_Main* GetDocument(void);//получить документ
-  bool GetSelectedUser(SUser &sUser);//получить итератор выбранного пользователя из класса документа
-  void SetSelectedUser(const SUser &sUser);//записать выбранного пользователя в класс документа
+  bool GetSelectedUser(CUser &cUser);//получить итератор выбранного пользователя из класса документа
+  void SetSelectedUser(const CUser &cUser);//записать выбранного пользователя в класс документа
   //-Прочее------------------------------------------------------------------
   DECLARE_DYNCREATE(CListView_Main)
   

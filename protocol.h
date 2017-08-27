@@ -143,7 +143,7 @@ struct SServerCommand
   unsigned long PasswordSize;//размер пароля
  };
  //кодирование заголовка данных при передаче задания
- struct STaskDataHeader
+ struct CTaskDataHeader
  {
   long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
@@ -158,7 +158,7 @@ struct SServerCommand
   long Day;//число   
  };
  //кодирование заголовка данных при передаче проекта
- struct SProjectDataHeader
+ struct CProjectDataHeader
  {
   unsigned long ProjectNameSize;//проект
   unsigned long ProjectGUIDSize;//идентификатор проекта
@@ -200,7 +200,7 @@ struct SServerAnswer
  };
 
  //кодирование заголовка данные при передаче параметров пользователя
- struct SUserDataHeader
+ struct CUserDataHeader
  {
   unsigned long NameSize;//размер имени
   unsigned long JobTitleSize;//размер должности
@@ -210,7 +210,7 @@ struct SServerAnswer
   bool Leader;//является ли начальником
  };
  //кодирование заголовка данных при передаче параметров задания
- struct STaskDataHeader
+ struct CTaskDataHeader
  {
   long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
@@ -225,7 +225,7 @@ struct SServerAnswer
   long Day;//число 
  };
  //кодирование заголовка данных при передаче параметров проекта
- struct SProjectDataHeader
+ struct CProjectDataHeader
  {
   unsigned long ProjectNameSize;//проект
   unsigned long ProjectGUIDSize;//идентификатор проекта

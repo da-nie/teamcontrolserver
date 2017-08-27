@@ -117,18 +117,18 @@ afx_msg void CListView_Main::OnRButtonDown(UINT nFlags,CPoint point)
 //----------------------------------------------------------------------------------------------------
 afx_msg void CListView_Main::OnCommand_Menu_List_AddUser(void)
 {
- SUser sUser;
- sUser.Leader=false;
- sUser.Name="";
- sUser.Login="";
- sUser.Password="";
- sUser.JobTitle="";
- sUser.Telephone=""; 
+ CUser cUser;
+ cUser.SetLeader(false);
+ cUser.SetName("");
+ cUser.SetLogin("");
+ cUser.SetPassword("");
+ cUser.SetJobTitle("");
+ cUser.SetTelephone(""); 
  CDialog_UserSettings cDialog_UserSettings((LPCSTR)IDD_DIALOG_USER_SETTINGS,this);
- if (cDialog_UserSettings.Activate(sUser)==true)
+ if (cDialog_UserSettings.Activate(cUser)==true)
  {
   CDocument_Main *cDocument_Main_Ptr=GetDocument();
-  cDocument_Main_Ptr->AddUser(sUser); 
+  cDocument_Main_Ptr->AddUser(cUser); 
  }
  UpdateList();
 }
@@ -138,10 +138,10 @@ afx_msg void CListView_Main::OnCommand_Menu_List_AddUser(void)
 afx_msg void CListView_Main::OnCommand_Menu_List_EditUser(void)
 {
  //получаем выбранного пользователя
- SUser sUser;
- if (GetSelectedUser(sUser)==false) return;//ошибка
+ CUser cUser;
+ if (GetSelectedUser(cUser)==false) return;//ошибка
  CDialog_UserSettings cDialog_UserSettings((LPCSTR)IDD_DIALOG_USER_SETTINGS,this);
- if (cDialog_UserSettings.Activate(sUser)==true) SetSelectedUser(sUser);
+ if (cDialog_UserSettings.Activate(cUser)==true) SetSelectedUser(cUser);
  UpdateList();
 }
 //----------------------------------------------------------------------------------------------------
@@ -150,10 +150,10 @@ afx_msg void CListView_Main::OnCommand_Menu_List_EditUser(void)
 afx_msg void CListView_Main::OnCommand_Menu_List_DeleteUser(void)
 {
  //получаем выбранного пользователя
- SUser sUser;
- if (GetSelectedUser(sUser)==false) return;//ошибка
+ CUser cUser;
+ if (GetSelectedUser(cUser)==false) return;//ошибка
  CSafeString name="Удалить пользователя ";
- name+=sUser.Name;
+ name+=cUser.GetName();
  name+=" ?";
  if (MessageBox(name,"Подтверждение",MB_YESNO|MB_DEFBUTTON2)!=IDYES) return;
  CListCtrl &cListCtrl=GetListCtrl();
@@ -170,11 +170,11 @@ afx_msg void CListView_Main::OnCommand_Menu_List_DeleteUser(void)
 afx_msg void CListView_Main::OnCommand_Menu_List_SetLeader(void)
 {
  //получаем выбранного пользователя
- SUser sUser;
- if (GetSelectedUser(sUser)==false) return;//ошибка
- sUser.Leader=true;
+ CUser cUser;
+ if (GetSelectedUser(cUser)==false) return;//ошибка
+ cUser.SetLeader(true);
  //записываем выбранного пользователя
- SetSelectedUser(sUser);
+ SetSelectedUser(cUser);
 }
 //----------------------------------------------------------------------------------------------------
 //назначить сотрудником
@@ -182,11 +182,11 @@ afx_msg void CListView_Main::OnCommand_Menu_List_SetLeader(void)
 afx_msg void CListView_Main::OnCommand_Menu_List_ResetLeader(void)
 {
  //получаем выбранного пользователя
- SUser sUser;
- if (GetSelectedUser(sUser)==false) return;//ошибка
- sUser.Leader=false;
+ CUser cUser;
+ if (GetSelectedUser(cUser)==false) return;//ошибка
+ cUser.SetLeader(false);
  //записываем выбранного пользователя
- SetSelectedUser(sUser);
+ SetSelectedUser(cUser);
 }
 //----------------------------------------------------------------------------------------------------
 //настройка сервера
@@ -255,40 +255,40 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_ResetProjectListBase(void)
 void CListView_Main::UpdateList(void)
 {
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
- list<SUser> list_SUser=cDocument_Main_Ptr->GetAllUser();
- list<SUser>::iterator iterator=list_SUser.begin();
- list<SUser>::iterator iterator_end=list_SUser.end(); 
+ list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
+ list<CUser>::iterator iterator=list_CUser.begin();
+ list<CUser>::iterator iterator_end=list_CUser.end(); 
  CListCtrl &cListCtrl=GetListCtrl(); 
  cListCtrl.DeleteAllItems();
  vector_CSafeString_UserGUID.clear();
- SUser sUser;
+ CUser cUser;
  long index=0;
  while(iterator!=iterator_end)
  {
-  sUser=*iterator;
+  cUser=*iterator;
   
   LV_ITEM item;  
   item.mask=LVIF_TEXT;
   item.iItem=index;
   item.iSubItem=0;
-  item.pszText=const_cast<LPSTR>((LPCSTR)sUser.Name);
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetName());
   item.iItem=cListCtrl.InsertItem(&item);
   item.iSubItem=1;
-  item.pszText=const_cast<LPSTR>((LPCSTR)sUser.JobTitle);
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetJobTitle());
   cListCtrl.SetItem(&item);
   item.iSubItem=2;
-  item.pszText=const_cast<LPSTR>((LPCSTR)sUser.Login);
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetLogin());
   cListCtrl.SetItem(&item);
   item.iSubItem=3;
-  item.pszText=const_cast<LPSTR>((LPCSTR)sUser.Password);
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetPassword());
   cListCtrl.SetItem(&item);
   item.iSubItem=4;
-  if (sUser.Leader==true) item.pszText="Руководитель";
-                     else item.pszText="Сотрудник";
+  if (cUser.GetLeader()==true) item.pszText="Руководитель";
+                          else item.pszText="Сотрудник";
   cListCtrl.SetItem(&item);
   index++;
   iterator++;
-  vector_CSafeString_UserGUID.push_back(sUser.UserGUID);
+  vector_CSafeString_UserGUID.push_back(cUser.GetUserGUID());
  }
 }
 //----------------------------------------------------------------------------------------------------
@@ -302,26 +302,26 @@ CDocument_Main* CListView_Main::GetDocument(void)
 //----------------------------------------------------------------------------------------------------
 //получить выбранного пользователя из класса документа
 //----------------------------------------------------------------------------------------------------
-bool CListView_Main::GetSelectedUser(SUser &sUser)
+bool CListView_Main::GetSelectedUser(CUser &cUser)
 {
  CListCtrl &cListCtrl=GetListCtrl();
  if (cListCtrl.GetSelectedCount()==0) return(false);//ничего не выбрано
  long selected_item=cListCtrl.GetSelectionMark();
  if (vector_CSafeString_UserGUID.size()<=selected_item) return(false);
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
- return(cDocument_Main_Ptr->FindUserByGUID(vector_CSafeString_UserGUID[selected_item],sUser));
+ return(cDocument_Main_Ptr->FindUserByGUID(vector_CSafeString_UserGUID[selected_item],cUser));
 }
 //----------------------------------------------------------------------------------------------------
 //записать выбранного пользователя в класс документа
 //----------------------------------------------------------------------------------------------------
-void CListView_Main::SetSelectedUser(const SUser &sUser)
+void CListView_Main::SetSelectedUser(const CUser &cUser)
 {
  CListCtrl &cListCtrl=GetListCtrl();
  if (cListCtrl.GetSelectedCount()==0) return;//ничего не выбрано
  long selected_item=cListCtrl.GetSelectionMark();
  if (vector_CSafeString_UserGUID.size()<=selected_item) return;
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
- cDocument_Main_Ptr->ChangeUserByGUID(vector_CSafeString_UserGUID[selected_item],sUser);
+ cDocument_Main_Ptr->ChangeUserByGUID(vector_CSafeString_UserGUID[selected_item],cUser);
  //обновляем список пользователей
  UpdateList();
 }

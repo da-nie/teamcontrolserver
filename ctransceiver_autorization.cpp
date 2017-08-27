@@ -57,10 +57,10 @@ void CTransceiver_Autorization::ExecuteAutorization(CDocument_Main *cDocument_Ma
  ptr+=sServerCommand_sAutorizationDataHeader_Ptr->LoginSize;
  SetString(sClient.Password,ptr,sServerCommand_sAutorizationDataHeader_Ptr->PasswordSize);
  //авторизуем пользователя
- SUser sUser;
- if (cDocument_Main_Ptr->FindUserByLoginAndPassword(sClient.Login,sClient.Password,sUser)==true)
+ CUser cUser;
+ if (cDocument_Main_Ptr->FindUserByLoginAndPassword(sClient.Login,sClient.Password,cUser)==true)
  {
-  sClient.UserGUID=sUser.UserGUID;  
+  sClient.UserGUID=cUser.GetUserGUID();
   SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
   if (on_exit==true) return;
   SServerAnswer::SHeader sServerAnswer_sHeader;
@@ -69,10 +69,10 @@ void CTransceiver_Autorization::ExecuteAutorization(CDocument_Main *cDocument_Ma
   SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
   if (on_exit==true) return;
   SServerAnswer::SAutorizationDataHeader sServerAnswer_sAutorizationDataHeader;
-  sServerAnswer_sAutorizationDataHeader.UserGUIDSize=sUser.UserGUID.GetLength();
+  sServerAnswer_sAutorizationDataHeader.UserGUIDSize=cUser.GetUserGUID().GetLength();
   SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sAutorizationDataHeader),sizeof(SServerAnswer::SAutorizationDataHeader),cEvent_Exit,on_exit);
   if (on_exit==true) return;
-  SendPart(sClient.Socket,sUser.UserGUID,sUser.UserGUID.GetLength(),cEvent_Exit,on_exit);
+  SendPart(sClient.Socket,cUser.GetUserGUID(),cUser.GetUserGUID().GetLength(),cEvent_Exit,on_exit);
   if (on_exit==true) return;
   SendEndPackage(sClient.Socket,cEvent_Exit,on_exit);
   return;

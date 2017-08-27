@@ -20,32 +20,33 @@ CTaskExportTXT::~CTaskExportTXT()
 //----------------------------------------------------------------------------------------------------
 //экспорт заданий
 //----------------------------------------------------------------------------------------------------
-bool CTaskExportTXT::Export(const CString &file_name,list<STask> &list_STask,list<SUser> &list_SUser)
+bool CTaskExportTXT::Export(const CString &file_name,list<CTask> &list_CTask,list<CUser> &list_CUser)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL) return(false);
 	
- list<STask>::iterator iterator=list_STask.begin();
- list<STask>::iterator iterator_end=list_STask.end();  
+ list<CTask>::iterator iterator=list_CTask.begin();
+ list<CTask>::iterator iterator_end=list_CTask.end();  
  while(iterator!=iterator_end)
  {
-  STask &sTask=*iterator;  
-  SUser sUser_From;
-  SUser sUser_For; 
+  CTask &cTask=*iterator;  
+  CUser cUser_From;
+  CUser cUser_For; 
   
-  list<SUser>::iterator iterator_user=list_SUser.begin();
-  list<SUser>::iterator iterator_user_end=list_SUser.end();  
+  list<CUser>::iterator iterator_user=list_CUser.begin();
+  list<CUser>::iterator iterator_user_end=list_CUser.end();  
   while(iterator_user!=iterator_user_end)
   {
-   SUser &sUser=*iterator_user;
-   if (sUser.UserGUID.Compare(sTask.ForUserGUID)==0) sUser_For=sUser;
-   if (sUser.UserGUID.Compare(sTask.FromUserGUID)==0) sUser_From=sUser;
+   CUser &cUser=*iterator_user;
+   if (cUser.GetUserGUID().Compare(cTask.GetForUserGUID())==0) cUser_For=cUser;
+   if (cUser.GetUserGUID().Compare(cTask.GetFromUserGUID())==0) cUser_From=cUser;
    iterator_user++;
   }
-  const char *from_name=sUser_From.Name;
-  const char *for_name=sUser_For.Name;
-  const char *task=sTask.Task;
-  fprintf(file,"Срок до: %02i.%02i.%04i\r\n",sTask.Day,sTask.Month,sTask.Year);
+  const char *from_name=cUser_From.GetName();
+  const char *for_name=cUser_For.GetName();
+  const char *task=cTask.GetTask();
+  const CDate &cDate=cTask.GetDate();
+  fprintf(file,"Срок до: %02i.%02i.%04i\r\n",cDate.GetDay(),cDate.GetMonth(),cDate.GetYear());
   fprintf(file,"От: %s\r\n",from_name);
   fprintf(file,"Для: %s\r\n",for_name);
   fprintf(file,"Задание:\r\n%s\r\n",task);

@@ -44,17 +44,17 @@ class CThreadServerUnit
   struct SProtectedVariables
   {
    //данные для синхронизации с клиентами
-   vector<SUser> vector_SUser_Deleted;//удалённые пользователи
-   vector<SUser> vector_SUser_Changed;//изменённые пользователи
-   vector<SUser> vector_SUser_Added;//добавленные пользователи
+   vector<CUser> vector_CUser_Deleted;//удалённые пользователи
+   vector<CUser> vector_CUser_Changed;//изменённые пользователи
+   vector<CUser> vector_CUser_Added;//добавленные пользователи
 
-   vector<STask> vector_STask_Deleted;//удалённые задания
-   vector<STask> vector_STask_Changed;//изменённые задания 
-   vector<STask> vector_STask_Added;//добавленные задания
+   vector<CTask> vector_CTask_Deleted;//удалённые задания
+   vector<CTask> vector_CTask_Changed;//изменённые задания 
+   vector<CTask> vector_CTask_Added;//добавленные задания
 
-   vector<SProject> vector_SProject_Deleted;//удалённые проекты
-   vector<SProject> vector_SProject_Changed;//изменённые проекты
-   vector<SProject> vector_SProject_Added;//добавленные проекты
+   vector<CProject> vector_CProject_Deleted;//удалённые проекты
+   vector<CProject> vector_CProject_Changed;//изменённые проекты
+   vector<CProject> vector_CProject_Added;//добавленные проекты
 
    bool ClientOnLine;//подключён ли клиент (работает ли поток)
 
@@ -75,17 +75,17 @@ class CThreadServerUnit
    void Stop(void);//остановить поток
    void SetDocument(CDocument_Main *cDocument_Main_Set_Ptr);//задать класс документа
    void InitClient(SOCKET socket_client);//инициализировать клиента
-   void OnUserAdded(const SUser &sUser);//был добавлен пользователь
-   void OnUserDeleted(const SUser &sUser);//был удалён пользователь
-   void OnUserChanged(const SUser &sUser);//были изменены данные пользователя
+   void OnUserAdded(const CUser &cUser);//был добавлен пользователь
+   void OnUserDeleted(const CUser &cUser);//был удалён пользователь
+   void OnUserChanged(const CUser &cUser);//были изменены данные пользователя
 
-   void OnTaskAdded(const STask &sTask);//было добавлено задание
-   void OnTaskDeleted(const STask &sTask);//было удалено задания
-   void OnTaskChanged(const STask &sTask);//были изменены данные задания
+   void OnTaskAdded(const CTask &cTask);//было добавлено задание
+   void OnTaskDeleted(const CTask &cTask);//было удалено задания
+   void OnTaskChanged(const CTask &cTask);//были изменены данные задания
 
-   void OnProjectAdded(const SProject &sProject);//был добавлен проект
-   void OnProjectDeleted(const SProject &sProject);//был удален проект
-   void OnProjectChanged(const SProject &sProject);//были изменены данные задания
+   void OnProjectAdded(const CProject &cProject);//был добавлен проект
+   void OnProjectDeleted(const CProject &cProject);//был удален проект
+   void OnProjectChanged(const CProject &cProject);//были изменены данные задания
 
    bool GetClientOnLine(void);//получить, в сети ли клиент   
  protected:

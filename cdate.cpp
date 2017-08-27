@@ -1,98 +1,98 @@
-#include "crecordset_projectlist.h"
+#include "cdate.h"
 
 //====================================================================================================
 //конструктор класса
 //====================================================================================================
-CRecordset_ProjectList::CRecordset_ProjectList(CDatabase* pDatabase):CRecordset(pDatabase)
+CDate::CDate(void)
+{ 
+ Year=0;
+ Month=0;
+ Day=0;
+}
+
+CDate::CDate(const long &year,const long &month,const long &day)
 {
- ProjectName="";
- ProjectGUID="";
- Index=0;
- m_nFields=3;
- m_nDefaultType=snapshot;
+ Year=year;
+ Month=month;
+ Day=day;
 }
 //====================================================================================================
 //деструктор класса
 //====================================================================================================
-CRecordset_ProjectList::~CRecordset_ProjectList()
-{		
+CDate::~CDate() 
+{
 }
 //====================================================================================================
 //функции класса
 //====================================================================================================
-CString CRecordset_ProjectList::GetDefaultConnect(void)
-{
- return(_T("ODBC;DRIVER=Microsoft Paradox Driver (*.db );DBQ=ProjBase"));
-}
-//----------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------
-CString CRecordset_ProjectList::GetDefaultSQL(void)
-{
- return(_T("[ProjBase]"));
-}
-//----------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------
-void CRecordset_ProjectList::DoFieldExchange(CFieldExchange* pFX)
-{ 
- pFX->SetFieldType(CFieldExchange::outputColumn);  
- RFX_Long(pFX,_T("[Index]"),Index);
- RFX_Text(pFX,_T("[ProjectGUID]"),ProjectGUID);
- RFX_Text(pFX,_T("[ProjectName]"),ProjectName); 
-}
-//----------------------------------------------------------------------------------------------------
-//задать запись
-//----------------------------------------------------------------------------------------------------
-void CRecordset_ProjectList::SetRecord(const CProject& cProject)
-{
- ProjectName=cProject.GetProjectName();
- ProjectGUID=cProject.GetProjectGUID(); 
-}
-//----------------------------------------------------------------------------------------------------
-//получить запись
-//----------------------------------------------------------------------------------------------------
-void CRecordset_ProjectList::GetRecord(CProject& cProject)
-{
- cProject.SetProjectName(ProjectName);
- cProject.SetProjectGUID(ProjectGUID);
-}
-
-
-//====================================================================================================
-//класс RAII (Resource Acquisition is Initialization) дл€ работы с CRecordset_ProjectList
-//====================================================================================================
 
 //----------------------------------------------------------------------------------------------------
-//конструктор
+//оператор <
 //----------------------------------------------------------------------------------------------------
-CRAIICRecordset_ProjectList::CRAIICRecordset_ProjectList(CDatabase *cDatabase_Ptr,const CString &table_name)
+bool CDate::operator<(const CDate &cDate) const
 {
- Ok=false;
- if (cDatabase_Ptr==NULL) return;
- if (cDatabase_Ptr->IsOpen()==FALSE) return;
- cRecordset_ProjectList.m_pDatabase=cDatabase_Ptr;
- if (cRecordset_ProjectList.Open(CRecordset::snapshot,table_name,CRecordset::none)==FALSE) return;
- if (cRecordset_ProjectList.IsOpen()==FALSE) return;
- Ok=true;
+ if (cDate==*(this)) return(false);
+ if (cDate>*(this)) return(false);
+ return(true);
 }
 //----------------------------------------------------------------------------------------------------
-//деструктор
+//оператор >
 //----------------------------------------------------------------------------------------------------
-CRAIICRecordset_ProjectList::~CRAIICRecordset_ProjectList()
+bool CDate::operator>(const CDate &cDate) const
 {
- if (Ok==false) return;
- if (cRecordset_ProjectList.IsOpen()==TRUE) cRecordset_ProjectList.Close();
+ if (Year>cDate.Year) return(true);
+ if (Year<cDate.Year) return(false);
+ if (Month>cDate.Month) return(true);
+ if (Month<cDate.Month) return(false);
+ if (Day>cDate.Day) return(true);
+ return(false);
 }
 //----------------------------------------------------------------------------------------------------
-//проверка, произошЄл ли захват объекта
+//оператор ==
 //----------------------------------------------------------------------------------------------------
-bool CRAIICRecordset_ProjectList::IsOk(void)
+bool CDate::operator==(const CDate &cDate) const
 {
- return(Ok);
+ if (Year!=cDate.Year) return(false);
+ if (Month!=cDate.Month) return(false);
+ if (Day!=cDate.Day) return(false);
+ return(true);
 }
 //----------------------------------------------------------------------------------------------------
-//получение оригинального объекта
+//установить дату
 //----------------------------------------------------------------------------------------------------
-CRecordset_ProjectList& CRAIICRecordset_ProjectList::GetMainObject(void)
+void CDate::SetDate(const long &year,const long &month,const long &day)
 {
- return(cRecordset_ProjectList);
+ Year=year;
+ Month=month;
+ Day=day;
+}
+//----------------------------------------------------------------------------------------------------
+//получить дату
+//----------------------------------------------------------------------------------------------------
+void CDate::GetDate(long &year,long &month,long &day) const
+{
+ year=Year;
+ month=Month;
+ day=Day;
+}
+//----------------------------------------------------------------------------------------------------
+//получить год
+//----------------------------------------------------------------------------------------------------
+long CDate::GetYear(void) const
+{
+ return(Year);
+}
+//----------------------------------------------------------------------------------------------------
+//получить мес€ц
+//----------------------------------------------------------------------------------------------------
+long CDate::GetMonth(void) const
+{
+ return(Month);
+}
+//----------------------------------------------------------------------------------------------------
+//получить число
+//----------------------------------------------------------------------------------------------------
+long CDate::GetDay(void) const
+{
+ return(Day);
 }

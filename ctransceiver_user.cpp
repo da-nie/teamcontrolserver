@@ -23,33 +23,33 @@ CTransceiver_User::~CTransceiver_User()
 //----------------------------------------------------------------------------------------------------
 //передать клиенту данные пользователя
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_User::SendUserDataToClient(const SClient &sClient,const SUser &sUser,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_User::SendUserDataToClient(const SClient &sClient,const CUser &cUser,CEvent &cEvent_Exit,bool &on_exit)
 {
  on_exit=false;
- SServerAnswer::SUserDataHeader sServerAnswer_sUserDataHeader;
- sServerAnswer_sUserDataHeader.NameSize=sUser.Name.GetLength();
- sServerAnswer_sUserDataHeader.JobTitleSize=sUser.JobTitle.GetLength();
- sServerAnswer_sUserDataHeader.TelephoneSize=sUser.Telephone.GetLength();
- sServerAnswer_sUserDataHeader.DescriptionSize=sUser.Description.GetLength();
- sServerAnswer_sUserDataHeader.GUIDSize=sUser.UserGUID.GetLength();
- sServerAnswer_sUserDataHeader.Leader=sUser.Leader;
- SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sUserDataHeader),sizeof(SServerAnswer::SUserDataHeader),cEvent_Exit,on_exit);
+ SServerAnswer::CUserDataHeader sServerAnswer_cUserDataHeader;
+ sServerAnswer_cUserDataHeader.NameSize=cUser.GetName().GetLength();
+ sServerAnswer_cUserDataHeader.JobTitleSize=cUser.GetJobTitle().GetLength();
+ sServerAnswer_cUserDataHeader.TelephoneSize=cUser.GetTelephone().GetLength();
+ sServerAnswer_cUserDataHeader.DescriptionSize=cUser.GetDescription().GetLength();
+ sServerAnswer_cUserDataHeader.GUIDSize=cUser.GetUserGUID().GetLength();
+ sServerAnswer_cUserDataHeader.Leader=cUser.GetLeader();
+ SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_cUserDataHeader),sizeof(SServerAnswer::CUserDataHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendPart(sClient.Socket,sUser.Name,sUser.Name.GetLength(),cEvent_Exit,on_exit);
+ SendPart(sClient.Socket,cUser.GetName(),cUser.GetName().GetLength(),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendPart(sClient.Socket,sUser.JobTitle,sUser.JobTitle.GetLength(),cEvent_Exit,on_exit);
+ SendPart(sClient.Socket,cUser.GetJobTitle(),cUser.GetJobTitle().GetLength(),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendPart(sClient.Socket,sUser.Telephone,sUser.Telephone.GetLength(),cEvent_Exit,on_exit);
+ SendPart(sClient.Socket,cUser.GetTelephone(),cUser.GetTelephone().GetLength(),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendPart(sClient.Socket,sUser.Description,sUser.Description.GetLength(),cEvent_Exit,on_exit);
+ SendPart(sClient.Socket,cUser.GetDescription(),cUser.GetDescription().GetLength(),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendPart(sClient.Socket,sUser.UserGUID,sUser.UserGUID.GetLength(),cEvent_Exit,on_exit);
+ SendPart(sClient.Socket,cUser.GetUserGUID(),cUser.GetUserGUID().GetLength(),cEvent_Exit,on_exit);
 }
 
 //----------------------------------------------------------------------------------------------------
 //передать клиенту данные пользователя в виде полного пакета
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_User::SendUserDataToClientInPackage(const SClient &sClient,const SUser &sUser,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_User::SendUserDataToClientInPackage(const SClient &sClient,const CUser &cUser,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit)
 { 
  on_exit=false;
  if (sClient.UserGUID.GetLength()==0) return;//если клиент не авторизован, то ему ничего не отправляем  
@@ -60,7 +60,7 @@ void CTransceiver_User::SendUserDataToClientInPackage(const SClient &sClient,con
  sServerAnswer_sHeader.CommandID=command;
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
- SendUserDataToClient(sClient,sUser,cEvent_Exit,on_exit);
+ SendUserDataToClient(sClient,cUser,cEvent_Exit,on_exit);
  if (on_exit==true) return;
  SendEndPackage(sClient.Socket,cEvent_Exit,on_exit);
 }
@@ -85,13 +85,13 @@ void CTransceiver_User::SendUserBook(CDocument_Main *cDocument_Main_Ptr,SClient&
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
 
- list<SUser> list_SUser=cDocument_Main_Ptr->GetAllUser();
- list<SUser>::iterator iterator=list_SUser.begin();
- list<SUser>::iterator iterator_end=list_SUser.end();  
+ list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
+ list<CUser>::iterator iterator=list_CUser.begin();
+ list<CUser>::iterator iterator_end=list_CUser.end();  
  while(iterator!=iterator_end)
  {
-  SUser &sUser=*iterator;
-  SendUserDataToClient(sClient,sUser,cEvent_Exit,on_exit);
+  CUser &cUser=*iterator;
+  SendUserDataToClient(sClient,cUser,cEvent_Exit,on_exit);
   if (on_exit==true) return;
   iterator++;
  }

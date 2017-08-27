@@ -22,7 +22,7 @@ CProjectDatabaseEngine_SQL::~CProjectDatabaseEngine_SQL()
 //----------------------------------------------------------------------------------------------------
 //найти проект по GUID
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,SProject &sProject)
+bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,CProject &cProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
@@ -36,7 +36,7 @@ bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,SProj
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
   if (cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==TRUE) return(false);
-  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject);
+  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject);
   return(true);
  } 
  return(false);
@@ -45,9 +45,9 @@ bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,SProj
 //----------------------------------------------------------------------------------------------------
 //получить все проекты
 //----------------------------------------------------------------------------------------------------
-list<SProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
+list<CProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
 {
- list<SProject> list_SProject_Local; 
+ list<CProject> list_CProject_Local; 
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   CString sql_request="";
@@ -55,24 +55,24 @@ list<SProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
   sql_request+=ProjectListTableName;
   sql_request+=" ORDER BY ProjectName";
   CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,sql_request);
-  if (cRAIICRecordset_ProjectList.IsOk()==false) return(list_SProject_Local);
-  if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(list_SProject_Local);
+  if (cRAIICRecordset_ProjectList.IsOk()==false) return(list_CProject_Local);
+  if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(list_CProject_Local);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
   while(cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==FALSE)
   {
-   SProject sProject;
-   cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject);
+   CProject cProject;
+   cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject);
    cRAIICRecordset_ProjectList.GetMainObject().MoveNext();
-   list_SProject_Local.push_back(sProject);
+   list_CProject_Local.push_back(cProject);
   }
  }
- return(list_SProject_Local);
+ return(list_CProject_Local);
 }
 
 //----------------------------------------------------------------------------------------------------
 //добавить проект
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_SQL::AddProject(SProject &sProject)
+bool CProjectDatabaseEngine_SQL::AddProject(CProject &cProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
@@ -83,7 +83,7 @@ bool CProjectDatabaseEngine_SQL::AddProject(SProject &sProject)
   {
    if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()!=0) cRAIICRecordset_ProjectList.GetMainObject().MoveLast();
    cRAIICRecordset_ProjectList.GetMainObject().AddNew();
-   cRAIICRecordset_ProjectList.GetMainObject().SetRecord(sProject);
+   cRAIICRecordset_ProjectList.GetMainObject().SetRecord(cProject);
    cRAIICRecordset_ProjectList.GetMainObject().Update();
   }
  }
@@ -93,7 +93,7 @@ bool CProjectDatabaseEngine_SQL::AddProject(SProject &sProject)
 //----------------------------------------------------------------------------------------------------
 //удалить проект
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_SQL::DeleteProject(const SProject &sProject)
+bool CProjectDatabaseEngine_SQL::DeleteProject(const CProject &cProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
@@ -101,14 +101,14 @@ bool CProjectDatabaseEngine_SQL::DeleteProject(const SProject &sProject)
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=ProjectListTableName;
-  sql_request+=" WHERE (ProjectGUID='"+sProject.ProjectGUID+"')";
+  sql_request+=" WHERE (ProjectGUID='"+cProject.GetProjectGUID()+"')";
   CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,sql_request);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();   
   if (cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==TRUE) return(false);
-  SProject sProject_Local;
-  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject_Local);
+  CProject cProject_Local;
+  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject_Local);
   cRAIICRecordset_ProjectList.GetMainObject().Delete();
   return(true);
  } 
@@ -117,7 +117,7 @@ bool CProjectDatabaseEngine_SQL::DeleteProject(const SProject &sProject)
 //----------------------------------------------------------------------------------------------------
 //изменить проект
 //----------------------------------------------------------------------------------------------------
-bool CProjectDatabaseEngine_SQL::ChangeProject(const SProject &sProject)
+bool CProjectDatabaseEngine_SQL::ChangeProject(const CProject &cProject)
 {
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
@@ -125,16 +125,16 @@ bool CProjectDatabaseEngine_SQL::ChangeProject(const SProject &sProject)
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=ProjectListTableName;
-  sql_request+=" WHERE (ProjectGUID='"+sProject.ProjectGUID+"')";
+  sql_request+=" WHERE (ProjectGUID='"+cProject.GetProjectGUID()+"')";
   CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,sql_request);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
   if (cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==TRUE) return(false);
-  SProject sProject_Local;
-  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(sProject_Local);
+  CProject cProject_Local;
+  cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject_Local);
   cRAIICRecordset_ProjectList.GetMainObject().Edit();
-  cRAIICRecordset_ProjectList.GetMainObject().SetRecord(sProject);   
+  cRAIICRecordset_ProjectList.GetMainObject().SetRecord(cProject);   
   cRAIICRecordset_ProjectList.GetMainObject().Update();
   return(true);
  }

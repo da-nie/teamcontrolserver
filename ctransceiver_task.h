@@ -33,9 +33,9 @@ class CTransceiver_Task:public CTransceiver
   //деструктор
   ~CTransceiver_Task();
   //функции класса
-  void SendTaskDataToClient(SClient &sClient,const STask &sTask,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные задания
-  void SendTaskDataToClientInPackage(SClient &sClient,const STask &sTask,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные задания в виде полного пакета
-  bool ReadSTaskInArray(char *ptr,size_t &offset,size_t max_length,STask &sTask);//получение задания из массива принятых данных
+  void SendTaskDataToClient(SClient &sClient,const CTask &cTask,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные задания
+  void SendTaskDataToClientInPackage(SClient &sClient,const CTask &cTask,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные задания в виде полного пакета
+  bool ReadCTaskInArray(char *ptr,size_t &offset,size_t max_length,CTask &cTask);//получение задания из массива принятых данных
   void SendTaskBook(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передача базы данных заданий
   void AddTask(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//добавление нового задания
   void DeleteTask(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//удаление задания

@@ -11,27 +11,10 @@
 //подключаемые библиотеки
 //====================================================================================================
 #include "stdafx.h"
+#include "cuser.h"
 #include <string>
 
 using namespace std;
-
-//====================================================================================================
-//структуры
-//====================================================================================================
-
-//параметры пользователя
-struct SUser
-{
- CSafeString Name;//имя
- CSafeString Login;//логин
- CSafeString Password;//пароль
- CSafeString JobTitle;//должность
- CSafeString Description;//описание
- CSafeString Telephone;//телефон
- CSafeString UserGUID;//уникальный идентификатор пользователя
- bool Leader;//является ли руководителем
-};
-
 
 //====================================================================================================
 //класс записи данных пользователя
@@ -54,8 +37,8 @@ class CRecordset_UserList:public CRecordset
   //-Деструктор класса-------------------------------------------------------
   ~CRecordset_UserList();
   //-Функции класса----------------------------------------------------------
-  void SetRecord(const SUser& sUser);//задать запись
-  void GetRecord(SUser& sUser);//получить запись
+  void SetRecord(const CUser& cUser);//задать запись
+  void GetRecord(CUser& cUser);//получить запись
   virtual CString GetDefaultConnect(void);
   virtual CString GetDefaultSQL(void);
   virtual void DoFieldExchange(CFieldExchange* pFX);

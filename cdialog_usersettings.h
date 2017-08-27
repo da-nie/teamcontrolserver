@@ -20,7 +20,7 @@ class CDialog_UserSettings:public CDialog
 {
  protected:
   //-ѕеременные класса-------------------------------------------------------
-  SUser sUser_Local;//редактируемый пользователь
+  CUser cUser_Local;//редактируемый пользователь
  public:
   //- онструктор класса------------------------------------------------------
   CDialog_UserSettings(LPCTSTR lpszTemplateName,CWnd* pParentWnd);
@@ -31,7 +31,7 @@ class CDialog_UserSettings:public CDialog
   afx_msg void OnCancel(void);//нажали ESC
   afx_msg BOOL OnInitDialog(void);//инициализаци€ диалога
   //-‘ункции класса----------------------------------------------------------
-  bool Activate(SUser& sUser);//запустить диалог
+  bool Activate(CUser& cUser);//запустить диалог
   //-‘ункции обработки сообщений класса--------------------------------------
   DECLARE_MESSAGE_MAP()
   afx_msg void OnDestroy(void);//уничтожение окна

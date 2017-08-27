@@ -42,17 +42,17 @@ class CThreadServer
    void Start(void);//запустить поток
    void Stop(void);//остановить поток
    void SetDocument(CDocument_Main *cDocument_Main_Set_Ptr);//задать класс документа
-   void OnUserAdded(const SUser &sUser);//был добавлен пользователь
-   void OnUserDeleted(const SUser &sUser);//был удалён пользователь
-   void OnUserChanged(const SUser &sUser);//были изменены данные пользователя
+   void OnUserAdded(const CUser &cUser);//был добавлен пользователь
+   void OnUserDeleted(const CUser &cUser);//был удалён пользователь
+   void OnUserChanged(const CUser &cUser);//были изменены данные пользователя
 
-   void OnTaskAdded(const STask &sTask);//было добавлено задание
-   void OnTaskDeleted(const STask &sTask);//было удалено задания
-   void OnTaskChanged(const STask &sTask);//были изменены данные задания
+   void OnTaskAdded(const CTask &cTask);//было добавлено задание
+   void OnTaskDeleted(const CTask &cTask);//было удалено задания
+   void OnTaskChanged(const CTask &cTask);//были изменены данные задания
 
-   void OnProjectAdded(const SProject &sProject);//был добавлен проект
-   void OnProjectDeleted(const SProject &sProject);//был удален проект
-   void OnProjectChanged(const SProject &sProject);//были изменены данные проекта
+   void OnProjectAdded(const CProject &cProject);//был добавлен проект
+   void OnProjectDeleted(const CProject &cProject);//был удален проект
+   void OnProjectChanged(const CProject &cProject);//были изменены данные проекта
 
  protected:
   SOCKET CreateServer(void);//создание сервера

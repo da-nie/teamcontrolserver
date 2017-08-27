@@ -1,35 +1,41 @@
-#ifndef CITASK_EXPORT_H
-#define CITASK_EXPORT_H
+#ifndef CDATE_H
+#define CDATE_H
 
 //====================================================================================================
 //описание
 //====================================================================================================
 
-//јбстрактный класс экспорта заданий
+// ласс даты
 
 //====================================================================================================
 //подключаемые библиотеки
 //====================================================================================================
-#include "stdafx.h"
-#include "csafestring.h"
-#include "crecordset_userlist.h"
-#include "crecordset_tasklist.h"
-#include "crecordset_projectlist.h"
-
-#include <list>
-using namespace std;
 
 //====================================================================================================
-//абстрактный класс экспорта заданий
+//класс даты
 //====================================================================================================
 
-class CITaskExport
+class CDate
 {
+ private:
+  long Year;//год
+  long Month;//мес€ц
+  long Day;//число
  public:
+  //конструктор
+  CDate(void);
+  CDate(const long &year,const long &month,const long &day);
   //деструктор
-  virtual ~CITaskExport() {};
-  //-‘ункции класса----------------------------------------------------------
-  virtual bool Export(const CString &file_name,list<CTask> &list_CTask,list<CUser> &list_CUser)=0;//экспортировать задани€
+  ~CDate();
+  //операции сравнени€
+  bool operator<(const CDate &cDate) const;
+  bool operator>(const CDate &cDate) const;
+  bool operator==(const CDate &cDate) const;
+  void SetDate(const long &year,const long &month,const long &day);//установить дату
+  void GetDate(long &year,long &month,long &day) const;//получить дату
+  long GetYear(void) const;//получить год
+  long GetMonth(void) const;//получить мес€ц
+  long GetDay(void) const;//получить число
 };
 
 #endif

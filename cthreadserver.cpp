@@ -69,7 +69,7 @@ void CThreadServer::SetDocument(CDocument_Main *cDocument_Main_Set_Ptr)
 //----------------------------------------------------------------------------------------------------
 //был добавлен пользователь
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnUserAdded(const SUser &sUser)
+void CThreadServer::OnUserAdded(const CUser &cUser)
 {
  //сообщаем всем потокам о добавлении пользователя
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -77,14 +77,14 @@ void CThreadServer::OnUserAdded(const SUser &sUser)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnUserAdded(sUser);
+  cThreadServerUnit_Ptr->OnUserAdded(cUser);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //был удалён пользователь
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnUserDeleted(const SUser &sUser)
+void CThreadServer::OnUserDeleted(const CUser &cUser)
 {
  //сообщаем всем потокам о удалении пользователя
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -92,14 +92,14 @@ void CThreadServer::OnUserDeleted(const SUser &sUser)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnUserDeleted(sUser);
+  cThreadServerUnit_Ptr->OnUserDeleted(cUser);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные пользователя
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnUserChanged(const SUser &sUser)
+void CThreadServer::OnUserChanged(const CUser &cUser)
 {
  //сообщаем всем потокам о изменении данных пользователя
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -107,7 +107,7 @@ void CThreadServer::OnUserChanged(const SUser &sUser)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnUserChanged(sUser);
+  cThreadServerUnit_Ptr->OnUserChanged(cUser);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
@@ -115,7 +115,7 @@ void CThreadServer::OnUserChanged(const SUser &sUser)
 //----------------------------------------------------------------------------------------------------
 //было добавлено задание
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnTaskAdded(const STask &sTask)
+void CThreadServer::OnTaskAdded(const CTask &cTask)
 {
  //сообщаем всем потокам о добавлении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -123,14 +123,14 @@ void CThreadServer::OnTaskAdded(const STask &sTask)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnTaskAdded(sTask);
+  cThreadServerUnit_Ptr->OnTaskAdded(cTask);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //было удалено задание
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnTaskDeleted(const STask &sTask)
+void CThreadServer::OnTaskDeleted(const CTask &cTask)
 {
  //сообщаем всем потокам о удалении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -138,14 +138,14 @@ void CThreadServer::OnTaskDeleted(const STask &sTask)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnTaskDeleted(sTask);
+  cThreadServerUnit_Ptr->OnTaskDeleted(cTask);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные задания
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnTaskChanged(const STask &sTask)
+void CThreadServer::OnTaskChanged(const CTask &cTask)
 {
  //сообщаем всем потокам о изменении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -153,7 +153,7 @@ void CThreadServer::OnTaskChanged(const STask &sTask)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnTaskChanged(sTask);
+  cThreadServerUnit_Ptr->OnTaskChanged(cTask);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
@@ -162,7 +162,7 @@ void CThreadServer::OnTaskChanged(const STask &sTask)
 //----------------------------------------------------------------------------------------------------
 //был добавлен проект
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnProjectAdded(const SProject &sProject)
+void CThreadServer::OnProjectAdded(const CProject &cProject)
 {
  //сообщаем всем потокам о добавлении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -170,14 +170,14 @@ void CThreadServer::OnProjectAdded(const SProject &sProject)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnProjectAdded(sProject);
+  cThreadServerUnit_Ptr->OnProjectAdded(cProject);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //был удален проект
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnProjectDeleted(const SProject &sProject)
+void CThreadServer::OnProjectDeleted(const CProject &cProject)
 {
  //сообщаем всем потокам о удалении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -185,14 +185,14 @@ void CThreadServer::OnProjectDeleted(const SProject &sProject)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnProjectDeleted(sProject);
+  cThreadServerUnit_Ptr->OnProjectDeleted(cProject);
   iterator_list_CThreadServerUnitPtr++;
  }
 }
 //----------------------------------------------------------------------------------------------------
 //были изменены данные проекта
 //----------------------------------------------------------------------------------------------------
-void CThreadServer::OnProjectChanged(const SProject &sProject)
+void CThreadServer::OnProjectChanged(const CProject &cProject)
 {
  //сообщаем всем потокам о изменении задания
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
@@ -200,7 +200,7 @@ void CThreadServer::OnProjectChanged(const SProject &sProject)
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
-  cThreadServerUnit_Ptr->OnProjectChanged(sProject);
+  cThreadServerUnit_Ptr->OnProjectChanged(cProject);
   iterator_list_CThreadServerUnitPtr++;
  }
 }

@@ -58,35 +58,35 @@ void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
 //----------------------------------------------------------------------------------------------------
 //задать запись
 //----------------------------------------------------------------------------------------------------
-void CRecordset_TaskList::SetRecord(const STask& sTask)
+void CRecordset_TaskList::SetRecord(const CTask& cTask)
 {
- ForUserGUID=sTask.ForUserGUID;
- FromUserGUID=sTask.FromUserGUID;
- ProjectGUID=sTask.ProjectGUID;
- TaskGUID=sTask.TaskGUID;
- State=sTask.State;
- Year=sTask.Year;
- Month=sTask.Month;
- Day=sTask.Day;
- Task=sTask.Task;
- Answer=sTask.Answer;
+ ForUserGUID=cTask.GetForUserGUID();
+ FromUserGUID=cTask.GetFromUserGUID();
+ ProjectGUID=cTask.GetProjectGUID();
+ TaskGUID=cTask.GetTaskGUID();
+ State=cTask.GetState();
+ const CDate &cDate=cTask.GetDate();
+ Year=cDate.GetYear();
+ Month=cDate.GetMonth();
+ Day=cDate.GetDay();
+ Task=cTask.GetTask();
+ Answer=cTask.GetAnswer();
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись
 //----------------------------------------------------------------------------------------------------
-void CRecordset_TaskList::GetRecord(STask& sTask)
+void CRecordset_TaskList::GetRecord(CTask& cTask)
 {
- sTask.ForUserGUID=ForUserGUID;
- sTask.FromUserGUID=FromUserGUID;
- sTask.ProjectGUID=ProjectGUID;
- sTask.TaskGUID=TaskGUID;
- sTask.Task=Task;
- sTask.State=State;
- sTask.Year=Year;
- sTask.Month=Month;
- sTask.Day=Day;
- sTask.Index=Index;
- sTask.Answer=Answer;
+ cTask.SetForUserGUID(ForUserGUID);
+ cTask.SetFromUserGUID(FromUserGUID);
+ cTask.SetProjectGUID(ProjectGUID);
+ cTask.SetTaskGUID(TaskGUID);
+ cTask.SetTask(Task);
+ cTask.SetState(State);
+ CDate cDate(Year,Month,Day);
+ cTask.SetDate(cDate);
+ cTask.SetIndex(Index);
+ cTask.SetAnswer(Answer);
 }
 
 

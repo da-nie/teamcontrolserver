@@ -33,8 +33,8 @@ class CTransceiver_User:public CTransceiver
   //деструктор
   ~CTransceiver_User();
   //функции класса
-  void SendUserDataToClient(const SClient &sClient,const SUser &sUser,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные пользователя
-  void SendUserDataToClientInPackage(const SClient &sClient,const SUser &sUser,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные пользователя в виде полного пакета
+  void SendUserDataToClient(const SClient &sClient,const CUser &cUser,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные пользователя
+  void SendUserDataToClientInPackage(const SClient &sClient,const CUser &cUser,SERVER_ANSWER answer,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передать клиенту данные пользователя в виде полного пакета
   void SendUserBook(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//передача базы данных пользователей
 
 };

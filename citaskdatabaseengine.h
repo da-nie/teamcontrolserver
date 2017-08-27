@@ -32,12 +32,12 @@ class CITaskDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   virtual ~CITaskDatabaseEngine() {};
   //-Функции класса----------------------------------------------------------
-  virtual bool FindTaskByGUID(const CSafeString &guid,STask &sTask)=0;//найти задание по GUID
-  virtual list<STask> GetAllTaskForUserGUID(const CSafeString &guid)=0;//получить все задания для и от пользователя с заданным GUID
-  virtual list<STask> GetAllTask(void)=0;//получить все задания
-  virtual bool AddTask(STask &sTask)=0;//добавить задание
-  virtual bool DeleteTask(const STask &sTask)=0;//удалить задание
-  virtual bool ChangeTask(const STask &sTask,bool &for_user_change,STask &sTask_Deleted,STask &sTask_Added)=0;//изменить задание
+  virtual bool FindTaskByGUID(const CSafeString &guid,CTask &cTask)=0;//найти задание по GUID
+  virtual list<CTask> GetAllTaskForUserGUID(const CSafeString &guid)=0;//получить все задания для и от пользователя с заданным GUID
+  virtual list<CTask> GetAllTask(void)=0;//получить все задания
+  virtual bool AddTask(CTask &cTask)=0;//добавить задание
+  virtual bool DeleteTask(const CTask &cTask)=0;//удалить задание
+  virtual bool ChangeTask(const CTask &cTask,bool &for_user_change,CTask &cTask_Deleted,CTask &cTask_Added)=0;//изменить задание
   virtual void ResetBase(void)=0;//очистить базу
 };
 

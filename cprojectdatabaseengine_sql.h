@@ -36,11 +36,11 @@ class CProjectDatabaseEngine_SQL:public CIProjectDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   ~CProjectDatabaseEngine_SQL();
   //-Функции класса----------------------------------------------------------
-  bool FindProjectByGUID(const CSafeString &guid,SProject &sProject);//найти проект по GUID
-  list<SProject> GetAllProject(void);//получить все проекты
-  bool AddProject(SProject &sProject);//добавить проект
-  bool DeleteProject(const SProject &sProject);//удалить проект
-  bool ChangeProject(const SProject &sProject);//изменить проект
+  bool FindProjectByGUID(const CSafeString &guid,CProject &cProject);//найти проект по GUID
+  list<CProject> GetAllProject(void);//получить все проекты
+  bool AddProject(CProject &cProject);//добавить проект
+  bool DeleteProject(const CProject &cProject);//удалить проект
+  bool ChangeProject(const CProject &cProject);//изменить проект
   void ResetBase(void);//очистить базу
 };
 

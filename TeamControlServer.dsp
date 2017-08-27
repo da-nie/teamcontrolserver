@@ -91,6 +91,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\cdate.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdialog_serversettings.cpp
 # End Source File
 # Begin Source File
@@ -115,6 +119,10 @@ SOURCE=.\clistview_main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cproject.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cprojectdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
@@ -136,6 +144,10 @@ SOURCE=.\crecordset_userlist.cpp
 # Begin Source File
 
 SOURCE=.\csafestring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctask.cpp
 # End Source File
 # Begin Source File
 
@@ -187,6 +199,10 @@ SOURCE=.\ctransceiver_user.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cuser.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\cuserdatabaseengine_software.cpp
 # End Source File
 # Begin Source File
@@ -205,6 +221,10 @@ SOURCE=.\Resource.rc
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\cdate.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\cdialog_serversettings.h
@@ -243,6 +263,10 @@ SOURCE=.\clistview_main.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\cproject.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cprojectdatabaseengine_software.h
 # End Source File
 # Begin Source File
@@ -272,6 +296,10 @@ SOURCE=.\crecordset_userlist.h
 # Begin Source File
 
 SOURCE=.\csafestring.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ctask.h
 # End Source File
 # Begin Source File
 
@@ -320,6 +348,10 @@ SOURCE=.\ctransceiver_task.h
 # Begin Source File
 
 SOURCE=.\ctransceiver_user.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cuser.h
 # End Source File
 # Begin Source File
 

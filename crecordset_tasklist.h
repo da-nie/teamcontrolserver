@@ -13,26 +13,8 @@
 #include "stdafx.h"
 #include <string>
 #include "protocol.h"
+#include "ctask.h"
 using namespace std;
-
-//====================================================================================================
-//структуры
-//====================================================================================================
-
-struct STask
-{
- long Index;//индекс задания
- CSafeString FromUserGUID;//от пользователя
- CSafeString ForUserGUID;//для пользователя
- CSafeString ProjectGUID;//по проекту
- CSafeString Task;//задание
- long State;//состояние
- long Year;//год
- long Month;//месяц
- long Day;//число
- CSafeString TaskGUID;//идентификатор задания
- CSafeString Answer;//ответ
-};
 
 //====================================================================================================
 //класс записи информации о задачах
@@ -58,8 +40,8 @@ class CRecordset_TaskList:public CRecordset
   //-Деструктор класса-------------------------------------------------------
   ~CRecordset_TaskList();
   //-Функции класса----------------------------------------------------------
-  void SetRecord(const STask& sTask);//задать запись
-  void GetRecord(STask& sTask);//получить запись
+  void SetRecord(const CTask& cTask);//задать запись
+  void GetRecord(CTask& cTask);//получить запись
   virtual CString GetDefaultConnect(void);
   virtual CString GetDefaultSQL(void);
   virtual void DoFieldExchange(CFieldExchange* pFX);
