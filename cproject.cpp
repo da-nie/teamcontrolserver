@@ -51,7 +51,7 @@ void CProject::SetProjectGUID(const char *guid)
 //----------------------------------------------------------------------------------------------------
 //верный ли ProjectGUID
 //----------------------------------------------------------------------------------------------------
-bool CProject::IsProjectGUIDCorrect(const char *guid)
+bool CProject::IsProjectGUID(const char *guid)
 {
  if (ProjectGUID.Compare(const_cast<char*>(guid))==0) return(true);    
  return(false);

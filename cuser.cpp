@@ -140,7 +140,7 @@ void CUser::SetLeader(bool leader)
 //----------------------------------------------------------------------------------------------------
 //верный ли логин и пароль
 //----------------------------------------------------------------------------------------------------
-bool CUser::IsLoginAndPasswordCorrect(const char *login,const char *password) const
+bool CUser::IsLoginAndPassword(const char *login,const char *password) const
 {
  if (Login.Compare(CSafeString(const_cast<char*>(login)))==0 && Password.Compare(CSafeString(const_cast<char*>(password)))==0) return(true);
  return(false);
@@ -148,7 +148,7 @@ bool CUser::IsLoginAndPasswordCorrect(const char *login,const char *password) co
 //----------------------------------------------------------------------------------------------------
 //верный ли UserGUID
 //----------------------------------------------------------------------------------------------------
-bool CUser::IsUserGUIDCorrect(const char *guid)
+bool CUser::IsUserGUID(const char *guid)
 {
  if (UserGUID.Compare(const_cast<char*>(guid))==0) return(true);    
  return(false);

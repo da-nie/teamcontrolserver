@@ -28,14 +28,14 @@ bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CSafeString &guid,CTask 
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
    while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
    {
     cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask);
-    if (cTask.IsTaskGUIDCorrect(guid)==true) return(true);
+    if (cTask.IsTaskGUID(guid)==true) return(true);
     cRAIICRecordset_TaskList.GetMainObject().MoveNext();
    }
   }
@@ -52,7 +52,7 @@ list<CTask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CSafeStrin
  {
   if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(list_CTask_Local);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();   
@@ -77,7 +77,7 @@ list<CTask> CTaskDatabaseEngine_Software::GetAllTask(void)
  {
   if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(list_CTask_Local);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
@@ -103,7 +103,7 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
   {
    if (cRAIICDatabase.IsOpen()==false) return(false);
    {
-    CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
     if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
     if (cRAIICRecordset_TaskList.GetMainObject().CanAppend()==TRUE)
     {
@@ -120,7 +120,7 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
@@ -129,7 +129,7 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
     CTask cTask_Read;
     cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Read);
     cRAIICRecordset_TaskList.GetMainObject().MoveNext();
-	if (cTask_Read.IsTaskGUIDCorrect(cTask.GetTaskGUID())==true)
+	if (cTask_Read.IsTaskGUID(cTask.GetTaskGUID())==true)
 	{
      cTask=cTask_Read;
      break;
@@ -148,7 +148,7 @@ bool CTaskDatabaseEngine_Software::DeleteTask(const CTask &cTask)
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();   
@@ -156,7 +156,7 @@ bool CTaskDatabaseEngine_Software::DeleteTask(const CTask &cTask)
    {
     CTask cTask_Local;
     cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Local);
-	if (cTask_Local.IsTaskGUIDCorrect(cTask.GetTaskGUID())==true)
+	if (cTask_Local.IsTaskGUID(cTask.GetTaskGUID())==true)
 	{
      cRAIICRecordset_TaskList.GetMainObject().Delete();
 	 return(true);
@@ -177,7 +177,7 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
    if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
    cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
@@ -185,7 +185,7 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_
    {
     CTask cTask_Local;
     cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Local);
-	if (cTask_Local.IsTaskGUIDCorrect(cTask.GetTaskGUID())==true)
+	if (cTask_Local.IsTaskGUID(cTask.GetTaskGUID())==true)
 	{
      //если у задания поменялся адресат, то отправляем старому адресату сообщение об удалении задания,
      //а новому о новом задании

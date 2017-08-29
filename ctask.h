@@ -59,6 +59,6 @@ class CTask
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
-  bool IsTaskGUIDCorrect(const char *guid) const;//верный ли TaskGUID
+  bool IsTaskGUID(const char *guid) const;//верный ли TaskGUID
 };
 #endif

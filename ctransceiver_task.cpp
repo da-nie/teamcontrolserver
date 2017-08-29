@@ -183,6 +183,8 @@ void CTransceiver_Task::AddTask(CDocument_Main *cDocument_Main_Ptr,SClient& sCli
  ReadCTaskInArray(ptr,offset,sClient.vector_Data.size(),cTask);
  //указываем, от кого было задание
  cTask.SetFromUserGUID(sClient.UserGUID);
+ //указываем, что задание не было прочитано
+ cTask.SetState(TASK_STATE_NO_READ);
  //выполняем действия с заданием
  if (cDocument_Main_Ptr->AddTask(cTask)==false) SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
  //отвечаем

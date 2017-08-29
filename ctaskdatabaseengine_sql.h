@@ -11,6 +11,8 @@
 //====================================================================================================
 
 #include "citaskdatabaseengine.h"
+#include "cdatabaseengine_sql.h"
+#include "craiicrecordset.h"
 
 using namespace std;
 
@@ -26,6 +28,7 @@ class CTaskDatabaseEngine_SQL:public CITaskDatabaseEngine
 {
  protected:
   //-Переменные класса-------------------------------------------------------
+  CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_TaskList>,CTask> *cDatabaseEngine_SQL_Ptr;//класс для работы с базой данных
   CString TaskListTableName;//имя таблицы базы данных списка задач  
   CString TaskListBaseInitString;//строка инициализации базы данных заданий
   CDatabase cDatabase_TaskList;//база данных списка задач

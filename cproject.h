@@ -34,6 +34,6 @@ class CProject
   void SetProjectName(const char *project_name);//задать название
   void SetProjectGUID(const char *guid);//задать уникальный идентификатор
 
-  bool IsProjectGUIDCorrect(const char *guid);//верный ли ProjectGUID
+  bool IsProjectGUID(const char *guid);//верный ли ProjectGUID
 };
 #endif

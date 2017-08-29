@@ -52,7 +52,7 @@ class CUser
   void SetUserGUID(const char *user_guid);//задать уникальный идентификатор пользователя
   void SetLeader(bool leader);//задать, является ли руководителем
 
-  bool IsLoginAndPasswordCorrect(const char *login,const char *password) const;//верный ли логин и пароль
-  bool IsUserGUIDCorrect(const char *guid);//верный ли UserGUID
+  bool IsLoginAndPassword(const char *login,const char *password) const;//верный ли логин и пароль
+  bool IsUserGUID(const char *guid);//верный ли UserGUID
 };
 #endif

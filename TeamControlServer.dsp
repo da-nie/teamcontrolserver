@@ -223,6 +223,10 @@ SOURCE=.\Resource.rc
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\cdatabaseengine_sql.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdate.h
 # End Source File
 # Begin Source File
@@ -280,6 +284,10 @@ SOURCE=.\craiiccriticalsection.h
 # Begin Source File
 
 SOURCE=.\craiicdatabase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\craiicrecordset.h
 # End Source File
 # Begin Source File
 

@@ -27,14 +27,14 @@ bool CProjectDatabaseEngine_Software::FindProjectByGUID(const CSafeString &guid,
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
   while(cRAIICRecordset_ProjectList.GetMainObject().IsEOF()==FALSE)
   {
    cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject);
-   if (cProject.IsProjectGUIDCorrect(guid)==true) return(true);
+   if (cProject.IsProjectGUID(guid)==true) return(true);
    cRAIICRecordset_ProjectList.GetMainObject().MoveNext();
   }
  } 
@@ -50,7 +50,7 @@ list<CProject> CProjectDatabaseEngine_Software::GetAllProject(void)
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(list_CProject_Local);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(list_CProject_Local);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(list_CProject_Local);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
@@ -73,7 +73,7 @@ bool CProjectDatabaseEngine_Software::AddProject(CProject &cProject)
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().CanAppend()==TRUE)
   {
@@ -94,7 +94,7 @@ bool CProjectDatabaseEngine_Software::DeleteProject(const CProject &cProject)
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();   
@@ -102,7 +102,7 @@ bool CProjectDatabaseEngine_Software::DeleteProject(const CProject &cProject)
   {
    CProject cProject_Local;
    cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject_Local);
-   if (cProject_Local.IsProjectGUIDCorrect(cProject.GetProjectGUID())==true)
+   if (cProject_Local.IsProjectGUID(cProject.GetProjectGUID())==true)
    {
     cRAIICRecordset_ProjectList.GetMainObject().Delete();
     return(true);
@@ -120,7 +120,7 @@ bool CProjectDatabaseEngine_Software::ChangeProject(const CProject &cProject)
  CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
-  CRAIICRecordset_ProjectList cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
+  CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_ProjectList.GetMainObject().MoveFirst();
@@ -128,7 +128,7 @@ bool CProjectDatabaseEngine_Software::ChangeProject(const CProject &cProject)
   {
    CProject cProject_Local;
    cRAIICRecordset_ProjectList.GetMainObject().GetRecord(cProject_Local);
-   if (cProject_Local.IsProjectGUIDCorrect(cProject.GetProjectGUID())==true)
+   if (cProject_Local.IsProjectGUID(cProject.GetProjectGUID())==true)
    {
     cRAIICRecordset_ProjectList.GetMainObject().Edit();
     cRAIICRecordset_ProjectList.GetMainObject().SetRecord(cProject);   

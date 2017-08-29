@@ -8,12 +8,14 @@ CTaskDatabaseEngine_SQL::CTaskDatabaseEngine_SQL(const CString &task_list_table_
  //настраиваем подключение к базам данных
  TaskListTableName=task_list_table_name;
  TaskListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+TaskListTableName;
+ cDatabaseEngine_SQL_Ptr=new CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_TaskList>,CTask>(TaskListTableName);
 }
 //====================================================================================================
 //деструктор класса
 //====================================================================================================
 CTaskDatabaseEngine_SQL::~CTaskDatabaseEngine_SQL() 
 {
+ delete(cDatabaseEngine_SQL_Ptr);
 }
 //====================================================================================================
 //функции класса
@@ -24,114 +26,45 @@ CTaskDatabaseEngine_SQL::~CTaskDatabaseEngine_SQL()
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_SQL::FindTaskByGUID(const CSafeString &guid,CTask &cTask)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
- {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
-  CString sql_request="";
-  sql_request+="SELECT * FROM ";
-  sql_request+=TaskListTableName;
-  sql_request+=" WHERE (TaskGUID='"+guid+"')";
-  CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,sql_request);
-  if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
-  if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
-  cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
-  if (cRAIICRecordset_TaskList.GetMainObject().IsEOF()==TRUE) return(false);
-  cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask);
-  return(true);
- } 
- return(false);
+ CString sql_condition="TaskGUID='"+guid+"'"; 
+ return(cDatabaseEngine_SQL_Ptr->FindOne(sql_condition,cTask));
 }
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
 list<CTask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
- list<CTask> list_CTask_Local;  
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
- {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
-  CString sql_request="";
-  sql_request+="SELECT * FROM ";
-  sql_request+=TaskListTableName;
-  sql_request+=" WHERE (FromUserGUID='"+guid+"') OR (ForUserGUID='"+guid+"')";
-  CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,sql_request);
-  if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
-  if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(list_CTask_Local);
-  cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
-  while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
-  {
-   CTask cTask;
-   cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask);
-   list_CTask_Local.push_back(cTask);//это нам или наше задание
-   cRAIICRecordset_TaskList.GetMainObject().MoveNext();
-  }
- }
- return(list_CTask_Local);
+ CString sql_condition="FromUserGUID='"+guid+"') OR (ForUserGUID='"+guid+"'"; 
+ return(cDatabaseEngine_SQL_Ptr->FindAll(sql_condition));
 }
 //----------------------------------------------------------------------------------------------------
 //получить все задания
 //----------------------------------------------------------------------------------------------------
 list<CTask> CTaskDatabaseEngine_SQL::GetAllTask(void)
 {
- list<CTask> list_CTask_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
- {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
-  {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
-   if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
-   if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(list_CTask_Local);
-   cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
-   while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
-   {
-    CTask cTask;
-    cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask);
-    cRAIICRecordset_TaskList.GetMainObject().MoveNext();
-    list_CTask_Local.push_back(cTask);
-   }
-  }
- } 
- return(list_CTask_Local);
+ return(cDatabaseEngine_SQL_Ptr->GetAll());
 }
 //----------------------------------------------------------------------------------------------------
 //добавить задание
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_SQL::AddTask(CTask &cTask)
-{
- cTask.SetState(TASK_STATE_NO_READ);
- {
-  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
-  {
-   if (cRAIICDatabase.IsOpen()==false) return(false);
-   {
-    CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
-    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
-    if (cRAIICRecordset_TaskList.GetMainObject().CanAppend()==TRUE)
-    {
-     if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()!=0) cRAIICRecordset_TaskList.GetMainObject().MoveLast();
-     cRAIICRecordset_TaskList.GetMainObject().AddNew();
-     cRAIICRecordset_TaskList.GetMainObject().SetRecord(cTask);
-     cRAIICRecordset_TaskList.GetMainObject().Update();
-    }
-   }
-  }
- }
+{ 
+ if (cDatabaseEngine_SQL_Ptr->Add(cTask)==false) return(false);
  //считаем задание заново, так как там есть автоинкрементное поле
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
   {
-   CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
-   if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
-   if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
-   cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
-   while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset(&cDatabase_TaskList,TaskListTableName);
+   if (cRAIICRecordset.IsOk()==false) return(false);
+   if (cRAIICRecordset.GetMainObject().GetRecordCount()==0) return(false);
+   cRAIICRecordset.GetMainObject().MoveFirst();
+   while(cRAIICRecordset.GetMainObject().IsEOF()==FALSE)
    {
     CTask cTask_Read;
-    cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Read);
-    cRAIICRecordset_TaskList.GetMainObject().MoveNext();
-
-    if (cTask_Read.IsTaskGUIDCorrect(cTask.GetTaskGUID())==true)
+    cRAIICRecordset.GetMainObject().GetRecord(cTask_Read);
+    cRAIICRecordset.GetMainObject().MoveNext();
+    if (cTask_Read.IsTaskGUID(cTask.GetTaskGUID())==true)
 	{
      cTask=cTask_Read;
      break;
@@ -146,24 +79,8 @@ bool CTaskDatabaseEngine_SQL::AddTask(CTask &cTask)
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_SQL::DeleteTask(const CTask &cTask)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
- {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
-  CString sql_request="";
-  sql_request+="SELECT * FROM ";
-  sql_request+=TaskListTableName;
-  sql_request+=" WHERE (TaskGUID='"+cTask.GetTaskGUID()+"')";
-  CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,sql_request);
-  if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
-  if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
-  cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
-  if (cRAIICRecordset_TaskList.GetMainObject().IsEOF()==TRUE) return(false);
-  CTask cTask_Local;
-  cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Local);
-  cRAIICRecordset_TaskList.GetMainObject().Delete();
-  return(true);
- } 
- return(false);
+ CString sql_condition="TaskGUID='"+cTask.GetTaskGUID()+"'";
+ return(cDatabaseEngine_SQL_Ptr->Delete(sql_condition));
 }
 //----------------------------------------------------------------------------------------------------
 //изменить задание
@@ -178,7 +95,7 @@ bool CTaskDatabaseEngine_SQL::ChangeTask(const CTask &cTask,bool &for_user_chang
   sql_request+="SELECT * FROM ";
   sql_request+=TaskListTableName;
   sql_request+=" WHERE (TaskGUID='"+cTask.GetTaskGUID()+"')";
-  CRAIICRecordset_TaskList cRAIICRecordset_TaskList(&cDatabase_TaskList,sql_request);
+  CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,sql_request);
   if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
   if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(false);
   cRAIICRecordset_TaskList.GetMainObject().MoveFirst();
@@ -205,11 +122,5 @@ bool CTaskDatabaseEngine_SQL::ChangeTask(const CTask &cTask,bool &for_user_chang
 //----------------------------------------------------------------------------------------------------
 void CTaskDatabaseEngine_SQL::ResetBase(void)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
- {
-  CString sql_request="";
-  sql_request+="DELETE * FROM ";
-  sql_request+=TaskListTableName;
-  cDatabase_TaskList.ExecuteSQL(sql_request);
- }
+ cDatabaseEngine_SQL_Ptr->ResetBase();
 }

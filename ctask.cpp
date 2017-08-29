@@ -171,7 +171,7 @@ bool CTask::IsForUserGUID(const char *guid) const
 //----------------------------------------------------------------------------------------------------
 //верный ли TaskGUID
 //----------------------------------------------------------------------------------------------------
-bool CTask::IsTaskGUIDCorrect(const char *guid) const
+bool CTask::IsTaskGUID(const char *guid) const
 {
  if (TaskGUID.Compare(const_cast<char*>(guid))==0) return(true);    
  return(false);

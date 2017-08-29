@@ -12,6 +12,8 @@
 //====================================================================================================
 
 #include "ciuserdatabaseengine.h"
+#include "cdatabaseengine_sql.h"
+#include "craiicrecordset.h"
 
 using namespace std;
 
@@ -27,6 +29,7 @@ class CUserDatabaseEngine_SQL:public CIUserDatabaseEngine
 {
  protected:
   //-Переменные класса-------------------------------------------------------
+  CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_UserList>,CUser> *cDatabaseEngine_SQL_Ptr;//класс для работы с базой данных
   CString UserListTableName;//имя таблицы базы данных списка пользователей
   CString UserListBaseInitString;//строка инициализации базы данных пользователей
   CDatabase cDatabase_UserList;//база данных списка пользователей

@@ -14,6 +14,7 @@
 #include <list>
 #include "stdafx.h"
 #include "craiicdatabase.h"
+#include "craiicrecordset.h"
 #include "crecordset_tasklist.h"
 
 using namespace std;

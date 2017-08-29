@@ -12,6 +12,8 @@
 //====================================================================================================
 
 #include "ciprojectdatabaseengine.h"
+#include "cdatabaseengine_sql.h"
+#include "craiicrecordset.h"
 
 using namespace std;
 
@@ -27,6 +29,8 @@ class CProjectDatabaseEngine_SQL:public CIProjectDatabaseEngine
 {
  protected:
   //-Переменные класса-------------------------------------------------------
+  CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_ProjectList>,CProject> *cDatabaseEngine_SQL_Ptr;//класс для работы с базой данных
+
   CString ProjectListTableName;//имя таблицы базы данных списка проектов  
   CString ProjectListBaseInitString;//строка инициализации базы данных проектов
   CDatabase cDatabase_ProjectList;//база данных списка проектов

@@ -280,7 +280,8 @@ void CListView_Main::UpdateList(void)
   item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetLogin());
   cListCtrl.SetItem(&item);
   item.iSubItem=3;
-  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetPassword());
+//  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetPassword());
+  item.pszText=const_cast<LPSTR>("*****");
   cListCtrl.SetItem(&item);
   item.iSubItem=4;
   if (cUser.GetLeader()==true) item.pszText="Руководитель";
