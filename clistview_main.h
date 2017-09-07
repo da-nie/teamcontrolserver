@@ -43,6 +43,7 @@ class CListView_Main:public CListView
   afx_msg void OnInitialUpdate(void);//создание окна
   //-Функции обработки сообщений класса--------------------------------------
   afx_msg void OnSize(UINT nType,int cx,int cy);//изменение размеров окна
+  afx_msg void OnUpdate(CView *pSender,LPARAM lHint,CObject *pHint);//обновить вид
   afx_msg void OnRButtonDown(UINT nFlags,CPoint point);//нажатие правой кнопкой мышки
   afx_msg void OnCommand_Menu_List_AddUser(void);//добавить пользователя
   afx_msg void OnCommand_Menu_List_EditUser(void);//редактировать пользователя

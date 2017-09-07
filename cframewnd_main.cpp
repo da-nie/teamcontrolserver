@@ -43,7 +43,9 @@ int CFrameWnd_Main::OnCreate(LPCREATESTRUCT lpCreateStruct)
  NotifyIconData.uCallbackMessage=WM_SYSTEM_TRAY_ICON;
  NotifyIconData.hIcon=hIcon_SysTray; strcpy(NotifyIconData.szTip,"Team Control сервер");
  Shell_NotifyIcon(NIM_ADD,&NotifyIconData);
- SetIcon(NotifyIconData.hIcon,TRUE);  
+ SetIcon(NotifyIconData.hIcon,TRUE);
+ //запускаем таймер
+ SetTimer(ID_TIMER_FRAMEWND_MAIN,FRAME_WND_TIMER_PERIOD,NULL); 
  return(CFrameWnd::OnCreate(lpCreateStruct));
 }
 //----------------------------------------------------------------------------------------------------
@@ -51,6 +53,7 @@ int CFrameWnd_Main::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //----------------------------------------------------------------------------------------------------
 afx_msg void CFrameWnd_Main::OnDestroy(void)
 {
+ KillTimer(ID_TIMER_FRAMEWND_MAIN);
  Shell_NotifyIcon(NIM_DELETE,&NotifyIconData);
  if (hIcon_SysTray!=NULL) DeleteObject(hIcon_SysTray);
  hIcon_SysTray=NULL;
@@ -61,7 +64,13 @@ afx_msg void CFrameWnd_Main::OnDestroy(void)
 afx_msg void CFrameWnd_Main::OnTimer(UINT nIDEvent)
 {
  if (nIDEvent==ID_TIMER_FRAMEWND_MAIN)
- { 
+ {
+  CDocument_Main *cDocument_Main_Ptr=(CDocument_Main*)GetActiveDocument();
+  if (cDocument_Main_Ptr!=NULL)
+  {
+   bool update=cDocument_Main_Ptr->GetChangeConnectedListAndResetState();
+   if (update==true) cDocument_Main_Ptr->UpdateAllViews(NULL);
+  }
  }
  CFrameWnd::OnTimer(nIDEvent);
 }

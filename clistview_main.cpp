@@ -59,12 +59,11 @@ afx_msg void CListView_Main::OnInitialUpdate(void)
  CListCtrl &cListCtrl=GetListCtrl(); 
  cListCtrl.ModifyStyle(LVS_TYPEMASK,LVS_REPORT|WS_BORDER|WS_VISIBLE|LVS_SINGLESEL);
  cListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES);
-  
  cListCtrl.InsertColumn(0,"Пользователь",LVCFMT_CENTER,width/5);
  cListCtrl.InsertColumn(1,"Должность",LVCFMT_CENTER,width/5);
  cListCtrl.InsertColumn(2,"Логин",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(3,"Пароль",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(4,"Аккаунт",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(3,"Аккаунт",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(4,"Состояние",LVCFMT_CENTER,width/5);
  cListCtrl.DeleteAllItems();
  //создадим контекстное меню
  cMenu_List.LoadMenu(IDR_MENU_LIST);
@@ -93,6 +92,14 @@ afx_msg void CListView_Main::OnSize(UINT nType,int cx,int cy)
   if (cListCtrl.SetColumnWidth(n,width/5)==FALSE) break;
   n++;
  }
+}
+
+//----------------------------------------------------------------------------------------------------
+//обновить вид
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnUpdate(CView *pSender,LPARAM lHint,CObject *pHint)
+{
+ UpdateList();
 }
 //----------------------------------------------------------------------------------------------------
 //нажатие правой кнопкой мышки
@@ -256,6 +263,7 @@ void CListView_Main::UpdateList(void)
 {
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
  list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
+ list<SConnected> list_SConnected=cDocument_Main_Ptr->GetConnectedList();
  list<CUser>::iterator iterator=list_CUser.begin();
  list<CUser>::iterator iterator_end=list_CUser.end(); 
  CListCtrl &cListCtrl=GetListCtrl(); 
@@ -280,13 +288,26 @@ void CListView_Main::UpdateList(void)
   item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetLogin());
   cListCtrl.SetItem(&item);
   item.iSubItem=3;
-//  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetPassword());
-  item.pszText=const_cast<LPSTR>("*****");
-  cListCtrl.SetItem(&item);
-  item.iSubItem=4;
   if (cUser.GetLeader()==true) item.pszText="Руководитель";
                           else item.pszText="Сотрудник";
   cListCtrl.SetItem(&item);
+  item.iSubItem=4;  
+  item.pszText="";
+  //ищем пользователя в списке подключённых
+  list<SConnected>::iterator iterator_SConnected=list_SConnected.begin();
+  list<SConnected>::iterator iterator_SConnected_end=list_SConnected.end(); 
+  while (iterator_SConnected!=iterator_SConnected_end)
+  {
+   SConnected &sConnected=*iterator_SConnected;
+   if (cUser.IsUserGUID(sConnected.GUID)==true)
+   {
+    item.pszText="В сети";
+    break;
+   }
+   iterator_SConnected++;
+  }
+  cListCtrl.SetItem(&item);
+  
   index++;
   iterator++;
   vector_CSafeString_UserGUID.push_back(cUser.GetUserGUID());

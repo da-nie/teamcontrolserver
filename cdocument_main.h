@@ -48,6 +48,13 @@ struct SServerSettings
  unsigned short Port;//порт сервера
 };
 
+//подключённые пользователи
+struct SConnected
+{
+ CSafeString GUID;//идентификатор подключённого пользователя
+ bool Connected;//состояние
+};
+
 //====================================================================================================
 //класс документов
 //====================================================================================================
@@ -56,7 +63,6 @@ class CDocument_Main:public CDocument
 {
  protected:
   //-Переменные класса-------------------------------------------------------
-
   //защищённые переменные класса
   struct SProtectedVariables
   {
@@ -66,6 +72,9 @@ class CDocument_Main:public CDocument
 
    SServerSettings sServerSettings;//настройки сервера
    CCriticalSection cCriticalSection;//критическая секция для доступа к классу
+
+   list <SConnected> list_SConnected;//подключённые пользователи
+   bool ChangeConnectedList;//изменился ли список подключённх пользователей
   } sProtectedVariables;
 
   CITaskExport *cITaskExport_Ptr;//указатель на класс экспорта заданий
@@ -75,6 +84,8 @@ class CDocument_Main:public CDocument
   //-Деструктор класса-------------------------------------------------------
   ~CDocument_Main();
   //-Функции класса----------------------------------------------------------
+  list<SConnected> GetConnectedList(void);//получить список подключённых пользователей
+  bool GetChangeConnectedListAndResetState(void);//получить, изменился ли список подключённых пользователей и сбросить значение
   void SaveState(void);//сохранение состояния
   bool AddUser(CUser& cUser);//добавить пользователя
   bool ChangeUser(long index,const CUser& cUser);//задать пользователя
@@ -106,6 +117,8 @@ class CDocument_Main:public CDocument
   void ResetUserListBase(void);//удаление базы пользователей
   void ResetTaskListBase(void);//удаление базы заданий
   void ResetProjectListBase(void);//удаление базы проектов
+
+  void SetUserConnected(const CSafeString& guid,bool connected);//задать, в сети ли пользователь
  protected:
   //-Функции класса----------------------------------------------------------  
   bool CreateGUID(CSafeString &cSafeString_GUID);//создать GUID

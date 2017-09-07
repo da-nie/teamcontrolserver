@@ -224,6 +224,7 @@ void CThreadServerUnit::SetClientOnLine(bool state)
    sProtectedVariables.ClientOnLine=state;
   }
  }
+ if (state==false) cDocument_Main_Ptr->SetUserConnected(sClient_My.UserGUID,false);
 }
 //----------------------------------------------------------------------------------------------------
 //получить, в сети ли клиент
@@ -490,6 +491,7 @@ void CThreadServerUnit::ExecuteCommand_GetClientProgrammAndLoader(SClient& sClie
 void CThreadServerUnit::ExecuteCommand_Autorization(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
 {
  cTransceiver_Autorization.ExecuteAutorization(cDocument_Main_Ptr,sClient,command,cEvent_Exit,on_exit);
+ cDocument_Main_Ptr->SetUserConnected(sClient.UserGUID,true);
 }
 //----------------------------------------------------------------------------------------------------
 //обработка команды получения данных пользователей

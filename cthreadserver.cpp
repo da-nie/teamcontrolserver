@@ -305,7 +305,7 @@ void CThreadServer::Processing(void)
    CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
    bool online=cThreadServerUnit_Ptr->GetClientOnLine();
    if (online==false)
-   {    
+   {
     cThreadServerUnit_Ptr->Stop();
     delete(cThreadServerUnit_Ptr);
     //удаляем клиента из списка

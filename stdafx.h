@@ -21,6 +21,7 @@
 #include "csafestring.h"
 
 #define ID_TIMER_FRAMEWND_MAIN 1000
+#define FRAME_WND_TIMER_PERIOD 100
 
 #define WM_SYSTEM_TRAY_ICON WM_USER+1
 

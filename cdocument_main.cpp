@@ -35,6 +35,9 @@ CDocument_Main::CDocument_Main(void)
    sProtectedVariables.cIProjectDatabaseEngine_Ptr=new CProjectDatabaseEngine_SQL("ProjBase");
    sProtectedVariables.cITaskDatabaseEngine_Ptr=new CTaskDatabaseEngine_SQL("TaskBase");
 
+   sProtectedVariables.list_SConnected.clear();
+   sProtectedVariables.ChangeConnectedList=false;
+
    cThreadServer.SetDocument(this);
   }
  }
@@ -75,6 +78,36 @@ void CDocument_Main::SaveState(void)
  }
 }
 
+//----------------------------------------------------------------------------------------------------
+//получить список подключённых пользователей
+//----------------------------------------------------------------------------------------------------
+list<SConnected> CDocument_Main::GetConnectedList(void)
+{
+ list<SConnected> list_SConnected;
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   list_SConnected=sProtectedVariables.list_SConnected;
+  }
+ }
+ return(list_SConnected);
+}
+
+//----------------------------------------------------------------------------------------------------
+//получить, изменился ли список подключённых пользователей и сбросить значение
+//----------------------------------------------------------------------------------------------------
+bool CDocument_Main::GetChangeConnectedListAndResetState(void)
+{
+ bool ret;
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   ret=sProtectedVariables.ChangeConnectedList;
+   sProtectedVariables.ChangeConnectedList=false;
+  }
+ }
+ return(ret);
+}
 //----------------------------------------------------------------------------------------------------
 //добавить пользователя
 //----------------------------------------------------------------------------------------------------
@@ -470,6 +503,44 @@ void CDocument_Main::ResetProjectListBase(void)
   }
  }
  UpdateAllViews(NULL);
+}
+
+//----------------------------------------------------------------------------------------------------
+//задать, в сети ли пользователь
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::SetUserConnected(const CSafeString& guid,bool connected)
+{ 
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {   
+   sProtectedVariables.ChangeConnectedList=true;
+   //найдём пользователя в списке
+   list<SConnected>::iterator iterator_current=sProtectedVariables.list_SConnected.begin();
+   list<SConnected>::iterator iterator_end=sProtectedVariables.list_SConnected.end();
+   while(iterator_current!=iterator_end)
+   {
+    SConnected &sConnected=*iterator_current;
+    if (sConnected.GUID.Compare(guid)==0) 
+	{
+     if (connected==false)
+	 {
+      //удаляем из списка подключённых
+      sProtectedVariables.list_SConnected.erase(iterator_current);
+	  return;
+	 }
+	 sConnected.Connected=connected;
+     return;
+	}
+    iterator_current++;
+   }
+   if (connected==false) return;//отключённого пользователя мы не добавляем в список
+   //пользователь не найден, поэтому добавляем пользователя в список подключённых
+   SConnected sConnected;
+   sConnected.Connected=connected;
+   sConnected.GUID=guid;
+   sProtectedVariables.list_SConnected.push_back(sConnected);   
+  }
+ }
 }
 
 //----------------------------------------------------------------------------------------------------
