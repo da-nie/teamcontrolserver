@@ -62,7 +62,10 @@ enum SERVER_COMMAND
  //проект удален
  SERVER_COMMAND_DELETED_PROJECT=11,
  //проект изменен
- SERVER_COMMAND_CHANGED_PROJECT=12
+ SERVER_COMMAND_CHANGED_PROJECT=12,
+
+ //проверка связи
+ SERVER_COMMAND_PING=13
 };
 
 //ответы сервера
@@ -103,7 +106,10 @@ enum SERVER_ANSWER
  //передаётся добавленный проект
  SERVER_ANSWER_ADDED_PROJECT=15,
  //передаётся изменённый проект
- SERVER_ANSWER_CHANGED_PROJECT=16
+ SERVER_ANSWER_CHANGED_PROJECT=16,
+
+ //проверка связи
+ SERVER_ANSWER_PING=17
 
 };
 
@@ -136,6 +142,11 @@ struct SServerCommand
   unsigned long CommandID;//идентификатор команды
  };
  //команды серверу
+ //кодирование заголовка данных для проверки связи
+ struct SPingDataHeader
+ {
+  unsigned char PingData[10];//тестовое сообщение
+ };
  //авторизация
  struct SAutorizationDataHeader
  { 
@@ -180,6 +191,11 @@ struct SServerAnswer
   unsigned long CommandID;//идентификатор команды на которую выдаётся ответ
  };
  //ответ
+ //кодирование заголовка данных для проверки связи
+ struct SPingDataHeader
+ {
+  unsigned char PingData[10];//тестовое сообщение
+ };
  //кодирование заголовка данных при авторизации
  struct SAutorizationDataHeader
  {

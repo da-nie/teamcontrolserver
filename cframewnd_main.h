@@ -22,6 +22,7 @@ class CFrameWnd_Main:public CFrameWnd
   //-Переменные класса-------------------------------------------------------
   NOTIFYICONDATA NotifyIconData;//иконка
   HICON hIcon_SysTray;//иконка в трее
+  unsigned long PingCounter;//счётчик для посылки сообщений для проверки связи
  public:
   //конструктор
   CFrameWnd_Main(void);

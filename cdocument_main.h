@@ -119,6 +119,8 @@ class CDocument_Main:public CDocument
   void ResetProjectListBase(void);//удаление базы проектов
 
   void SetUserConnected(const CSafeString& guid,bool connected);//задать, в сети ли пользователь
+
+  void SendPing(void);//отправить пользователям сигнал проверки связи
  protected:
   //-Функции класса----------------------------------------------------------  
   bool CreateGUID(CSafeString &cSafeString_GUID);//создать GUID

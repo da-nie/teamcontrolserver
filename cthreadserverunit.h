@@ -22,6 +22,7 @@
 #include "ctransceiver_project.h"
 #include "ctransceiver_autorization.h"
 #include "ctransceiver_file.h"
+#include "ctransceiver_ping.h"
 
 using namespace std;
 
@@ -58,9 +59,12 @@ class CThreadServerUnit
 
    bool ClientOnLine;//подключён ли клиент (работает ли поток)
 
+   bool SendPing;//требуется ли послать сообщения для проверки связи
+
    CCriticalSection cCriticalSection;//критическая секция для доступа
   } sProtectedVariables;
 
+  CTransceiver_Ping cTransceiver_Ping;//класс приёмо-передатчика данных сообщения для проверки связи
   CTransceiver_User cTransceiver_User;//класс приёмо-передатчика данных пользователя
   CTransceiver_Task cTransceiver_Task;//класс приёмо-передатчика данных задания
   CTransceiver_Project cTransceiver_Project;//класс приёмо-передатчика данных проектов
@@ -86,6 +90,8 @@ class CThreadServerUnit
    void OnProjectAdded(const CProject &cProject);//был добавлен проект
    void OnProjectDeleted(const CProject &cProject);//был удален проект
    void OnProjectChanged(const CProject &cProject);//были изменены данные задания
+
+   void SendPing(void);//послать клиенту сообщение для проверки связи
 
    bool GetClientOnLine(void);//получить, в сети ли клиент   
  protected:

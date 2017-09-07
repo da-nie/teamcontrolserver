@@ -60,10 +60,10 @@ afx_msg void CListView_Main::OnInitialUpdate(void)
  cListCtrl.ModifyStyle(LVS_TYPEMASK,LVS_REPORT|WS_BORDER|WS_VISIBLE|LVS_SINGLESEL);
  cListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES);
  cListCtrl.InsertColumn(0,"Пользователь",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(1,"Должность",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(2,"Логин",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(3,"Аккаунт",LVCFMT_CENTER,width/5);
- cListCtrl.InsertColumn(4,"Состояние",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(1,"Состояние",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(2,"Должность",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(3,"Логин",LVCFMT_CENTER,width/5);
+ cListCtrl.InsertColumn(4,"Аккаунт",LVCFMT_CENTER,width/5);
  cListCtrl.DeleteAllItems();
  //создадим контекстное меню
  cMenu_List.LoadMenu(IDR_MENU_LIST);
@@ -281,17 +281,8 @@ void CListView_Main::UpdateList(void)
   item.iSubItem=0;
   item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetName());
   item.iItem=cListCtrl.InsertItem(&item);
+
   item.iSubItem=1;
-  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetJobTitle());
-  cListCtrl.SetItem(&item);
-  item.iSubItem=2;
-  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetLogin());
-  cListCtrl.SetItem(&item);
-  item.iSubItem=3;
-  if (cUser.GetLeader()==true) item.pszText="Руководитель";
-                          else item.pszText="Сотрудник";
-  cListCtrl.SetItem(&item);
-  item.iSubItem=4;  
   item.pszText="";
   //ищем пользователя в списке подключённых
   list<SConnected>::iterator iterator_SConnected=list_SConnected.begin();
@@ -306,6 +297,17 @@ void CListView_Main::UpdateList(void)
    }
    iterator_SConnected++;
   }
+  cListCtrl.SetItem(&item);
+
+  item.iSubItem=2;
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetJobTitle());
+  cListCtrl.SetItem(&item);
+  item.iSubItem=3;
+  item.pszText=const_cast<LPSTR>((LPCSTR)cUser.GetLogin());
+  cListCtrl.SetItem(&item);
+  item.iSubItem=4;
+  if (cUser.GetLeader()==true) item.pszText="Руководитель";
+                          else item.pszText="Сотрудник";
   cListCtrl.SetItem(&item);
   
   index++;

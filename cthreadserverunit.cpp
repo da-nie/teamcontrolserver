@@ -60,6 +60,7 @@ void CThreadServerUnit::Start(SOCKET socket_client)
  sClient_My.vector_Data.reserve(MAX_PACKAGE_LENGTH); 
  sClient_My.StuffingEnabled=false;
  SetClientOnLine(true);
+ sProtectedVariables.SendPing=false;
  cEvent_Exit.ResetEvent();
  cWinThread_Thread=AfxBeginThread((AFX_THREADPROC)ThreadServerUnit,this);
  cWinThread_Thread->m_bAutoDelete=FALSE;
@@ -199,6 +200,18 @@ void CThreadServerUnit::OnProjectChanged(const CProject &cProject)
   }
  }
 }
+//----------------------------------------------------------------------------------------------------
+//послать клиенту сообщение дл€ проверки св€зи
+//----------------------------------------------------------------------------------------------------
+void CThreadServerUnit::SendPing(void)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sProtectedVariables.SendPing=true;
+  }
+ }
+}
 
 //----------------------------------------------------------------------------------------------------
 //отключение клиента
@@ -306,6 +319,8 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  vector<CProject> vector_CProject_Changed;//изменЄнные проекты
  vector<CProject> vector_CProject_Added;//добавленные проекты
 
+ bool send_ping;//требуетс€ ли послать сообщение дл€ проверки св€зи
+
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -332,8 +347,18 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
    sProtectedVariables.vector_CProject_Deleted.clear();
    sProtectedVariables.vector_CProject_Added.clear();
    sProtectedVariables.vector_CProject_Changed.clear();
+
+   send_ping=sProtectedVariables.SendPing;
+
+   sProtectedVariables.SendPing=false;
   }
  }
+ if (send_ping==true)
+ {
+  cTransceiver_Ping.SendPingDataToClientInPackage(sClient,SERVER_ANSWER_PING,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  if (on_exit==true) return;
+ }
+
  //передаЄм список удалЄнных пользователей
  size=vector_CUser_Deleted.size();
  for(n=0;n<size;n++)

@@ -204,6 +204,21 @@ void CThreadServer::OnProjectChanged(const CProject &cProject)
   iterator_list_CThreadServerUnitPtr++;
  }
 }
+//----------------------------------------------------------------------------------------------------
+//отправка пользователям сообщения для проверки связи
+//----------------------------------------------------------------------------------------------------
+void CThreadServer::SendPing(void)
+{
+ //сообщаем всем потокам о посылке сообщения для проверки связи
+ list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
+ {   
+  CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
+  cThreadServerUnit_Ptr->SendPing();
+  iterator_list_CThreadServerUnitPtr++;
+ }
+}
 
 //----------------------------------------------------------------------------------------------------
 //создание сервера

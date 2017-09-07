@@ -54,6 +54,8 @@ class CThreadServer
    void OnProjectDeleted(const CProject &cProject);//был удален проект
    void OnProjectChanged(const CProject &cProject);//были изменены данные проекта
 
+   void SendPing(void);//отправка пользователям сообщения для проверки связи
+
  protected:
   SOCKET CreateServer(void);//создание сервера
   void DisconnectAllClientAndResetClientList(void);//отключение всех клиентов и очистка списка всех клиентов
