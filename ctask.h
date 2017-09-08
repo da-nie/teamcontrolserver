@@ -30,6 +30,7 @@ class CTask
   CDate cDate;//срок
   CSafeString TaskGUID;//идентификатор задания
   CSafeString Answer;//ответ на задание
+  bool AnswerNotRead;//прочитан ли ответ на задание
   //-Переменные класса-------------------------------------------------------
  public:
   //-Конструктор класса------------------------------------------------------
@@ -46,6 +47,7 @@ class CTask
   const CDate& GetDate(void) const;//получить срок задания
   const CSafeString& GetTaskGUID(void) const;//получить уникальный идентификатор задания
   const CSafeString& GetAnswer(void) const;//получить ответ на задание
+  bool GetAnswerNotRead(void) const;//получить, прочитан ли ответ на задание
 
   void SetIndex(const long& index);//задать индекс
   void SetFromUserGUID(const char *from_user_guid);//задать уникальный идентификатор от какого пользователя задание
@@ -56,9 +58,11 @@ class CTask
   void SetDate(const CDate &cDate_Set);//задать срок задания
   void SetTaskGUID(const char *task_guid);//задать уникальный идентификатор задания
   void SetAnswer(const char *answer);//задать ответ на задание
+  void SetAnswerNotRead(bool state);//задать прочитан ли ответ на задание
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
   bool IsTaskGUID(const char *guid) const;//верный ли TaskGUID
+  bool IsAnswerNotRead(void) const;//прочитан ли ответ на задание
 };
 #endif

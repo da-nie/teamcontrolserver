@@ -39,6 +39,7 @@ void CTransceiver_Task::SendTaskDataToClient(SClient &sClient,const CTask &cTask
  sServerAnswer_cTaskDataHeader.Day=cDate.GetDay();
  sServerAnswer_cTaskDataHeader.State=cTask.GetState();
  sServerAnswer_cTaskDataHeader.Index=cTask.GetIndex();
+ sServerAnswer_cTaskDataHeader.AnswerNotRead=cTask.GetAnswerNotRead();
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_cTaskDataHeader),sizeof(SServerAnswer::CTaskDataHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
  SendPart(sClient.Socket,cTask.GetFromUserGUID(),cTask.GetFromUserGUID().GetLength(),cEvent_Exit,on_exit);
@@ -93,6 +94,7 @@ bool CTransceiver_Task::ReadCTaskInArray(char *ptr,size_t &offset,size_t max_len
  if (length>max_length) return(false);
 
  cTask.SetDate(CDate(sServerCommand_cTaskDataHeader_Ptr->Year,sServerCommand_cTaskDataHeader_Ptr->Month,sServerCommand_cTaskDataHeader_Ptr->Day));
+ cTask.SetAnswerNotRead(sServerCommand_cTaskDataHeader_Ptr->AnswerNotRead);
  cTask.SetState(sServerCommand_cTaskDataHeader_Ptr->State);
  cTask.SetIndex(sServerCommand_cTaskDataHeader_Ptr->Index);
 

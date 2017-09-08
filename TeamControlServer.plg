@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x419 /fo"Release/Resource.res" /d "NDEBUG" /d "_AFXDLL" "D:\Working\TeamControl\TeamControlServer\Resource.rc"" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP566.tmp" with contents
+Creating temporary file "C:\WINDOWS\TEMP\RSP407.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/TeamControlServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\Working\TeamControl\TeamControlServer\cdate.cpp"
@@ -43,8 +43,8 @@ Creating temporary file "C:\WINDOWS\TEMP\RSP566.tmp" with contents
 "D:\Working\TeamControl\TeamControlServer\cuserdatabaseengine_sql.cpp"
 "D:\Working\TeamControl\TeamControlServer\Main.cpp"
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP566.tmp" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP567.tmp" with contents
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP407.tmp" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP408.tmp" with contents
 [
 ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlServer.pdb" /machine:I386 /out:"Release/TeamControlServer.exe" 
 .\Release\cdate.obj
@@ -81,7 +81,7 @@ ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlS
 .\Release\Main.obj
 .\Release\Resource.res
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSP567.tmp"
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP408.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...

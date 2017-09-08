@@ -166,7 +166,8 @@ struct SServerCommand
   long State;//состояние
   long Year;//год
   long Month;//месяц
-  long Day;//число   
+  long Day;//число 
+  bool AnswerNotRead;//задание не прочитано
  };
  //кодирование заголовка данных при передаче проекта
  struct CProjectDataHeader
@@ -239,6 +240,7 @@ struct SServerAnswer
   long Year;//год
   long Month;//месяц
   long Day;//число 
+  bool AnswerNotRead;//задание не прочитано
  };
  //кодирование заголовка данных при передаче параметров проекта
  struct CProjectDataHeader
