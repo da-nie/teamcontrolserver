@@ -20,10 +20,14 @@
 #include "resource.h"
 #include "csafestring.h"
 
+//идентификатор таймера главного окна
 #define ID_TIMER_FRAMEWND_MAIN 1000
-
+//период таймера главного окна
 #define FRAME_WND_TIMER_PERIOD 100
+//максимальное значение счётчика запуска проверки связи
 #define PING_COUNTER_MAX_VALUE (60000/FRAME_WND_TIMER_PERIOD)
+//максимальное значение счётчика запуска резервного копирования баз данных
+#define BACKUP_COUNTER_MAX_VALUE (4*60*60000/FRAME_WND_TIMER_PERIOD)
 
 #define WM_SYSTEM_TRAY_ICON WM_USER+1
 

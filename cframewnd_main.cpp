@@ -19,6 +19,7 @@ CFrameWnd_Main::CFrameWnd_Main(void)
  NotifyIconData.hIcon=NULL;
  hIcon_SysTray=NULL;
  PingCounter=PING_COUNTER_MAX_VALUE;
+ BackUpCounter=BACKUP_COUNTER_MAX_VALUE;
 }
 //====================================================================================================
 //деструктор класса
@@ -77,6 +78,12 @@ afx_msg void CFrameWnd_Main::OnTimer(UINT nIDEvent)
   {
    bool update=cDocument_Main_Ptr->GetChangeConnectedListAndResetState();
    if (update==true) cDocument_Main_Ptr->UpdateAllViews(NULL);
+  }
+  if (BackUpCounter>0) BackUpCounter--;
+  else
+  {
+   if (cDocument_Main_Ptr!=NULL) cDocument_Main_Ptr->BackUpAllDatabase();
+   BackUpCounter=BACKUP_COUNTER_MAX_VALUE;
   }
  }
  CFrameWnd::OnTimer(nIDEvent);

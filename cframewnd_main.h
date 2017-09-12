@@ -23,6 +23,7 @@ class CFrameWnd_Main:public CFrameWnd
   NOTIFYICONDATA NotifyIconData;//иконка
   HICON hIcon_SysTray;//иконка в трее
   unsigned long PingCounter;//счётчик для посылки сообщений для проверки связи
+  unsigned long BackUpCounter;//счётчик для резервного копирования базы данных
  public:
   //конструктор
   CFrameWnd_Main(void);

@@ -11,6 +11,8 @@ extern CThreadServer cThreadServer;//серверный поток
 //====================================================================================================
 CDocument_Main::CDocument_Main(void) 
 {
+ BackUpAllDatabase();
+
  cITaskExport_Ptr=new CTaskExportHTML;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
@@ -550,6 +552,39 @@ void CDocument_Main::SendPing(void)
  cThreadServer.SendPing();//указываем потоку, что требуется послать сигнал проверки связи
 }
 //----------------------------------------------------------------------------------------------------
+//выполнить резервное копирование баз данных
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::BackUpAllDatabase(void)
+{
+
+ CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+ {
+  char filename[255];
+  SYSTEMTIME systemtime;
+  GetLocalTime(&systemtime);
+  CreateDirectory("BackUp",NULL);
+  sprintf(filename,"BackUp\\%04i",systemtime.wYear);
+  CreateDirectory(filename,NULL);
+  sprintf(filename,"BackUp\\%04i\\%02i",systemtime.wYear,systemtime.wMonth);
+  CreateDirectory(filename,NULL);
+  sprintf(filename,"BackUp\\%04i\\%02i\\backup_%04i_%02i_%02i.rar",systemtime.wYear,systemtime.wMonth,systemtime.wYear,systemtime.wMonth,systemtime.wDay);
+  FILE *file=fopen(filename,"rb");
+  if (file!=NULL)//такой файл уже есть, поэтому резервное копирование не выполняем
+  {
+   fclose(file);
+   return;
+  }
+  char path[MAX_PATH];
+  GetCurrentDirectory(MAX_PATH,path);
+  string command_line="a ";
+  command_line+=filename; 
+  command_line+=" TaskBase ProjBase UserBase";
+  Execute("winrar.exe",command_line.c_str(),path);
+ }
+}
+
+
+//----------------------------------------------------------------------------------------------------
 //создать GUID
 //----------------------------------------------------------------------------------------------------
 bool CDocument_Main::CreateGUID(CSafeString &cSafeString_GUID)
@@ -568,6 +603,34 @@ bool CDocument_Main::CreateGUID(CSafeString &cSafeString_GUID)
  delete[](guid_name);
  delete[](szGUID);
  return(true);
+}
+//----------------------------------------------------------------------------------------------------
+//запустить на выполнение файл
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::Execute(const char *Name,const char *Param,const char *Directory)
+{
+ SHELLEXECUTEINFO lpSEI;
+ lpSEI.cbSize=sizeof(SHELLEXECUTEINFO);
+ lpSEI.fMask=SEE_MASK_NOCLOSEPROCESS;
+ lpSEI.hwnd=NULL;
+ lpSEI.lpVerb="open";
+ lpSEI.lpFile=Name;
+ lpSEI.lpParameters=Param;
+ lpSEI.lpDirectory=Directory;
+ lpSEI.nShow=SW_MINIMIZE;
+ lpSEI.hInstApp=NULL;
+ ShellExecuteEx(&lpSEI);
+ HANDLE hProcess=lpSEI.hProcess;
+ WaitForInputIdle(hProcess,INFINITE);
+ if (hProcess)
+ {
+  DWORD dwExitCode=STILL_ACTIVE;
+  while (dwExitCode==STILL_ACTIVE)
+  {
+   WaitForSingleObject(hProcess,1000);
+   GetExitCodeProcess(hProcess,&dwExitCode);
+  }
+ }
 }
 
 //====================================================================================================

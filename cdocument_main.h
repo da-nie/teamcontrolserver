@@ -121,9 +121,11 @@ class CDocument_Main:public CDocument
   void SetUserConnected(const CSafeString& guid,bool connected);//задать, в сети ли пользователь
 
   void SendPing(void);//отправить пользовател€м сигнал проверки св€зи
+  void BackUpAllDatabase(void);//выполнить резервное копирование баз данных
  protected:
   //-‘ункции класса----------------------------------------------------------  
   bool CreateGUID(CSafeString &cSafeString_GUID);//создать GUID
+  void Execute(const char *Name,const char *Param,const char *Directory);//запустить на выполнение файл
   //-ѕрочее------------------------------------------------------------------
   DECLARE_DYNCREATE(CDocument_Main) 
 };
