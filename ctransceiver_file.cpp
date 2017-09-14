@@ -54,7 +54,7 @@ void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVE
 //передать клиенту программу и загрузчик
 //----------------------------------------------------------------------------------------------------
 void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient,SERVER_COMMAND command,const CSafeString &programm_file_name,const CSafeString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
-{
+{ 
  on_exit=false;
  vector<char> vector_programm_data;
  unsigned short programm_crc16;
@@ -106,7 +106,7 @@ bool CTransceiver_File::LoadFileAndCreateCRC(const CSafeString &file_name,vector
 {
  vector_data.clear();
  crc16=0;
- FILE *file=fopen(file_name,"rb"); 
+ FILE *file=fopen(file_name,"rb");
  if (file==NULL) return(false);
  while(1)
  {  

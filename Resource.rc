@@ -71,7 +71,7 @@ BEGIN
     POPUP "TeamControlServer"
     BEGIN
         MENUITEM "Ќастройка",                   IDC_MENU_MAIN_SETTINGS
-        MENUITEM "Ёкспортировать задани€ в текстовом файл", 
+        MENUITEM "Ёкспортировать задани€ в html-файл", 
                                                 IDC_MENU_MAIN_EXPORT_TASK
     END
     POPUP "Ѕазы данных"

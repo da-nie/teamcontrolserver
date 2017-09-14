@@ -69,7 +69,7 @@ void CTransceiver::SendAnswer(SOCKET socket_client,SERVER_ANSWER answer,SERVER_C
   if (on_exit==true) return;
  }
  //завершаем передачу
- SendEndPackage(socket_client,cEvent_Exit,on_exit);
+ SendEndPackage(socket_client,cEvent_Exit,on_exit); 
 }
 //----------------------------------------------------------------------------------------------------
 //отправить данные клиенту с выполнением байтстаффинга
@@ -133,7 +133,11 @@ void CTransceiver::SendData(SOCKET socket_client,const char *package,long size,C
   //спрашиваем, не готов ли сокет передавать данные
   if (select(0,0,&Writen,&Exeption,&timeout)>0)
   {
-   if (FD_ISSET(socket_client,&Exeption)) return;
+   if (FD_ISSET(socket_client,&Exeption))
+   {
+    on_exit=true;
+	return;
+   }
    if (FD_ISSET(socket_client,&Writen))
    {
     long ret=send(socket_client,package+offset,size,0);
@@ -145,6 +149,7 @@ void CTransceiver::SendData(SOCKET socket_client,const char *package,long size,C
       Pause(1);
       continue;
      }
+	 on_exit=true;
      return;
 	}
     size-=ret;
@@ -153,7 +158,7 @@ void CTransceiver::SendData(SOCKET socket_client,const char *package,long size,C
   }
   else
   {
-   return;
+   continue;
   }
  }
 }
