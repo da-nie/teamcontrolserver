@@ -168,6 +168,7 @@ struct SServerCommand
   long Month;//месяц
   long Day;//число 
   bool AnswerNotRead;//задание не прочитано
+  bool PlannedPosition;//задание является плановой позицией
  };
  //кодирование заголовка данных при передаче проекта
  struct CProjectDataHeader
@@ -241,6 +242,7 @@ struct SServerAnswer
   long Month;//месяц
   long Day;//число 
   bool AnswerNotRead;//задание не прочитано
+  bool PlannedPosition;//задание является плановой позицией
  };
  //кодирование заголовка данных при передаче параметров проекта
  struct CProjectDataHeader

@@ -75,6 +75,7 @@ void CRecordset_TaskList::SetRecord(const CTask& cTask)
  Answer=cTask.GetAnswer();
  long p=0;
  if (cTask.IsAnswerNotRead()==true) p|=TASK_RECORD_PROPERTYS_MASK_ANSWER_NOT_READ;
+ if (cTask.IsPlannedPosition()==true) p|=TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION;
  Propertys=p;
 }
 //----------------------------------------------------------------------------------------------------
@@ -95,4 +96,6 @@ void CRecordset_TaskList::GetRecord(CTask& cTask)
 
  if (Propertys&TASK_RECORD_PROPERTYS_MASK_ANSWER_NOT_READ) cTask.SetAnswerNotRead(true);
                                                       else cTask.SetAnswerNotRead(false);
+ if (Propertys&TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION) cTask.SetPlannedPosition(true);
+                                                       else cTask.SetPlannedPosition(false);
 }

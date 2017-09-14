@@ -22,6 +22,8 @@ using namespace std;
 
 //ответ на задание не прочитан
 #define TASK_RECORD_PROPERTYS_MASK_ANSWER_NOT_READ (1<<0)
+//задание является плановой позицией
+#define TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION (1<<1)
 
 //====================================================================================================
 //класс записи информации о задачах

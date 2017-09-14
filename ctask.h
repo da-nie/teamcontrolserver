@@ -31,6 +31,7 @@ class CTask
   CSafeString TaskGUID;//идентификатор задания
   CSafeString Answer;//ответ на задание
   bool AnswerNotRead;//прочитан ли ответ на задание
+  bool PlannedPosition;//плановая позиция
   //-Переменные класса-------------------------------------------------------
  public:
   //-Конструктор класса------------------------------------------------------
@@ -47,7 +48,8 @@ class CTask
   const CDate& GetDate(void) const;//получить срок задания
   const CSafeString& GetTaskGUID(void) const;//получить уникальный идентификатор задания
   const CSafeString& GetAnswer(void) const;//получить ответ на задание
-  bool GetAnswerNotRead(void) const;//получить, прочитан ли ответ на задание
+  bool GetAnswerNotRead(void) const;//получить, прочитан ли ответ на задание  
+  bool GetPlannedPosition(void) const;//получить, является ли задание плановой позицией
 
   void SetIndex(const long& index);//задать индекс
   void SetFromUserGUID(const char *from_user_guid);//задать уникальный идентификатор от какого пользователя задание
@@ -59,10 +61,12 @@ class CTask
   void SetTaskGUID(const char *task_guid);//задать уникальный идентификатор задания
   void SetAnswer(const char *answer);//задать ответ на задание
   void SetAnswerNotRead(bool state);//задать прочитан ли ответ на задание
+  void SetPlannedPosition(bool state);//задать, является ли задание плановой позицией
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
   bool IsTaskGUID(const char *guid) const;//верный ли TaskGUID
   bool IsAnswerNotRead(void) const;//прочитан ли ответ на задание
+  bool IsPlannedPosition(void) const;//является ли задание плановой позицией
 };
 #endif
