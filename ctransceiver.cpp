@@ -131,7 +131,13 @@ void CTransceiver::SendData(SOCKET socket_client,const char *package,long size,C
   timeout.tv_sec=0;
   timeout.tv_usec=5000;
   //спрашиваем, не готов ли сокет передавать данные
-  if (select(0,0,&Writen,&Exeption,&timeout)>0)
+  long ret=select(0,0,&Writen,&Exeption,&timeout);
+  if (ret<0)
+  {
+   on_exit=true;
+   return;
+  }
+  if (ret>0)
   {
    if (FD_ISSET(socket_client,&Exeption))
    {

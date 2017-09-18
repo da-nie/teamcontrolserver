@@ -279,7 +279,9 @@ void CThreadServerUnit::Processing(void)
   timeval timeout;
   timeout.tv_sec=0;
   timeout.tv_usec=timeout_us;
-  if (select(FD_SETSIZE,&Readen,0,&Exeption,&timeout)>0)//произошли события с сокетами
+  long ret=select(FD_SETSIZE,&Readen,0,&Exeption,&timeout);
+  if (ret<0) break;
+  if (ret>0)//произошли события с сокетами
   {
    if (FD_ISSET(sClient_My.Socket,&Exeption)) break;//сбой у клиента
    if (FD_ISSET(sClient_My.Socket,&Readen))//клиент готов на чтение (т.е. прислал нам данные)
