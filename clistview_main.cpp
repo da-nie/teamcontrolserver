@@ -221,7 +221,11 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_ExportTask(void)
  strcpy(Title,"Экспорт базы заданий");
  cFileDialog.m_ofn.lpstrTitle=Title;
  if (cFileDialog.DoModal()!=IDOK) return;
- cDocument_Main_Ptr->ExportTaskBase(cFileDialog.GetFileName());
+ char FilePath[MAX_PATH];
+ GetCurrentDirectory(MAX_PATH,FilePath); 
+ SetCurrentDirectory(Path);
+ CString cString_FilePath=FilePath;
+ cDocument_Main_Ptr->ExportTaskBase(cString_FilePath+"\\"+cFileDialog.GetFileName());
 }
 //----------------------------------------------------------------------------------------------------
 //очистить базу пользователей

@@ -515,7 +515,6 @@ void CDocument_Main::SetUserConnected(const CSafeString& guid,bool connected)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {   
-   sProtectedVariables.ChangeConnectedList=true;
    //найдём пользователя в списке
    list<SConnected>::iterator iterator_current=sProtectedVariables.list_SConnected.begin();
    list<SConnected>::iterator iterator_end=sProtectedVariables.list_SConnected.end();
@@ -528,6 +527,7 @@ void CDocument_Main::SetUserConnected(const CSafeString& guid,bool connected)
 	 {
       //удаляем из списка подключённых
       sProtectedVariables.list_SConnected.erase(iterator_current);
+	  sProtectedVariables.ChangeConnectedList=true;
 	  return;
 	 }
 	 sConnected.Connected=connected;
@@ -537,6 +537,7 @@ void CDocument_Main::SetUserConnected(const CSafeString& guid,bool connected)
    }
    if (connected==false) return;//отключённого пользователя мы не добавляем в список
    //пользователь не найден, поэтому добавляем пользователя в список подключённых
+   sProtectedVariables.ChangeConnectedList=true;
    SConnected sConnected;
    sConnected.Connected=connected;
    sConnected.GUID=guid;
