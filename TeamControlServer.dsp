@@ -131,6 +131,10 @@ SOURCE=.\cprojectdatabaseengine_sql.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\crc.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\crecordset_projectlist.cpp
 # End Source File
 # Begin Source File
@@ -292,6 +296,10 @@ SOURCE=.\craiicdatabase.h
 # Begin Source File
 
 SOURCE=.\craiicrecordset.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\crc.h
 # End Source File
 # Begin Source File
 

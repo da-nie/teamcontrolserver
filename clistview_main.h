@@ -55,6 +55,7 @@ class CListView_Main:public CListView
   afx_msg void OnCommand_Menu_Main_ResetUserListBase(void);//очистить базу пользователей
   afx_msg void OnCommand_Menu_Main_ResetTaskListBase(void);//очистить базу заданий
   afx_msg void OnCommand_Menu_Main_ResetProjectListBase(void);//очистить базу проектов
+  afx_msg void OnCommand_Menu_Main_SaveCRC(void);//запомнить контрольную сумму программы и загрузчика
 
   DECLARE_MESSAGE_MAP()
  public:

@@ -23,12 +23,33 @@ CTransceiver_File::~CTransceiver_File()
 //----------------------------------------------------------------------------------------------------
 //передать клиенту контрольную сумму файла клиентской программы
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVER_COMMAND command,const CSafeString &programm_file_name,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,const SCRC &sCRC,SERVER_COMMAND command,const CSafeString &programm_file_name,const CSafeString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
 {
  on_exit=false;
+
+ if (sCRC.EnabledCRCLoader==false || sCRC.EnabledCRCProgramm==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+
  vector<char> vector_programm_data;
  unsigned short programm_crc16;
  if (LoadFileAndCreateCRC(programm_file_name,vector_programm_data,programm_crc16)==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+
+ vector<char> vector_loader_data;
+ unsigned short loader_crc16;
+ if (LoadFileAndCreateCRC(loader_file_name,vector_loader_data,loader_crc16)==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+
+ if (loader_crc16!=sCRC.CRC16_Loader || programm_crc16!=sCRC.CRC16_Programm)//файлы были изменены
  {
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
@@ -53,9 +74,16 @@ void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,SERVE
 //----------------------------------------------------------------------------------------------------
 //передать клиенту программу и загрузчик
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient,SERVER_COMMAND command,const CSafeString &programm_file_name,const CSafeString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient,const SCRC &sCRC,SERVER_COMMAND command,const CSafeString &programm_file_name,const CSafeString &loader_file_name,CEvent &cEvent_Exit,bool &on_exit)
 { 
  on_exit=false;
+
+ if (sCRC.EnabledCRCLoader==false || sCRC.EnabledCRCProgramm==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+
  vector<char> vector_programm_data;
  unsigned short programm_crc16;
  if (LoadFileAndCreateCRC(programm_file_name,vector_programm_data,programm_crc16)==false)
@@ -71,6 +99,13 @@ void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
  }
+
+ if (loader_crc16!=sCRC.CRC16_Loader || programm_crc16!=sCRC.CRC16_Programm)//файлы были изменены
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
+
 
  SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
  if (on_exit==true) return;
@@ -97,29 +132,4 @@ void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient
  if (on_exit==true) return;
 
  SendEndPackage(sClient.Socket,cEvent_Exit,on_exit); 
-}
-
-//----------------------------------------------------------------------------------------------------
-//загрузить файл и вычислить CRC
-//----------------------------------------------------------------------------------------------------
-bool CTransceiver_File::LoadFileAndCreateCRC(const CSafeString &file_name,vector<char> &vector_data,unsigned short &crc16)
-{
- vector_data.clear();
- crc16=0;
- FILE *file=fopen(file_name,"rb");
- if (file==NULL) return(false);
- while(1)
- {  
-  unsigned char byte;
-  if (fread(&byte,sizeof(unsigned char),1,file)<=0) break;
-  crc16^=(byte<<8);
-  for (unsigned char i=0;i<8;i++) 
-  { 
-   if (crc16&0x8000) crc16=(crc16<<1)^0x1021;
-                else crc16<<=1;
-  }
-  vector_data.push_back(byte);
- }
- fclose(file);
- return(true);
 }

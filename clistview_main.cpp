@@ -18,6 +18,7 @@ BEGIN_MESSAGE_MAP(CListView_Main,CView)
  ON_COMMAND(IDC_MENU_MAIN_RESET_USER_LIST_BASE,OnCommand_Menu_Main_ResetUserListBase)
  ON_COMMAND(IDC_MENU_MAIN_RESET_TASK_LIST_BASE,OnCommand_Menu_Main_ResetTaskListBase)
  ON_COMMAND(IDC_MENU_MAIN_RESET_PROJECT_LIST_BASE,OnCommand_Menu_Main_ResetProjectListBase)
+ ON_COMMAND(IDC_MENU_MAIN_SAVE_CRC,OnCommand_Menu_Main_SaveCRC)
 END_MESSAGE_MAP()
 
 //====================================================================================================
@@ -255,6 +256,14 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_ResetProjectListBase(void)
  cDocument_Main_Ptr->ResetProjectListBase();
 }
 
+//----------------------------------------------------------------------------------------------------
+//запомнить контрольную сумму программы и загрузчика
+//----------------------------------------------------------------------------------------------------
+afx_msg void CListView_Main::OnCommand_Menu_Main_SaveCRC(void)
+{
+ CDocument_Main *cDocument_Main_Ptr=GetDocument();
+ cDocument_Main_Ptr->SaveCRC();
+}
 
 //====================================================================================================
 //функции класса

@@ -28,6 +28,22 @@ CDocument_Main::CDocument_Main(void)
    {
     sProtectedVariables.sServerSettings.Port=THREAD_SERVER_PORT_DEFAULT;
    }
+   //считаем CRC программы и загрузчика
+   file=fopen("crc.bin","rb");
+   if (file!=NULL)
+   {
+    fread(&sProtectedVariables.sCRC,sizeof(SCRC),1,file);
+    fclose(file);
+   }
+   else
+   {
+    sProtectedVariables.sCRC.CRC16_Programm=0;
+	sProtectedVariables.sCRC.CRC16_Loader=0;
+	sProtectedVariables.sCRC.EnabledCRCProgramm=false;
+	sProtectedVariables.sCRC.EnabledCRCLoader=false;
+   }
+
+
 /*   sProtectedVariables.cIUserDatabaseEngine_Ptr=new CUserDatabaseEngine_Software("UserBase");
    sProtectedVariables.cIProjectDatabaseEngine_Ptr=new CProjectDatabaseEngine_Software("ProjBase");
    sProtectedVariables.cITaskDatabaseEngine_Ptr=new CTaskDatabaseEngine_Software("TaskBase");
@@ -286,6 +302,19 @@ void CDocument_Main::GetServerSettings(SServerSettings &sServerSettings)
   }
  }
 }
+//----------------------------------------------------------------------------------------------------
+//получить CRC программы и загрузчика
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::GetCRC(SCRC &sCRC)
+{
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sCRC=sProtectedVariables.sCRC;
+  }
+ }
+}
+
 //----------------------------------------------------------------------------------------------------
 //установить настройки сервера (сервер будет перезапущен)
 //----------------------------------------------------------------------------------------------------
@@ -557,7 +586,6 @@ void CDocument_Main::SendPing(void)
 //----------------------------------------------------------------------------------------------------
 void CDocument_Main::BackUpAllDatabase(void)
 {
-
  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
  {
   char filename[255];
@@ -581,6 +609,44 @@ void CDocument_Main::BackUpAllDatabase(void)
   command_line+=filename; 
   command_line+=" TaskBase ProjBase UserBase";
   Execute("winrar.exe",command_line.c_str(),path);
+ }
+}
+//----------------------------------------------------------------------------------------------------
+//сохранить CRC программы и загрузчика
+//----------------------------------------------------------------------------------------------------
+void CDocument_Main::SaveCRC(void)
+{
+ unsigned short crc16_programm;
+ unsigned short crc16_loader;
+
+ vector<char> vector_programm;
+ vector<char> vector_loader;
+ if (LoadFileAndCreateCRC("TeamControlClient.exe",vector_programm,crc16_programm)==NULL)
+ {
+  MessageBox(NULL,"Не могу открыть файл программы TeamControlClient.exe!","Ошибка",MB_OK);
+  return;
+ }
+ if (LoadFileAndCreateCRC("TeamControlLoader.exe",vector_loader,crc16_loader)==NULL)
+ {
+  MessageBox(NULL,"Не могу открыть файл программы TeamControlLoader.exe!","Ошибка",MB_OK);
+  return;
+ }
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   sProtectedVariables.sCRC.CRC16_Programm=crc16_programm;
+   sProtectedVariables.sCRC.CRC16_Loader=crc16_loader;
+   sProtectedVariables.sCRC.EnabledCRCProgramm=true;
+   sProtectedVariables.sCRC.EnabledCRCLoader=true;
+
+   FILE *file=fopen("crc.bin","wb");
+   if (file!=NULL)
+   {
+    fwrite(&sProtectedVariables.sCRC,sizeof(SCRC),1,file);
+    fclose(file);
+   }
+   else MessageBox(NULL,"Не могу записать файл crc.bin!","Ошибка",MB_OK);
+  }
  }
 }
 

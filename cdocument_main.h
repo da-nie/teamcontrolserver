@@ -36,6 +36,8 @@
 #include "ctaskexporthtml.h"
 #include "ctaskexporttxt.h"
 
+#include "crc.h"
+
 using namespace std;
 
 //====================================================================================================
@@ -46,6 +48,15 @@ using namespace std;
 struct SServerSettings
 {
  unsigned short Port;//порт сервера
+};
+
+//настройки CRC
+struct SCRC
+{
+ unsigned short CRC16_Programm;//CRC программы
+ unsigned short CRC16_Loader;//CRC загрузчика
+ bool EnabledCRCProgramm;//есть CRC программы
+ bool EnabledCRCLoader;//есть CRC загрузчика
 };
 
 //подключённые пользователи
@@ -71,10 +82,12 @@ class CDocument_Main:public CDocument
    CITaskDatabaseEngine *cITaskDatabaseEngine_Ptr;//указатель на класс работы с базой данных заданий
 
    SServerSettings sServerSettings;//настройки сервера
-   CCriticalSection cCriticalSection;//критическая секция для доступа к классу
+   SCRC sCRC;//контрольные суммы программы и загрузчика
 
    list <SConnected> list_SConnected;//подключённые пользователи
    bool ChangeConnectedList;//изменился ли список подключённх пользователей
+
+   CCriticalSection cCriticalSection;//критическая секция для доступа к классу
   } sProtectedVariables;
 
   CITaskExport *cITaskExport_Ptr;//указатель на класс экспорта заданий
@@ -98,6 +111,7 @@ class CDocument_Main:public CDocument
   bool DeleteUserByGUID(const CSafeString& guid);//удалить пользователя по GUID
   bool FindTaskByGUID(const CSafeString &guid,CTask &cTask);//найти задание по GUID
   bool FindProjectByGUID(const CSafeString &guid,CProject &cProject);//найти проект по GUID
+  void GetCRC(SCRC &sCRC);//получить CRC программы и загрузчика
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера
   void SetServerSettings(const SServerSettings &sServerSettings);//установить настройки сервера (сервер будет перезапущен)
   list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
@@ -122,6 +136,7 @@ class CDocument_Main:public CDocument
 
   void SendPing(void);//отправить пользователям сигнал проверки связи
   void BackUpAllDatabase(void);//выполнить резервное копирование баз данных
+  void SaveCRC(void);//сохранить CRC программы и загрузчика
  protected:
   //-Функции класса----------------------------------------------------------  
   bool CreateGUID(CSafeString &cSafeString_GUID);//создать GUID

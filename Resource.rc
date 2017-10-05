@@ -73,6 +73,8 @@ BEGIN
         MENUITEM "Настройка",                   IDC_MENU_MAIN_SETTINGS
         MENUITEM "Экспортировать задания в html-файл", 
                                                 IDC_MENU_MAIN_EXPORT_TASK
+        MENUITEM "Запомнить CRC программы и загрузчика", 
+                                                IDC_MENU_MAIN_SAVE_CRC
     END
     POPUP "Базы данных"
     BEGIN

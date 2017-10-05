@@ -501,14 +501,18 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
 //----------------------------------------------------------------------------------------------------
 void CThreadServerUnit::ExecuteCommand_GetClientProgrammCRC(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
 {
- cTransceiver_File.SendCRCClientProgrammFileToClient(sClient,command,CLIENT_PROGRAMM_FILE_NAME,cEvent_Exit,on_exit);
+ SCRC sCRC;
+ cDocument_Main_Ptr->GetCRC(sCRC);
+ cTransceiver_File.SendCRCClientProgrammFileToClient(sClient,sCRC,command,CLIENT_PROGRAMM_FILE_NAME,LOADER_FILE_NAME,cEvent_Exit,on_exit);
 }
 //----------------------------------------------------------------------------------------------------
 //обработка команды получения файлов клиентской программы и загрузчика
 //----------------------------------------------------------------------------------------------------
 void CThreadServerUnit::ExecuteCommand_GetClientProgrammAndLoader(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
 {
- cTransceiver_File.SendClientProgrammAndLoaderFileToClient(sClient,command,CLIENT_PROGRAMM_FILE_NAME,LOADER_FILE_NAME,cEvent_Exit,on_exit);
+ SCRC sCRC;
+ cDocument_Main_Ptr->GetCRC(sCRC);
+ cTransceiver_File.SendClientProgrammAndLoaderFileToClient(sClient,sCRC,command,CLIENT_PROGRAMM_FILE_NAME,LOADER_FILE_NAME,cEvent_Exit,on_exit);
 }
 
 
