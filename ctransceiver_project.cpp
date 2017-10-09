@@ -9,6 +9,7 @@
 //====================================================================================================
 CTransceiver_Project::CTransceiver_Project(void)
 {
+ Version=1;
 }
 //====================================================================================================
 //деструктор класса
@@ -27,6 +28,12 @@ void CTransceiver_Project::SendProjectDataToClient(SClient &sClient,const CProje
 {
  on_exit=false;
  SServerAnswer::CProjectDataHeader sServerAnswer_cProjectDataHeader;
+
+ sServerAnswer_cProjectDataHeader.Signature[0]='P';
+ sServerAnswer_cProjectDataHeader.Signature[1]='L';
+ sServerAnswer_cProjectDataHeader.Signature[2]='V';
+ sServerAnswer_cProjectDataHeader.Version=Version;
+
  sServerAnswer_cProjectDataHeader.ProjectNameSize=cProject.GetProjectName().GetLength();
  sServerAnswer_cProjectDataHeader.ProjectGUIDSize=cProject.GetProjectGUID().GetLength();
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_cProjectDataHeader),sizeof(SServerAnswer::CProjectDataHeader),cEvent_Exit,on_exit);
@@ -64,6 +71,10 @@ bool CTransceiver_Project::ReadCProjectInArray(char *ptr,size_t &offset,size_t m
  if (offset+sizeof(SServerCommand::CProjectDataHeader)>max_length) return(false);
  SServerCommand::CProjectDataHeader *sServerCommand_cProjectDataHeader_Ptr=reinterpret_cast<SServerCommand::CProjectDataHeader*>(ptr+offset);
  offset+=sizeof(SServerCommand::CProjectDataHeader);
+
+ if (sServerCommand_cProjectDataHeader_Ptr->Signature[0]!='P' || sServerCommand_cProjectDataHeader_Ptr->Signature[1]!='L' || sServerCommand_cProjectDataHeader_Ptr->Signature[2]!='V') return(false);
+ if (sServerCommand_cProjectDataHeader_Ptr->Version!=Version) return(false);
+
  long length=offset;
  length+=sServerCommand_cProjectDataHeader_Ptr->ProjectNameSize;
  length+=sServerCommand_cProjectDataHeader_Ptr->ProjectGUIDSize;

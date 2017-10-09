@@ -156,6 +156,8 @@ struct SServerCommand
  //кодирование заголовка данных при передаче задания
  struct CTaskDataHeader
  {
+  unsigned char Signature[3];//сигнатура
+  unsigned long Version;//номер версии структуры
   long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
   unsigned long ForUserGUIDSize;//для пользователя
@@ -163,16 +165,22 @@ struct SServerCommand
   unsigned long TaskSize;//задание
   unsigned long TaskGUIDSize;//идентификатор задания
   unsigned long AnswerSize;//ответ
+  unsigned long AnswerReferenceSize;//ссылка на файл в ответе исполнителя
+  unsigned long TaskReferenceSize;//ссылка на файл в задании
   long State;//состояние
   long Year;//год
   long Month;//месяц
   long Day;//число 
   bool AnswerNotRead;//задание не прочитано
   bool PlannedPosition;//задание является плановой позицией
+  bool AnswerReferenceExist;//есть ссылка на файл в ответе исполнителя
+  bool TaskReferenceExist;//есть ссылка на файл в задании
  };
  //кодирование заголовка данных при передаче проекта
  struct CProjectDataHeader
  {
+  unsigned char Signature[3];//сигнатура
+  unsigned long Version;//номер версии структуры
   unsigned long ProjectNameSize;//проект
   unsigned long ProjectGUIDSize;//идентификатор проекта
  };
@@ -220,6 +228,8 @@ struct SServerAnswer
  //кодирование заголовка данные при передаче параметров пользователя
  struct CUserDataHeader
  {
+  unsigned char Signature[3];//сигнатура
+  unsigned long Version;//номер версии структуры
   unsigned long NameSize;//размер имени
   unsigned long JobTitleSize;//размер должности
   unsigned long TelephoneSize;//размер телефонных данных
@@ -230,6 +240,8 @@ struct SServerAnswer
  //кодирование заголовка данных при передаче параметров задания
  struct CTaskDataHeader
  {
+  unsigned char Signature[3];//сигнатура
+  unsigned long Version;//номер версии структуры
   long Index;//индекс задания
   unsigned long FromUserGUIDSize;//от пользователя
   unsigned long ForUserGUIDSize;//для пользователя
@@ -237,16 +249,22 @@ struct SServerAnswer
   unsigned long TaskSize;//задание
   unsigned long TaskGUIDSize;//идентификатор задания
   unsigned long AnswerSize;//ответ
+  unsigned long AnswerReferenceSize;//ссылка на файл в ответе исполнителя
+  unsigned long TaskReferenceSize;//ссылка на файл в задании
   long State;//состояние
   long Year;//год
   long Month;//месяц
   long Day;//число 
   bool AnswerNotRead;//задание не прочитано
   bool PlannedPosition;//задание является плановой позицией
+  bool AnswerReferenceExist;//есть ссылка на файл в ответе исполнителя
+  bool TaskReferenceExist;//есть ссылка на файл в задании
  };
  //кодирование заголовка данных при передаче параметров проекта
  struct CProjectDataHeader
  {
+  unsigned char Signature[3];//сигнатура
+  unsigned long Version;//номер версии структуры
   unsigned long ProjectNameSize;//проект
   unsigned long ProjectGUIDSize;//идентификатор проекта
  };

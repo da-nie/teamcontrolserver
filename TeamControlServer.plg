@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x419 /fo"Release/Resource.res" /d "NDEBUG" /d "_AFXDLL" "D:\Working\TeamControl\TeamControlServer\Resource.rc"" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP13A.tmp" with contents
+Creating temporary file "C:\WINDOWS\TEMP\RSP68.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Fp"Release/TeamControlServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\Working\TeamControl\TeamControlServer\cdate.cpp"
@@ -20,6 +20,7 @@ Creating temporary file "C:\WINDOWS\TEMP\RSP13A.tmp" with contents
 "D:\Working\TeamControl\TeamControlServer\cproject.cpp"
 "D:\Working\TeamControl\TeamControlServer\cprojectdatabaseengine_software.cpp"
 "D:\Working\TeamControl\TeamControlServer\cprojectdatabaseengine_sql.cpp"
+"D:\Working\TeamControl\TeamControlServer\crc.cpp"
 "D:\Working\TeamControl\TeamControlServer\crecordset_projectlist.cpp"
 "D:\Working\TeamControl\TeamControlServer\crecordset_tasklist.cpp"
 "D:\Working\TeamControl\TeamControlServer\crecordset_userlist.cpp"
@@ -42,10 +43,9 @@ Creating temporary file "C:\WINDOWS\TEMP\RSP13A.tmp" with contents
 "D:\Working\TeamControl\TeamControlServer\cuserdatabaseengine_software.cpp"
 "D:\Working\TeamControl\TeamControlServer\cuserdatabaseengine_sql.cpp"
 "D:\Working\TeamControl\TeamControlServer\Main.cpp"
-"D:\Working\TeamControl\TeamControlServer\crc.cpp"
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP13A.tmp" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP13B.tmp" with contents
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP68.tmp" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP69.tmp" with contents
 [
 ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlServer.pdb" /machine:I386 /out:"Release/TeamControlServer.exe" 
 .\Release\cdate.obj
@@ -58,6 +58,7 @@ ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlS
 .\Release\cproject.obj
 .\Release\cprojectdatabaseengine_software.obj
 .\Release\cprojectdatabaseengine_sql.obj
+.\Release\crc.obj
 .\Release\crecordset_projectlist.obj
 .\Release\crecordset_tasklist.obj
 .\Release\crecordset_userlist.obj
@@ -81,9 +82,8 @@ ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/TeamControlS
 .\Release\cuserdatabaseengine_sql.obj
 .\Release\Main.obj
 .\Release\Resource.res
-.\Release\crc.obj
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSP13B.tmp"
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP69.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -97,6 +97,7 @@ clistview_main.cpp
 cproject.cpp
 cprojectdatabaseengine_software.cpp
 cprojectdatabaseengine_sql.cpp
+crc.cpp
 crecordset_projectlist.cpp
 crecordset_tasklist.cpp
 crecordset_userlist.cpp
@@ -119,7 +120,6 @@ cuser.cpp
 cuserdatabaseengine_software.cpp
 cuserdatabaseengine_sql.cpp
 Main.cpp
-crc.cpp
 Linking...
 
 

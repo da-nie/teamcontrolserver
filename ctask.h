@@ -32,6 +32,10 @@ class CTask
   CSafeString Answer;//ответ на задание
   bool AnswerNotRead;//прочитан ли ответ на задание
   bool PlannedPosition;//плановая позиция
+  bool AnswerReferenceExist;//есть ссылка в ответе исполнителя
+  bool TaskReferenceExist;//есть ссылка в задании
+  CSafeString AnswerReference;//ссылка на файл в ответе исполнителя
+  CSafeString TaskReference;//ссылка на файл в задании
   //-Переменные класса-------------------------------------------------------
  public:
   //-Конструктор класса------------------------------------------------------
@@ -48,8 +52,12 @@ class CTask
   const CDate& GetDate(void) const;//получить срок задания
   const CSafeString& GetTaskGUID(void) const;//получить уникальный идентификатор задания
   const CSafeString& GetAnswer(void) const;//получить ответ на задание
+  const CSafeString& GetAnswerReference(void) const;//получить ссылку на файл в ответе исполнителя
+  const CSafeString& GetTaskReference(void) const;//получить ссылку на файл в задании
   bool GetAnswerNotRead(void) const;//получить, прочитан ли ответ на задание  
   bool GetPlannedPosition(void) const;//получить, является ли задание плановой позицией
+  bool GetAnswerReferenceExist(void) const;//получить, есть ли ссылка в ответе исполнителя
+  bool GetTaskReferenceExist(void) const;//получить, есть ли ссылка в задании
 
   void SetIndex(const long& index);//задать индекс
   void SetFromUserGUID(const char *from_user_guid);//задать уникальный идентификатор от какого пользователя задание
@@ -60,13 +68,20 @@ class CTask
   void SetDate(const CDate &cDate_Set);//задать срок задания
   void SetTaskGUID(const char *task_guid);//задать уникальный идентификатор задания
   void SetAnswer(const char *answer);//задать ответ на задание
+  void SetAnswerReference(const char *reference);//задать ссылку на файл в ответе исполнителя
+  void SetTaskReference(const char *reference);//задать ссылку на файл в задании
   void SetAnswerNotRead(bool state);//задать прочитан ли ответ на задание
   void SetPlannedPosition(bool state);//задать, является ли задание плановой позицией
+  void SetAnswerReferenceExist(bool state);//задать, есть ли ссылка в ответе исполнителя
+  void SetTaskReferenceExist(bool state);//задать, есть ли ссылка в задании
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
   bool IsTaskGUID(const char *guid) const;//верный ли TaskGUID
   bool IsAnswerNotRead(void) const;//прочитан ли ответ на задание
   bool IsPlannedPosition(void) const;//является ли задание плановой позицией
+  bool IsAnswerReferenceExist(void) const;//есть ли ссылка в ответе исполнителя
+  bool IsTaskReferenceExist(void) const;//есть ли ссылка в задании
+
 };
 #endif

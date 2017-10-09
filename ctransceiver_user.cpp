@@ -9,6 +9,7 @@
 //====================================================================================================
 CTransceiver_User::CTransceiver_User(void)
 {
+ Version=1;
 }
 //====================================================================================================
 //деструктор класса
@@ -27,6 +28,11 @@ void CTransceiver_User::SendUserDataToClient(const SClient &sClient,const CUser 
 {
  on_exit=false;
  SServerAnswer::CUserDataHeader sServerAnswer_cUserDataHeader;
+ sServerAnswer_cUserDataHeader.Signature[0]='U';
+ sServerAnswer_cUserDataHeader.Signature[1]='L';
+ sServerAnswer_cUserDataHeader.Signature[2]='V';
+ sServerAnswer_cUserDataHeader.Version=Version;
+
  sServerAnswer_cUserDataHeader.NameSize=cUser.GetName().GetLength();
  sServerAnswer_cUserDataHeader.JobTitleSize=cUser.GetJobTitle().GetLength();
  sServerAnswer_cUserDataHeader.TelephoneSize=cUser.GetTelephone().GetLength();

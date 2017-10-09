@@ -27,6 +27,7 @@ using namespace std;
 class CTransceiver_Project:public CTransceiver
 {
  protected:
+  unsigned long Version;//номер версии структуры
  public:  
   //конструктор
   CTransceiver_Project(void);

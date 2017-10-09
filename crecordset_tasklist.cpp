@@ -16,8 +16,10 @@ CRecordset_TaskList::CRecordset_TaskList(CDatabase* pDatabase):CRecordset(pDatab
  Month=0;
  Day=0;
  Answer="";
+ AnswerReference="";
+ TaskReference="";
  Propertys=0;
- m_nFields=12;
+ m_nFields=14;
  m_nDefaultType=snapshot;
 }
 //====================================================================================================
@@ -56,6 +58,8 @@ void CRecordset_TaskList::DoFieldExchange(CFieldExchange* pFX)
  RFX_Long(pFX,_T("[Day]"),Day);  
  RFX_Text(pFX,_T("[Answer]"),Answer);
  RFX_Long(pFX,_T("[Propertys]"),Propertys);
+ RFX_Text(pFX,_T("[AnswerReference]"),AnswerReference);
+ RFX_Text(pFX,_T("[TaskReference]"),TaskReference);
 }
 //----------------------------------------------------------------------------------------------------
 //задать запись
@@ -76,7 +80,11 @@ void CRecordset_TaskList::SetRecord(const CTask& cTask)
  long p=0;
  if (cTask.IsAnswerNotRead()==true) p|=TASK_RECORD_PROPERTYS_MASK_ANSWER_NOT_READ;
  if (cTask.IsPlannedPosition()==true) p|=TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION;
+ if (cTask.IsAnswerReferenceExist()==true) p|=TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE;
+ if (cTask.IsTaskReferenceExist()==true) p|=TASK_RECORD_PROPERTYS_MASK_TASK_REFERENCE;
  Propertys=p;
+ AnswerReference=cTask.GetAnswerReference();
+ TaskReference=cTask.GetTaskReference();
 }
 //----------------------------------------------------------------------------------------------------
 //получить запись
@@ -98,4 +106,10 @@ void CRecordset_TaskList::GetRecord(CTask& cTask)
                                                       else cTask.SetAnswerNotRead(false);
  if (Propertys&TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION) cTask.SetPlannedPosition(true);
                                                        else cTask.SetPlannedPosition(false);
+ if (Propertys&TASK_RECORD_PROPERTYS_MASK_TASK_REFERENCE) cTask.SetTaskReferenceExist(true);
+                                                     else cTask.SetTaskReferenceExist(false);
+ if (Propertys&TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE) cTask.SetAnswerReferenceExist(true);
+                                                       else cTask.SetAnswerReferenceExist(false);
+ cTask.SetAnswerReference(AnswerReference);
+ cTask.SetTaskReference(TaskReference);
 }

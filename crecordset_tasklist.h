@@ -24,6 +24,10 @@ using namespace std;
 #define TASK_RECORD_PROPERTYS_MASK_ANSWER_NOT_READ (1<<0)
 //задание является плановой позицией
 #define TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION (1<<1)
+//есть ссылка на файл в задании
+#define TASK_RECORD_PROPERTYS_MASK_TASK_REFERENCE (1<<2)
+//есть ссылка на файл в ответе
+#define TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE (1<<3)
 
 //====================================================================================================
 //класс записи информации о задачах
@@ -44,6 +48,8 @@ class CRecordset_TaskList:public CRecordset
   long Propertys;//свойства задания
   CString TaskGUID;//идентификатор задания 
   CString Answer;//ответ
+  CString AnswerReference;//ссылка на файл в ответе исполнителя
+  CString TaskReference;//ссылка на файл в задании
  public:
   //-Конструктор класса------------------------------------------------------
   CRecordset_TaskList(CDatabase* pDatabase=NULL);
