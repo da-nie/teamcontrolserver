@@ -9,7 +9,7 @@
 //====================================================================================================
 CTransceiver_Task::CTransceiver_Task(void)
 {
- Version=1;
+ Version=2;
 }
 //====================================================================================================
 //деструктор класса
@@ -52,6 +52,7 @@ void CTransceiver_Task::SendTaskDataToClient(SClient &sClient,const CTask &cTask
  sServerAnswer_cTaskDataHeader.PlannedPosition=cTask.GetPlannedPosition();
  sServerAnswer_cTaskDataHeader.AnswerReferenceExist=cTask.GetAnswerReferenceExist();
  sServerAnswer_cTaskDataHeader.TaskReferenceExist=cTask.GetTaskReferenceExist();
+ sServerAnswer_cTaskDataHeader.Common=cTask.GetCommon();
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_cTaskDataHeader),sizeof(SServerAnswer::CTaskDataHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
  SendPart(sClient.Socket,cTask.GetFromUserGUID(),cTask.GetFromUserGUID().GetLength(),cEvent_Exit,on_exit);
@@ -122,6 +123,7 @@ bool CTransceiver_Task::ReadCTaskInArray(char *ptr,size_t &offset,size_t max_len
  cTask.SetIndex(sServerCommand_cTaskDataHeader_Ptr->Index);
  cTask.SetAnswerReferenceExist(sServerCommand_cTaskDataHeader_Ptr->AnswerReferenceExist);
  cTask.SetTaskReferenceExist(sServerCommand_cTaskDataHeader_Ptr->TaskReferenceExist);
+ cTask.SetCommon(sServerCommand_cTaskDataHeader_Ptr->Common);
 
  CSafeString str;
  SetString(str,ptr+offset,sServerCommand_cTaskDataHeader_Ptr->FromUserGUIDSize);
@@ -169,37 +171,22 @@ void CTransceiver_Task::SendTaskBook(CDocument_Main *cDocument_Main_Ptr,SClient&
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
  }
- //отвечаем
- //передаём список базы данных
- SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
- if (on_exit==true) return;
- SServerAnswer::SHeader sServerAnswer_sHeader;
- sServerAnswer_sHeader.AnswerID=SERVER_ANSWER_TASK_BOOK;
- sServerAnswer_sHeader.CommandID=command;
- SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
- if (on_exit==true) return;
-
  list<CTask> list_CTask=cDocument_Main_Ptr->GetAllTaskForUserGUID(sClient.UserGUID);
- list<CTask>::iterator iterator=list_CTask.begin();
- list<CTask>::iterator iterator_end=list_CTask.end();  
- while(iterator!=iterator_end)
+ SendTaskList(list_CTask,sClient,command,SERVER_ANSWER_TASK_BOOK,cEvent_Exit,on_exit);
+}
+//----------------------------------------------------------------------------------------------------
+//передача базы данных общих заданий
+//----------------------------------------------------------------------------------------------------
+void CTransceiver_Task::SendCommonTaskBook(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit)
+{
+ on_exit=false;
+ if (cDocument_Main_Ptr==NULL || sClient.UserGUID.GetLength()==0)//если документа нет или клиент не авторизован
  {
-  CTask &cTask=*iterator;  
-  /*
-  if (cTask.State==TASK_STATE_DONE || cTask.State==TASK_STATE_CANCELED || cTask.State==TASK_STATE_FINISHED)
-  {
-   if (cTask.FromUserGUID.Compare(sClient.UserGUID)!=0 && cTask.ForUserGUID.Compare(sClient.UserGUID)==0)//для данного клиента это задание уже завершено и не должно передаваться
-   {
-    iterator++;
-	continue;
-   }
-  }
-  */
-  SendTaskDataToClient(sClient,cTask,cEvent_Exit,on_exit);
-  if (on_exit==true) return;
-  iterator++;
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
  }
- SendEndPackage(sClient.Socket,cEvent_Exit,on_exit);
+ list<CTask> list_CTask=cDocument_Main_Ptr->GetCommonTask();
+ SendTaskList(list_CTask,sClient,command,SERVER_ANSWER_COMMON_TASK_BOOK,cEvent_Exit,on_exit);
 }
 //----------------------------------------------------------------------------------------------------
 //добавление нового задания
@@ -269,4 +256,41 @@ void CTransceiver_Task::ChangeTask(CDocument_Main *cDocument_Main_Ptr,SClient& s
  if (cDocument_Main_Ptr->ChangeTask(cTask)==false) SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
  //отвечаем
  SendAnswer(sClient.Socket,SERVER_ANSWER_OK,command,NULL,0,cEvent_Exit,on_exit);
+}
+//----------------------------------------------------------------------------------------------------
+//передача списка заданий
+//----------------------------------------------------------------------------------------------------
+void CTransceiver_Task::SendTaskList(list<CTask> &list_CTask,SClient& sClient,SERVER_COMMAND command,SERVER_ANSWER answer,CEvent &cEvent_Exit,bool &on_exit)
+{
+ on_exit=false;
+ //отвечаем
+ //передаём список базы данных
+ SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
+ if (on_exit==true) return;
+ SServerAnswer::SHeader sServerAnswer_sHeader;
+ sServerAnswer_sHeader.AnswerID=answer;
+ sServerAnswer_sHeader.CommandID=command;
+ SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
+ if (on_exit==true) return;
+ 
+ list<CTask>::iterator iterator=list_CTask.begin();
+ list<CTask>::iterator iterator_end=list_CTask.end();
+ while(iterator!=iterator_end)
+ {
+  CTask &cTask=*iterator;  
+  /*
+  if (cTask.State==TASK_STATE_DONE || cTask.State==TASK_STATE_CANCELED || cTask.State==TASK_STATE_FINISHED)
+  {
+   if (cTask.FromUserGUID.Compare(sClient.UserGUID)!=0 && cTask.ForUserGUID.Compare(sClient.UserGUID)==0)//для данного клиента это задание уже завершено и не должно передаваться
+   {
+    iterator++;
+	continue;
+   }
+  }
+  */
+  SendTaskDataToClient(sClient,cTask,cEvent_Exit,on_exit);
+  if (on_exit==true) return;
+  iterator++;
+ }
+ SendEndPackage(sClient.Socket,cEvent_Exit,on_exit);
 }

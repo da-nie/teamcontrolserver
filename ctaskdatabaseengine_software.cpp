@@ -93,6 +93,33 @@ list<CTask> CTaskDatabaseEngine_Software::GetAllTask(void)
  return(list_CTask_Local);
 }
 //----------------------------------------------------------------------------------------------------
+//получить общие задания
+//----------------------------------------------------------------------------------------------------
+list<CTask> CTaskDatabaseEngine_Software::GetCommonTask(void)
+{ 
+ list<CTask> list_CTask_Local;  
+ CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ {
+  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
+  {
+   CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
+   if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
+   if (cRAIICRecordset_TaskList.GetMainObject().GetRecordCount()==0) return(list_CTask_Local);
+   cRAIICRecordset_TaskList.GetMainObject().MoveFirst();   
+   while(cRAIICRecordset_TaskList.GetMainObject().IsEOF()==FALSE)
+   {
+    CTask cTask;
+    cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask);
+    cRAIICRecordset_TaskList.GetMainObject().MoveNext();
+    //общие задания - это задания с отметкой
+	if (cTask.IsCommon()==true) list_CTask_Local.push_back(cTask);
+   }
+  }
+ }
+ return(list_CTask_Local);
+}
+
+//----------------------------------------------------------------------------------------------------
 //добавить задание
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)

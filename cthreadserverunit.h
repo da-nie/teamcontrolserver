@@ -108,6 +108,7 @@ class CThreadServerUnit
   void ExecuteCommand_GetUserBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения данных пользователей
   void ExecuteCommand_GetTaskBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения заданий пользователя
   void ExecuteCommand_GetProjectBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения проектов
+  void ExecuteCommand_GetCommonTaskBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды получения общих заданий
   void ExecuteCommand_AddedTask(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды добавления нового задания
   void ExecuteCommand_DeletedTask(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды удаления задания
   void ExecuteCommand_ChangedTask(SClient& sClient,SERVER_COMMAND command,bool &on_exit);//обработка команды изменения задания

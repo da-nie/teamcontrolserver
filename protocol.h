@@ -65,7 +65,10 @@ enum SERVER_COMMAND
  SERVER_COMMAND_CHANGED_PROJECT=12,
 
  //проверка связи
- SERVER_COMMAND_PING=13
+ SERVER_COMMAND_PING=13,
+
+ //получение базы общих заданий
+ SERVER_COMMAND_GET_COMMON_TASK_BOOK=14
 };
 
 //ответы сервера
@@ -109,8 +112,9 @@ enum SERVER_ANSWER
  SERVER_ANSWER_CHANGED_PROJECT=16,
 
  //проверка связи
- SERVER_ANSWER_PING=17
-
+ SERVER_ANSWER_PING=17,
+ //передаётся база общих заданий
+ SERVER_ANSWER_COMMON_TASK_BOOK=18
 };
 
 //задание не прочитано
@@ -175,6 +179,7 @@ struct SServerCommand
   bool PlannedPosition;//задание является плановой позицией
   bool AnswerReferenceExist;//есть ссылка на файл в ответе исполнителя
   bool TaskReferenceExist;//есть ссылка на файл в задании
+  bool Common;//задание является общим
  };
  //кодирование заголовка данных при передаче проекта
  struct CProjectDataHeader
@@ -259,6 +264,7 @@ struct SServerAnswer
   bool PlannedPosition;//задание является плановой позицией
   bool AnswerReferenceExist;//есть ссылка на файл в ответе исполнителя
   bool TaskReferenceExist;//есть ссылка на файл в задании
+  bool Common;//задание является общим
  };
  //кодирование заголовка данных при передаче параметров проекта
  struct CProjectDataHeader

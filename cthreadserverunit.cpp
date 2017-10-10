@@ -472,6 +472,7 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_TASK_BOOK) ExecuteCommand_GetTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_PROJECT_BOOK) ExecuteCommand_GetProjectBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_COMMON_TASK_BOOK) ExecuteCommand_GetCommonTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_ADDED_TASK) ExecuteCommand_AddedTask(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_DELETED_TASK) ExecuteCommand_DeletedTask(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_CHANGED_TASK) ExecuteCommand_ChangedTask(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
@@ -547,7 +548,13 @@ void CThreadServerUnit::ExecuteCommand_GetProjectBook(SClient& sClient,SERVER_CO
 {
  cTransceiver_Project.SendProjectBook(cDocument_Main_Ptr,sClient,command,cEvent_Exit,on_exit);
 }
-
+//----------------------------------------------------------------------------------------------------
+//обработка команды получения данных общих заданий
+//----------------------------------------------------------------------------------------------------
+void CThreadServerUnit::ExecuteCommand_GetCommonTaskBook(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
+{
+ cTransceiver_Task.SendCommonTaskBook(cDocument_Main_Ptr,sClient,command,cEvent_Exit,on_exit);
+}
 //----------------------------------------------------------------------------------------------------
 //обработка команды добавления нового задания
 //----------------------------------------------------------------------------------------------------

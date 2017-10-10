@@ -82,6 +82,7 @@ void CRecordset_TaskList::SetRecord(const CTask& cTask)
  if (cTask.IsPlannedPosition()==true) p|=TASK_RECORD_PROPERTYS_MASK_PLANNED_POSITION;
  if (cTask.IsAnswerReferenceExist()==true) p|=TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE;
  if (cTask.IsTaskReferenceExist()==true) p|=TASK_RECORD_PROPERTYS_MASK_TASK_REFERENCE;
+ if (cTask.IsCommon()==true) p|=TASK_RECORD_PROPERTYS_MASK_COMMON;
  Propertys=p;
  AnswerReference=cTask.GetAnswerReference();
  TaskReference=cTask.GetTaskReference();
@@ -110,6 +111,8 @@ void CRecordset_TaskList::GetRecord(CTask& cTask)
                                                      else cTask.SetTaskReferenceExist(false);
  if (Propertys&TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE) cTask.SetAnswerReferenceExist(true);
                                                        else cTask.SetAnswerReferenceExist(false);
+ if (Propertys&TASK_RECORD_PROPERTYS_MASK_COMMON) cTask.SetCommon(true);
+                                             else cTask.SetCommon(false);
  cTask.SetAnswerReference(AnswerReference);
  cTask.SetTaskReference(TaskReference);
 }

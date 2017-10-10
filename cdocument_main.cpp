@@ -359,6 +359,20 @@ list<CTask> CDocument_Main::GetAllTask(void)
 }
 
 //----------------------------------------------------------------------------------------------------
+//получить все общие задания
+//----------------------------------------------------------------------------------------------------
+list<CTask> CDocument_Main::GetCommonTask(void)
+{ 
+ list<CTask> list_CTask_Local;
+ {
+  CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
+  {
+   return(sProtectedVariables.cITaskDatabaseEngine_Ptr->GetCommonTask());
+  }
+ }
+ return(list_CTask_Local);
+}
+//----------------------------------------------------------------------------------------------------
 //получить все проекты
 //----------------------------------------------------------------------------------------------------
 list<CProject> CDocument_Main::GetAllProject(void)

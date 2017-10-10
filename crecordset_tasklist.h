@@ -28,6 +28,8 @@ using namespace std;
 #define TASK_RECORD_PROPERTYS_MASK_TASK_REFERENCE (1<<2)
 //есть ссылка на файл в ответе
 #define TASK_RECORD_PROPERTYS_MASK_ANSWER_REFERENCE (1<<3)
+//задание является общим
+#define TASK_RECORD_PROPERTYS_MASK_COMMON (1<<4)
 
 //====================================================================================================
 //класс записи информации о задачах

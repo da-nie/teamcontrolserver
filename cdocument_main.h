@@ -115,6 +115,7 @@ class CDocument_Main:public CDocument
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера
   void SetServerSettings(const SServerSettings &sServerSettings);//установить настройки сервера (сервер будет перезапущен)
   list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
+  list<CTask> GetCommonTask();//получить все общие задания
   list<CTask> GetAllTask(void);//получить все задания
   list<CProject> GetAllProject(void);//получить все проекты
 

@@ -34,6 +34,7 @@ class CTask
   bool PlannedPosition;//плановая позиция
   bool AnswerReferenceExist;//есть ссылка в ответе исполнителя
   bool TaskReferenceExist;//есть ссылка в задании
+  bool Common;//задание является общим
   CSafeString AnswerReference;//ссылка на файл в ответе исполнителя
   CSafeString TaskReference;//ссылка на файл в задании
   //-Переменные класса-------------------------------------------------------
@@ -58,6 +59,7 @@ class CTask
   bool GetPlannedPosition(void) const;//получить, является ли задание плановой позицией
   bool GetAnswerReferenceExist(void) const;//получить, есть ли ссылка в ответе исполнителя
   bool GetTaskReferenceExist(void) const;//получить, есть ли ссылка в задании
+  bool GetCommon(void) const;//получить, является ли задание общим
 
   void SetIndex(const long& index);//задать индекс
   void SetFromUserGUID(const char *from_user_guid);//задать уникальный идентификатор от какого пользователя задание
@@ -74,6 +76,7 @@ class CTask
   void SetPlannedPosition(bool state);//задать, является ли задание плановой позицией
   void SetAnswerReferenceExist(bool state);//задать, есть ли ссылка в ответе исполнителя
   void SetTaskReferenceExist(bool state);//задать, есть ли ссылка в задании
+  void SetCommon(bool state);//установить, является ли задание общим
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
@@ -82,6 +85,7 @@ class CTask
   bool IsPlannedPosition(void) const;//является ли задание плановой позицией
   bool IsAnswerReferenceExist(void) const;//есть ли ссылка в ответе исполнителя
   bool IsTaskReferenceExist(void) const;//есть ли ссылка в задании
+  bool IsCommon(void) const;//является ли задание общим
 
 };
 #endif

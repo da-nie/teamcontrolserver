@@ -41,6 +41,7 @@ class CTaskDatabaseEngine_SQL:public CITaskDatabaseEngine
   bool FindTaskByGUID(const CSafeString &guid,CTask &cTask);//найти задание по GUID
   list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
   list<CTask> GetAllTask(void);//получить все задания
+  list<CTask> GetCommonTask(void);//получить все общие задания
   bool AddTask(CTask &cTask);//добавить задание
   bool DeleteTask(const CTask &cTask);//удалить задание
   bool ChangeTask(const CTask &cTask,bool &for_user_change,CTask &cTask_Deleted,CTask &cTask_Added);//изменить задание
