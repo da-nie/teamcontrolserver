@@ -121,7 +121,7 @@ class CDocument_Main:public CDocument
 
   bool AddTask(CTask &cTask);//добавить задание
   bool DeleteTask(const CTask &cTask);//удалить задание
-  bool ChangeTask(const CTask &cTask);//изменить задание
+  bool ChangeTask(CTask &cTask);//изменить задание
 
   bool AddProject(CProject &cProject);//добавить проект
   bool DeleteProject(const CProject &cProject);//удалить проект

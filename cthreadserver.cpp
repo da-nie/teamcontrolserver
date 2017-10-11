@@ -121,7 +121,7 @@ void CThreadServer::OnTaskAdded(const CTask &cTask)
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
- {   
+ {
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
   cThreadServerUnit_Ptr->OnTaskAdded(cTask);
   iterator_list_CThreadServerUnitPtr++;

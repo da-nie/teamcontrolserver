@@ -197,9 +197,10 @@ bool CTaskDatabaseEngine_Software::DeleteTask(const CTask &cTask)
 //----------------------------------------------------------------------------------------------------
 //изменить задание
 //----------------------------------------------------------------------------------------------------
-bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_change,CTask &cTask_Deleted,CTask &cTask_Added)
+bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_change,bool &common_change,CTask &cTask_Deleted,CTask &cTask_Added)
 {
  for_user_change=false;
+ common_change=false;
  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(false);
@@ -214,6 +215,8 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_
     cRAIICRecordset_TaskList.GetMainObject().GetRecord(cTask_Local);
 	if (cTask_Local.IsTaskGUID(cTask.GetTaskGUID())==true)
 	{
+      //если у задания поменялась общность
+     if (cTask.IsCommon()!=cTask_Local.IsCommon()) common_change=true;
      //если у задания поменялся адресат, то отправляем старому адресату сообщение об удалении задания,
      //а новому о новом задании
      if (cTask_Local.IsForUserGUID(cTask.GetForUserGUID())==false)

@@ -423,17 +423,21 @@ bool CDocument_Main::DeleteTask(const CTask &cTask)
 //----------------------------------------------------------------------------------------------------
 //изменить задание
 //----------------------------------------------------------------------------------------------------
-bool CDocument_Main::ChangeTask(const CTask &cTask)
+bool CDocument_Main::ChangeTask(CTask &cTask)
 {
  CTask cTask_Deleted;
  CTask cTask_Added;
  bool for_user_change=false;
+ bool common_change=false;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   if (sProtectedVariables.cITaskDatabaseEngine_Ptr->ChangeTask(cTask,for_user_change,cTask_Deleted,cTask_Added)==false) return(false);
+   if (sProtectedVariables.cITaskDatabaseEngine_Ptr->ChangeTask(cTask,for_user_change,common_change,cTask_Deleted,cTask_Added)==false) return(false);
   }
  }
+ //менялся статус общности
+ if (common_change==true) cTask.SetChangeCommonState(true);
+                     else cTask.SetChangeCommonState(false);
  if (for_user_change==true)//измение с заменой адресата
  {
   cThreadServer.OnTaskDeleted(cTask_Deleted);//указываем потоку, что произошло удаление задания  

@@ -360,6 +360,8 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
   cTransceiver_Ping.SendPingDataToClientInPackage(sClient,SERVER_ANSWER_PING,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
+ bool send_common_task_base=false;//нужно ли заново отправить базу общих заданий
+
 
  //передаём список удалённых пользователей
  size=vector_CUser_Deleted.size();
@@ -392,6 +394,7 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  {
   CTask &cTask=vector_CTask_Deleted[n];
   cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_DELETED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  if (cTask.IsCommon()==true) send_common_task_base=true;
   if (on_exit==true) return;
  }
  //передаём список добавленных заданий
@@ -400,6 +403,7 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  {
   CTask &cTask=vector_CTask_Added[n];
   cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_ADDED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  if (cTask.IsCommon()==true) send_common_task_base=true;
   if (on_exit==true) return;
  }
  //передаём список изменённых заданий
@@ -408,6 +412,8 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  {
   CTask &cTask=vector_CTask_Changed[n];
   cTransceiver_Task.SendTaskDataToClientInPackage(sClient,cTask,SERVER_ANSWER_CHANGED_TASK,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
+  if (cTask.IsChangeCommonState()==true) send_common_task_base=true;//изменялся статус общности задания
+  if (cTask.IsCommon()==true) send_common_task_base=true;
   if (on_exit==true) return;
  }
 
@@ -435,6 +441,8 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
   cTransceiver_Project.SendProjectDataToClientInPackage(sClient,cProject,SERVER_ANSWER_CHANGED_PROJECT,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
+
+ if (send_common_task_base==true) cTransceiver_Task.SendCommonTaskBook(cDocument_Main_Ptr,sClient,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
 }
 
 

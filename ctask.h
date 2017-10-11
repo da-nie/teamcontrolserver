@@ -37,6 +37,9 @@ class CTask
   bool Common;//задание является общим
   CSafeString AnswerReference;//ссылка на файл в ответе исполнителя
   CSafeString TaskReference;//ссылка на файл в задании
+  //долнительная информация
+  bool ChangeCommonState;//был изменён статус общности (нужно потоку, чтобы знать, когда заново передавать базу общих заданий)
+
   //-Переменные класса-------------------------------------------------------
  public:
   //-Конструктор класса------------------------------------------------------
@@ -77,6 +80,7 @@ class CTask
   void SetAnswerReferenceExist(bool state);//задать, есть ли ссылка в ответе исполнителя
   void SetTaskReferenceExist(bool state);//задать, есть ли ссылка в задании
   void SetCommon(bool state);//установить, является ли задание общим
+  void SetChangeCommonState(bool state);//установить, изменение статуса общности задания
 
   bool IsFromOrForUserGUID(const char *guid) const;//это задание от или для пользователя с уникальным идентификатором
   bool IsForUserGUID(const char *guid) const;//это задание для пользователя с уникальным идентификатором
@@ -86,6 +90,6 @@ class CTask
   bool IsAnswerReferenceExist(void) const;//есть ли ссылка в ответе исполнителя
   bool IsTaskReferenceExist(void) const;//есть ли ссылка в задании
   bool IsCommon(void) const;//является ли задание общим
-
+  bool IsChangeCommonState(void) const;//был ли изменён статус общности задания
 };
 #endif

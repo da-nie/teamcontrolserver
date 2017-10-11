@@ -44,7 +44,7 @@ class CTaskDatabaseEngine_SQL:public CITaskDatabaseEngine
   list<CTask> GetCommonTask(void);//получить все общие задания
   bool AddTask(CTask &cTask);//добавить задание
   bool DeleteTask(const CTask &cTask);//удалить задание
-  bool ChangeTask(const CTask &cTask,bool &for_user_change,CTask &cTask_Deleted,CTask &cTask_Added);//изменить задание
+  bool ChangeTask(const CTask &cTask,bool &for_user_change,bool &common_change,CTask &cTask_Deleted,CTask &cTask_Added);//изменить задание
   void ResetBase(void);//очистить базу
 };
 

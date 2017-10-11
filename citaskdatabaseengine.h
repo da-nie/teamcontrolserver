@@ -39,7 +39,7 @@ class CITaskDatabaseEngine
   virtual list<CTask> GetCommonTask(void)=0;//получить все общие задания
   virtual bool AddTask(CTask &cTask)=0;//добавить задание
   virtual bool DeleteTask(const CTask &cTask)=0;//удалить задание
-  virtual bool ChangeTask(const CTask &cTask,bool &for_user_change,CTask &cTask_Deleted,CTask &cTask_Added)=0;//изменить задание
+  virtual bool ChangeTask(const CTask &cTask,bool &for_user_change,bool &common_change,CTask &cTask_Deleted,CTask &cTask_Added)=0;//изменить задание
   virtual void ResetBase(void)=0;//очистить базу
 };
 
