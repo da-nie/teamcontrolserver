@@ -79,8 +79,7 @@ void CTransceiver_Task::SendTaskDataToClientInPackage(SClient &sClient,const CTa
 { 
  on_exit=false;
 
- if (sClient.UserGUID.GetLength()==0) return;//если клиент не авторизован, то ему ничего не отправляем   
- if (cTask.IsFromOrForUserGUID(sClient.UserGUID)==false) return;
+ if (sClient.UserGUID.GetLength()==0) return;//если клиент не авторизован, то ему ничего не отправляем
 
  SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
  if (on_exit==true) return;
