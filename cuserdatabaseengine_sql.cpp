@@ -88,7 +88,7 @@ list<CUser> CUserDatabaseEngine_SQL::GetAllUser(void)
  list<CUser> list_CUser_Local; 
  CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase.IsOpen()==false) return(list_CUser_Local);
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=UserListTableName;

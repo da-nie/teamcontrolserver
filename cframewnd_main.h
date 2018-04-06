@@ -36,7 +36,7 @@ class CFrameWnd_Main:public CFrameWnd
   afx_msg void OnSysCommand(UINT nID,LPARAM lParam);//изменение параметров окна
   //-‘ункции обработки сообщений класса--------------------------------------
   DECLARE_MESSAGE_MAP()
-  afx_msg void OnSystemTrayIconMessage(WPARAM wParam,LPARAM lParam);//обработка сообщений тре€
+  afx_msg LRESULT OnSystemTrayIconMessage(WPARAM wParam,LPARAM lParam);//обработка сообщений тре€
   afx_msg void OnCommand_Menu_SysTray_Exit(void);//обработка команды выхода из программы
   //-ѕрочее------------------------------------------------------------------
   DECLARE_DYNCREATE(CFrameWnd_Main) 

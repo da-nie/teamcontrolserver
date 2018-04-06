@@ -108,9 +108,9 @@ afx_msg void CFrameWnd_Main::OnSysCommand(UINT nID,LPARAM lParam)
 //----------------------------------------------------------------------------------------------------
 //обработка сообщений трея
 //----------------------------------------------------------------------------------------------------
-afx_msg void CFrameWnd_Main::OnSystemTrayIconMessage(WPARAM wParam,LPARAM lParam)
+afx_msg LRESULT CFrameWnd_Main::OnSystemTrayIconMessage(WPARAM wParam,LPARAM lParam)
 {
- if (wParam!=IDI_ICON_MAIN) return;//это не наша иконка в лотке 
+ if (wParam!=IDI_ICON_MAIN) return(0);//это не наша иконка в лотке 
  if (lParam==WM_LBUTTONUP)//нажали и отпустили левую кнопку мыши
  {  
   SetForegroundWindow();
@@ -128,6 +128,7 @@ afx_msg void CFrameWnd_Main::OnSystemTrayIconMessage(WPARAM wParam,LPARAM lParam
   cMenu->TrackPopupMenu(TPM_LEFTBUTTON|TPM_RIGHTBUTTON,cPoint.x,cPoint.y,this);
   delete(cMenu);
  }
+ return(0);
 }
 //----------------------------------------------------------------------------------------------------
 //обработка команды выхода из программы
