@@ -20,7 +20,7 @@ CTaskExportHTML::~CTaskExportHTML()
 //----------------------------------------------------------------------------------------------------
 //экспорт заданий
 //----------------------------------------------------------------------------------------------------
-bool CTaskExportHTML::Export(const CString &file_name,list<CTask> &list_CTask,list<CUser> &list_CUser)
+bool CTaskExportHTML::Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL) return(false);
@@ -90,20 +90,20 @@ bool CTaskExportHTML::Export(const CString &file_name,list<CTask> &list_CTask,li
  fprintf(file,"  <td height=\"4%%\" width=\"10%%\">Состояние</td>\r\n");
  fprintf(file," </tr>\r\n");
 
- list<CTask>::iterator iterator=list_CTask.begin();
- list<CTask>::iterator iterator_end=list_CTask.end();  
+ list<CTask>::const_iterator iterator=list_CTask.begin();
+ list<CTask>::const_iterator iterator_end=list_CTask.end();  
  long index=0;
  while(iterator!=iterator_end)
  {
-  CTask &cTask=*iterator;  
+  const CTask &cTask=*iterator;  
   CUser cUser_From;
   CUser cUser_For; 
   
-  list<CUser>::iterator iterator_user=list_CUser.begin();
-  list<CUser>::iterator iterator_user_end=list_CUser.end();  
+  list<CUser>::const_iterator iterator_user=list_CUser.begin();
+  list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
   while(iterator_user!=iterator_user_end)
   {
-   CUser &cUser=*iterator_user;
+   const CUser &cUser=*iterator_user;
    if (cUser.GetUserGUID().Compare(cTask.GetForUserGUID())==0) cUser_For=cUser;
    if (cUser.GetUserGUID().Compare(cTask.GetFromUserGUID())==0) cUser_From=cUser;
    iterator_user++;
@@ -124,7 +124,11 @@ bool CTaskExportHTML::Export(const CString &file_name,list<CTask> &list_CTask,li
   for(long n=0;n<size;n++)
   {
    unsigned char s=task[n];
-   if (s=='\n') fprintf(file,"<br>");
+   if (s=='\n') 
+   {
+	fprintf(file,"<br>");
+	continue;
+   }
    if (s=='\t') s=' ';
    if (s<32) continue;
    fwrite(&s,sizeof(unsigned char),1,file);

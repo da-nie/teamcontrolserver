@@ -29,7 +29,7 @@ class CITaskExport
   //деструктор
   virtual ~CITaskExport() {};
   //-Функции класса----------------------------------------------------------
-  virtual bool Export(const CString &file_name,list<CTask> &list_CTask,list<CUser> &list_CUser)=0;//экспортировать задания
+  virtual bool Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)=0;//экспортировать задания
 };
 
 #endif

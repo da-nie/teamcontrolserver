@@ -505,14 +505,16 @@ void CDocument_Main::ExportTaskBase(const CString &file_name)
 {
  list<CTask> list_CTask;
  list<CUser> list_CUser;
+ list<CProject> list_CProject;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
    list_CTask=sProtectedVariables.cITaskDatabaseEngine_Ptr->GetAllTask();
    list_CUser=sProtectedVariables.cIUserDatabaseEngine_Ptr->GetAllUser();
+   list_CProject=sProtectedVariables.cIProjectDatabaseEngine_Ptr->GetAllProject();
   }
  }
- if (cITaskExport_Ptr->Export(file_name,list_CTask,list_CUser)==false) MessageBox(NULL,"Не могу сохранить файл!","Ошибка",MB_OK);
+ if (cITaskExport_Ptr->Export(file_name,list_CTask,list_CUser,list_CProject)==false) MessageBox(NULL,"Не могу сохранить файл!","Ошибка",MB_OK);
 }
 //----------------------------------------------------------------------------------------------------
 //удаление базы пользователей

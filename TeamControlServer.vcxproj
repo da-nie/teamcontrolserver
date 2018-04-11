@@ -36,6 +36,7 @@
     <ClInclude Include="ctask.h" />
     <ClInclude Include="ctaskdatabaseengine_software.h" />
     <ClInclude Include="ctaskdatabaseengine_sql.h" />
+    <ClInclude Include="ctaskexportcsv.h" />
     <ClInclude Include="ctaskexporthtml.h" />
     <ClInclude Include="ctaskexporttxt.h" />
     <ClInclude Include="cthreadserver.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="ctask.cpp" />
     <ClCompile Include="ctaskdatabaseengine_software.cpp" />
     <ClCompile Include="ctaskdatabaseengine_sql.cpp" />
+    <ClCompile Include="ctaskexportcsv.cpp" />
     <ClCompile Include="ctaskexporthtml.cpp" />
     <ClCompile Include="ctaskexporttxt.cpp" />
     <ClCompile Include="cthreadserver.cpp" />

@@ -1,11 +1,11 @@
-#ifndef CTASK_EXPORT_TXT_H
-#define CTASK_EXPORT_TXT_H
+#ifndef CTASK_EXPORT_CSV_H
+#define CTASK_EXPORT_CSV_H
 
 //====================================================================================================
 //описание
 //====================================================================================================
 
-//Класс экспорта заданий в txt
+//Класс экспорта заданий в CSV
 
 //====================================================================================================
 //подключаемые библиотеки
@@ -15,16 +15,16 @@
 #include "citaskexport.h"
 
 //====================================================================================================
-//класс экспорта заданий в txt
+//класс экспорта заданий в CSV
 //====================================================================================================
 
-class CTaskExportTXT:public CITaskExport
+class CTaskExportCSV:public CITaskExport
 {
  public:
   //конструктор
-  CTaskExportTXT(void);
+  CTaskExportCSV(void);
   //деструктор
-  ~CTaskExportTXT();
+  ~CTaskExportCSV();
   //-Функции класса----------------------------------------------------------
   bool Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject) override;//экспортировать задания
 };

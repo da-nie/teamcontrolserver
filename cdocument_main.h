@@ -35,6 +35,7 @@
 
 #include "ctaskexporthtml.h"
 #include "ctaskexporttxt.h"
+#include "ctaskexportcsv.h"
 
 #include "crc.h"
 

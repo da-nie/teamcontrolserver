@@ -26,7 +26,7 @@ class CTaskExportHTML:public CITaskExport
   //деструктор
   ~CTaskExportHTML();
   //-Функции класса----------------------------------------------------------
-  bool Export(const CString &file_name,list<CTask> &list_CTask,list<CUser> &list_CUser);//экспортировать задания
+  bool Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject) override;//экспортировать задания
 };
 
 #endif

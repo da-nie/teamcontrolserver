@@ -36,16 +36,16 @@ class CUserDatabaseEngine_Software:public CIUserDatabaseEngine
   //-Деструктор класса-------------------------------------------------------
   ~CUserDatabaseEngine_Software();
   //-Функции класса----------------------------------------------------------
-  bool AddUser(CUser& cUser);//добавить пользователя
-  bool ChangeUser(long index,const CUser& cUser);//задать пользователя
-  bool GetUser(long index,CUser &cUser);//получить пользователя по индексу
-  bool DeleteUser(long index);//удалить пользователя по индексу
-  list<CUser> GetAllUser(void);//получить список всех пользователей
-  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser);//найти пользователя по логину и паролю
-  bool FindUserByGUID(const CSafeString& guid,CUser& cUser);//найти пользователя по GUID
-  bool ChangeUserByGUID(const CSafeString& guid,const CUser& cUser);//изменить пользователя по GUID
-  bool DeleteUserByGUID(const CSafeString& guid);//удалить пользователя по GUID
-  void ResetBase(void);//очистить базу
+  bool AddUser(CUser& cUser) override;//добавить пользователя
+  bool ChangeUser(long index,const CUser& cUser) override;//задать пользователя
+  bool GetUser(long index,CUser &cUser) override;//получить пользователя по индексу
+  bool DeleteUser(long index) override;//удалить пользователя по индексу
+  list<CUser> GetAllUser(void) override;//получить список всех пользователей
+  bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser) override;//найти пользователя по логину и паролю
+  bool FindUserByGUID(const CSafeString& guid,CUser& cUser) override;//найти пользователя по GUID
+  bool ChangeUserByGUID(const CSafeString& guid,const CUser& cUser) override;//изменить пользователя по GUID
+  bool DeleteUserByGUID(const CSafeString& guid) override;//удалить пользователя по GUID
+  void ResetBase(void) override;//очистить базу
 };
 
 #endif
