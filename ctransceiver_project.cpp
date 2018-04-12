@@ -69,6 +69,7 @@ void CTransceiver_Project::SendProjectDataToClientInPackage(SClient &sClient,con
 bool CTransceiver_Project::ReadCProjectInArray(char *ptr,size_t &offset,size_t max_length,CProject &cProject)
 {
  if (offset+sizeof(SServerCommand::CProjectDataHeader)>max_length) return(false);
+
  SServerCommand::CProjectDataHeader *sServerCommand_cProjectDataHeader_Ptr=reinterpret_cast<SServerCommand::CProjectDataHeader*>(ptr+offset);
  offset+=sizeof(SServerCommand::CProjectDataHeader);
 
@@ -82,6 +83,7 @@ bool CTransceiver_Project::ReadCProjectInArray(char *ptr,size_t &offset,size_t m
 
  CSafeString str;
  SetString(str,ptr+offset,sServerCommand_cProjectDataHeader_Ptr->ProjectNameSize);
+
  cProject.SetProjectName(str);
  offset+=sServerCommand_cProjectDataHeader_Ptr->ProjectNameSize;
 
@@ -138,7 +140,11 @@ void CTransceiver_Project::AddProject(CDocument_Main *cDocument_Main_Ptr,SClient
  //выделяем параметры проекта
  CProject cProject;
  size_t offset=sizeof(SServerCommand::SHeader);
- ReadCProjectInArray(ptr,offset,sClient.vector_Data.size(),cProject);
+ if (ReadCProjectInArray(ptr,offset,sClient.vector_Data.size(),cProject)==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
  CUser cUser;
  if (cDocument_Main_Ptr->FindUserByGUID(sClient.UserGUID,cUser)==false)
  {
