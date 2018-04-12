@@ -202,7 +202,11 @@ void CTransceiver_Task::AddTask(CDocument_Main *cDocument_Main_Ptr,SClient& sCli
  //выделяем параметры задания
  CTask cTask;
  size_t offset=sizeof(SServerCommand::SHeader);
- ReadCTaskInArray(ptr,offset,sClient.vector_Data.size(),cTask);
+ if (ReadCTaskInArray(ptr,offset,sClient.vector_Data.size(),cTask)==false)
+ {
+  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
+  return;
+ }
  //указываем, от кого было задание
  cTask.SetFromUserGUID(sClient.UserGUID);
  //указываем, что задание не было прочитано
