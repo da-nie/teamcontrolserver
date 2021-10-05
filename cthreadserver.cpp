@@ -282,6 +282,7 @@ void CThreadServer::NewClient(SOCKET socket_server)
  struct sockaddr client_addr;
  int addr_size=sizeof(sockaddr);
  SOCKET socket_client=accept(socket_server,(SOCKADDR*)&client_addr,&addr_size);
+
  //переведём сокет клиента в неблокирующий режим
  unsigned long nb=1;
  if (ioctlsocket(socket_client,FIONBIO,(unsigned long *)&nb)==INVALID_SOCKET)
@@ -343,7 +344,7 @@ void CThreadServer::Processing(void)
   timeval timeout;
   timeout.tv_sec=0;
   timeout.tv_usec=timeout_us;
-  if (select(FD_SETSIZE,&Readen,0,&Exeption,&timeout)>0)//произошли события с сокетами
+  if (select(0,&Readen,0,&Exeption,&timeout)>0)//произошли события с сокетами
   {
    if (FD_ISSET(socket_server,&Readen)) NewClient(socket_server);//новый клиент хочет подключиться к серверу
    //не произошло ли исключение на сокете сервера?

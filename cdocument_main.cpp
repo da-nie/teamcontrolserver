@@ -13,7 +13,7 @@ CDocument_Main::CDocument_Main(void)
 {
  BackUpAllDatabase();
 
- cITaskExport_Ptr=new CTaskExportHTML;
+ cITaskExport_Ptr=new CTaskExportCSV;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {

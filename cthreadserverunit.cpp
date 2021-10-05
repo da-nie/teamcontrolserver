@@ -279,7 +279,7 @@ void CThreadServerUnit::Processing(void)
   timeval timeout;
   timeout.tv_sec=0;
   timeout.tv_usec=timeout_us;
-  long ret=select(FD_SETSIZE,&Readen,0,&Exeption,&timeout);
+  long ret=select(0,&Readen,0,&Exeption,&timeout);
   if (ret<0) break;
   if (ret>0)//произошли события с сокетами
   {
@@ -326,25 +326,25 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
-   vector_CUser_Deleted=sProtectedVariables.vector_CUser_Deleted;
-   vector_CUser_Added=sProtectedVariables.vector_CUser_Added;
-   vector_CUser_Changed=sProtectedVariables.vector_CUser_Changed;
+   vector_CUser_Deleted.swap(sProtectedVariables.vector_CUser_Deleted);
+   vector_CUser_Added.swap(sProtectedVariables.vector_CUser_Added);
+   vector_CUser_Changed.swap(sProtectedVariables.vector_CUser_Changed);
 
    sProtectedVariables.vector_CUser_Deleted.clear();
    sProtectedVariables.vector_CUser_Added.clear();
    sProtectedVariables.vector_CUser_Changed.clear();
 
-   vector_CTask_Deleted=sProtectedVariables.vector_CTask_Deleted;
-   vector_CTask_Added=sProtectedVariables.vector_CTask_Added;
-   vector_CTask_Changed=sProtectedVariables.vector_CTask_Changed;
+   vector_CTask_Deleted.swap(sProtectedVariables.vector_CTask_Deleted);
+   vector_CTask_Added.swap(sProtectedVariables.vector_CTask_Added);
+   vector_CTask_Changed.swap(sProtectedVariables.vector_CTask_Changed);
 
    sProtectedVariables.vector_CTask_Deleted.clear();
    sProtectedVariables.vector_CTask_Added.clear();
    sProtectedVariables.vector_CTask_Changed.clear();
 
-   vector_CProject_Deleted=sProtectedVariables.vector_CProject_Deleted;
-   vector_CProject_Added=sProtectedVariables.vector_CProject_Added;
-   vector_CProject_Changed=sProtectedVariables.vector_CProject_Changed;
+   vector_CProject_Deleted.swap(sProtectedVariables.vector_CProject_Deleted);
+   vector_CProject_Added.swap(sProtectedVariables.vector_CProject_Added);
+   vector_CProject_Changed.swap(sProtectedVariables.vector_CProject_Changed);
 
    sProtectedVariables.vector_CProject_Deleted.clear();
    sProtectedVariables.vector_CProject_Added.clear();
@@ -355,11 +355,13 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
    sProtectedVariables.SendPing=false;
   }
  }
+
  if (send_ping==true)
  {
   cTransceiver_Ping.SendPingDataToClientInPackage(sClient,SERVER_ANSWER_PING,SERVER_COMMAND_NOTHING,cEvent_Exit,on_exit);
   if (on_exit==true) return;
  }
+
  //передаём список удалённых пользователей
  size=vector_CUser_Deleted.size();
  for(n=0;n<size;n++)
@@ -461,12 +463,12 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
    }
    if (byte==PROTOCOL_END_PACKAGE)//команда собрана полностью
    {
-	sServerCommand_sHeader=*(reinterpret_cast<SServerCommand::SHeader*>(&sClient.vector_Data[0]));
+	sServerCommand_sHeader=*(reinterpret_cast<SServerCommand::SHeader*>(&sClient.vector_Data[0]));	
     //расшифровываем принятую команду
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_CRC) ExecuteCommand_GetClientProgrammCRC(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_AND_LOADER) ExecuteCommand_GetClientProgrammAndLoader(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
-    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_AUTORIZATION) ExecuteCommand_Autorization(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
-    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_AUTORIZATION) ExecuteCommand_Autorization(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 	
+	if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_TASK_BOOK) ExecuteCommand_GetTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_PROJECT_BOOK) ExecuteCommand_GetProjectBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_COMMON_TASK_BOOK) ExecuteCommand_GetCommonTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
@@ -476,8 +478,8 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_ADDED_PROJECT) ExecuteCommand_AddedProject(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_DELETED_PROJECT) ExecuteCommand_DeletedProject(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_CHANGED_PROJECT) ExecuteCommand_ChangedProject(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
-	if (on_exit==true) return;
     sClient.vector_Data.clear();
+	if (on_exit==true) return;
 	continue;
    }
   }
