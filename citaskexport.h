@@ -17,7 +17,7 @@
 #include "crecordset_projectlist.h"
 
 #include <list>
-using namespace std;
+
 
 //====================================================================================================
 //абстрактный класс экспорта заданий
@@ -29,7 +29,7 @@ class CITaskExport
   //деструктор
   virtual ~CITaskExport() {};
   //-Функции класса----------------------------------------------------------
-  virtual bool Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)=0;//экспортировать задания
+  virtual bool Export(const CString &file_name,const std::list<CTask> &list_CTask,const std::list<CUser> &list_CUser,const std::list<CProject> &list_CProject)=0;//экспортировать задания
 };
 
 #endif

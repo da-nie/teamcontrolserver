@@ -17,7 +17,7 @@
 #include "craiicrecordset.h"
 #include "crecordset_projectlist.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -34,7 +34,7 @@ class CIProjectDatabaseEngine
   virtual ~CIProjectDatabaseEngine() {};
   //-Функции класса----------------------------------------------------------
   virtual bool FindProjectByGUID(const CSafeString &guid,CProject &cProject)=0;//найти проект по GUID
-  virtual list<CProject> GetAllProject(void)=0;//получить все проекты
+  virtual std::list<CProject> GetAllProject(void)=0;//получить все проекты
   virtual bool AddProject(CProject &cProject)=0;//добавить проект
   virtual bool DeleteProject(const CProject &cProject)=0;//удалить проект
   virtual bool ChangeProject(const CProject &cProject)=0;//изменить проект

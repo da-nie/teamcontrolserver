@@ -8,6 +8,8 @@ CProjectDatabaseEngine_Software::CProjectDatabaseEngine_Software(const CString &
  //настраиваем подключение к базе данных
  ProjectListTableName=project_list_table_name;
  ProjectListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+ProjectListTableName;
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -24,9 +26,8 @@ CProjectDatabaseEngine_Software::~CProjectDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 bool CProjectDatabaseEngine_Software::FindProjectByGUID(const CSafeString &guid,CProject &cProject)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
@@ -44,12 +45,11 @@ bool CProjectDatabaseEngine_Software::FindProjectByGUID(const CSafeString &guid,
 //----------------------------------------------------------------------------------------------------
 //получить все проекты
 //----------------------------------------------------------------------------------------------------
-list<CProject> CProjectDatabaseEngine_Software::GetAllProject(void)
+std::list<CProject> CProjectDatabaseEngine_Software::GetAllProject(void)
 {
- list<CProject> list_CProject_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
+ std::list<CProject> list_CProject_Local; 
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CProject_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CProject_Local);
   CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(list_CProject_Local);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(list_CProject_Local);
@@ -70,9 +70,8 @@ list<CProject> CProjectDatabaseEngine_Software::GetAllProject(void)
 //----------------------------------------------------------------------------------------------------
 bool CProjectDatabaseEngine_Software::AddProject(CProject &cProject)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().CanAppend()==TRUE)
@@ -91,9 +90,8 @@ bool CProjectDatabaseEngine_Software::AddProject(CProject &cProject)
 //----------------------------------------------------------------------------------------------------
 bool CProjectDatabaseEngine_Software::DeleteProject(const CProject &cProject)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
@@ -117,9 +115,8 @@ bool CProjectDatabaseEngine_Software::DeleteProject(const CProject &cProject)
 //----------------------------------------------------------------------------------------------------
 bool CProjectDatabaseEngine_Software::ChangeProject(const CProject &cProject)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_ProjectList> cRAIICRecordset_ProjectList(&cDatabase_ProjectList,ProjectListTableName);
   if (cRAIICRecordset_ProjectList.IsOk()==false) return(false);
   if (cRAIICRecordset_ProjectList.GetMainObject().GetRecordCount()==0) return(false);
@@ -145,7 +142,6 @@ bool CProjectDatabaseEngine_Software::ChangeProject(const CProject &cProject)
 //----------------------------------------------------------------------------------------------------
 void CProjectDatabaseEngine_Software::ResetBase(void)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
  {
   CSafeString sql_request="";
   sql_request+="DELETE * FROM ";

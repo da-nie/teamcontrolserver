@@ -12,8 +12,9 @@
 //====================================================================================================
 
 #include "citaskdatabaseengine.h"
+#include <memory>
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -30,6 +31,8 @@ class CTaskDatabaseEngine_Software:public CITaskDatabaseEngine
   CString TaskListTableName;//имя таблицы базы данных списка задач  
   CString TaskListBaseInitString;//строка инициализации базы данных заданий
   CDatabase cDatabase_TaskList;//база данных списка задач
+
+  std::shared_ptr<CRAIICDatabase> cRAIICDatabase_Ptr;//указатель на класс захвата базы данных
  public:
   //-Конструктор класса------------------------------------------------------
   CTaskDatabaseEngine_Software(const CString &task_list_table_name);
@@ -37,9 +40,9 @@ class CTaskDatabaseEngine_Software:public CITaskDatabaseEngine
   ~CTaskDatabaseEngine_Software();
   //-Функции класса----------------------------------------------------------
   bool FindTaskByGUID(const CSafeString &guid,CTask &cTask) override;//найти задание по GUID
-  list<CTask> GetAllTaskForUserGUID(const CSafeString &guid) override;//получить все задания для и от пользователя с заданным GUID
-  list<CTask> GetAllTask(void) override;//получить все задания
-  list<CTask> GetCommonTask(void) override;//получить общие задания
+  std::list<CTask> GetAllTaskForUserGUID(const CSafeString &guid) override;//получить все задания для и от пользователя с заданным GUID
+  std::list<CTask> GetAllTask(void) override;//получить все задания
+  std::list<CTask> GetCommonTask(void) override;//получить общие задания
   bool AddTask(CTask &cTask) override;//добавить задание
   bool DeleteTask(const CTask &cTask) override;//удалить задание
   bool ChangeTask(const CTask &cTask,bool &for_user_change,bool &common_change,CTask &cTask_Deleted,CTask &cTask_Added) override;//изменить задание

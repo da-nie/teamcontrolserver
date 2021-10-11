@@ -8,6 +8,8 @@ CUserDatabaseEngine_Software::CUserDatabaseEngine_Software(const CString &user_l
  //настраиваем подключение к базам данных
  UserListTableName=user_list_table_name;
  UserListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+UserListTableName;
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_UserList,UserListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -24,9 +26,8 @@ CUserDatabaseEngine_Software::~CUserDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::AddUser(CUser& cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().CanAppend()==TRUE)
@@ -44,9 +45,8 @@ bool CUserDatabaseEngine_Software::AddUser(CUser& cUser)
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::ChangeUser(long index,const CUser& cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -62,9 +62,8 @@ bool CUserDatabaseEngine_Software::ChangeUser(long index,const CUser& cUser)
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::GetUser(long index,CUser &cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -80,9 +79,8 @@ bool CUserDatabaseEngine_Software::DeleteUser(long index)
 {
  CUser cUser_Deleted; 
  if (GetUser(index,cUser_Deleted)==false) return(false);
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);  
@@ -94,12 +92,11 @@ bool CUserDatabaseEngine_Software::DeleteUser(long index)
 //----------------------------------------------------------------------------------------------------
 //получить список всех пользователей
 //----------------------------------------------------------------------------------------------------
-list<CUser> CUserDatabaseEngine_Software::GetAllUser(void)
+std::list<CUser> CUserDatabaseEngine_Software::GetAllUser(void)
 { 
- list<CUser> list_CUser_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
+ std::list<CUser> list_CUser_Local; 
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CUser_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CUser_Local);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(list_CUser_Local);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(list_CUser_Local);
@@ -119,9 +116,8 @@ list<CUser> CUserDatabaseEngine_Software::GetAllUser(void)
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -140,9 +136,8 @@ bool CUserDatabaseEngine_Software::FindUserByLoginAndPassword(const CSafeString&
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::FindUserByGUID(const CSafeString& guid,CUser& cUser)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -161,9 +156,8 @@ bool CUserDatabaseEngine_Software::FindUserByGUID(const CSafeString& guid,CUser&
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::ChangeUserByGUID(const CSafeString& guid,const CUser& cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -189,9 +183,8 @@ bool CUserDatabaseEngine_Software::ChangeUserByGUID(const CSafeString& guid,cons
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_Software::DeleteUserByGUID(const CSafeString& guid)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -216,8 +209,8 @@ bool CUserDatabaseEngine_Software::DeleteUserByGUID(const CSafeString& guid)
 //----------------------------------------------------------------------------------------------------
 void CUserDatabaseEngine_Software::ResetBase(void)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return;
   CSafeString sql_request="";
   sql_request+="DELETE * FROM ";
   sql_request+=UserListTableName;

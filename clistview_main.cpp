@@ -275,10 +275,10 @@ afx_msg void CListView_Main::OnCommand_Menu_Main_SaveCRC(void)
 void CListView_Main::UpdateList(void)
 {
  CDocument_Main *cDocument_Main_Ptr=GetDocument();
- list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
- list<SConnected> list_SConnected=cDocument_Main_Ptr->GetConnectedList();
- list<CUser>::iterator iterator=list_CUser.begin();
- list<CUser>::iterator iterator_end=list_CUser.end(); 
+ std::list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
+ std::list<SConnected> list_SConnected=cDocument_Main_Ptr->GetConnectedList();
+ std::list<CUser>::iterator iterator=list_CUser.begin();
+ std::list<CUser>::iterator iterator_end=list_CUser.end(); 
  CListCtrl &cListCtrl=GetListCtrl(); 
  cListCtrl.DeleteAllItems();
  vector_CSafeString_UserGUID.clear();
@@ -298,8 +298,8 @@ void CListView_Main::UpdateList(void)
   item.iSubItem=1;
   item.pszText="";
   //ищем пользователя в списке подключённых
-  list<SConnected>::iterator iterator_SConnected=list_SConnected.begin();
-  list<SConnected>::iterator iterator_SConnected_end=list_SConnected.end(); 
+  std::list<SConnected>::iterator iterator_SConnected=list_SConnected.begin();
+  std::list<SConnected>::iterator iterator_SConnected_end=list_SConnected.end(); 
   while (iterator_SConnected!=iterator_SConnected_end)
   {
    SConnected &sConnected=*iterator_SConnected;

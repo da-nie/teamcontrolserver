@@ -72,8 +72,8 @@ void CThreadServer::SetDocument(CDocument_Main *cDocument_Main_Set_Ptr)
 void CThreadServer::OnUserAdded(const CUser &cUser)
 {
  //сообщаем всем потокам о добавлении пользователя
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -87,8 +87,8 @@ void CThreadServer::OnUserAdded(const CUser &cUser)
 void CThreadServer::OnUserDeleted(const CUser &cUser)
 {
  //сообщаем всем потокам о удалении пользователя
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -102,8 +102,8 @@ void CThreadServer::OnUserDeleted(const CUser &cUser)
 void CThreadServer::OnUserChanged(const CUser &cUser)
 {
  //сообщаем всем потокам о изменении данных пользователя
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -118,8 +118,8 @@ void CThreadServer::OnUserChanged(const CUser &cUser)
 void CThreadServer::OnTaskAdded(const CTask &cTask)
 {
  //сообщаем всем потокам о добавлении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -133,8 +133,8 @@ void CThreadServer::OnTaskAdded(const CTask &cTask)
 void CThreadServer::OnTaskDeleted(const CTask &cTask)
 {
  //сообщаем всем потокам о удалении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -148,8 +148,8 @@ void CThreadServer::OnTaskDeleted(const CTask &cTask)
 void CThreadServer::OnTaskChanged(const CTask &cTask)
 {
  //сообщаем всем потокам о изменении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -165,8 +165,8 @@ void CThreadServer::OnTaskChanged(const CTask &cTask)
 void CThreadServer::OnProjectAdded(const CProject &cProject)
 {
  //сообщаем всем потокам о добавлении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -180,8 +180,8 @@ void CThreadServer::OnProjectAdded(const CProject &cProject)
 void CThreadServer::OnProjectDeleted(const CProject &cProject)
 {
  //сообщаем всем потокам о удалении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -195,8 +195,8 @@ void CThreadServer::OnProjectDeleted(const CProject &cProject)
 void CThreadServer::OnProjectChanged(const CProject &cProject)
 {
  //сообщаем всем потокам о изменении задания
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -210,8 +210,8 @@ void CThreadServer::OnProjectChanged(const CProject &cProject)
 void CThreadServer::SendPing(void)
 {
  //сообщаем всем потокам о посылке сообщения для проверки связи
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -263,8 +263,8 @@ SOCKET CThreadServer::CreateServer(void)
 //----------------------------------------------------------------------------------------------------
 void CThreadServer::DisconnectAllClientAndResetClientList(void)
 {
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
- list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+ std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
  while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
  {   
   CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);
@@ -314,8 +314,8 @@ void CThreadServer::Processing(void)
  {
   if (WaitForSingleObject(cEvent_Exit.m_hObject,0)==WAIT_OBJECT_0) break;//получен сигнал на выход
   //удаляем из списка отключившихся клиентов
-  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
-  list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
+  std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr=list_CThreadServerUnitPtr.begin();
+  std::list<CThreadServerUnit*>::iterator iterator_list_CThreadServerUnitPtr_end=list_CThreadServerUnitPtr.end();
   while(iterator_list_CThreadServerUnitPtr!=iterator_list_CThreadServerUnitPtr_end)
   {   
    CThreadServerUnit *cThreadServerUnit_Ptr=(*iterator_list_CThreadServerUnitPtr);

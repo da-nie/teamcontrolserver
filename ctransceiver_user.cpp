@@ -91,9 +91,9 @@ void CTransceiver_User::SendUserBook(CDocument_Main *cDocument_Main_Ptr,SClient&
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
 
- list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
- list<CUser>::iterator iterator=list_CUser.begin();
- list<CUser>::iterator iterator_end=list_CUser.end();  
+ std::list<CUser> list_CUser=cDocument_Main_Ptr->GetAllUser();
+ std::list<CUser>::iterator iterator=list_CUser.begin();
+ std::list<CUser>::iterator iterator_end=list_CUser.end();  
  while(iterator!=iterator_end)
  {
   CUser &cUser=*iterator;

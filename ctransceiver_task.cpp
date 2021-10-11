@@ -170,7 +170,7 @@ void CTransceiver_Task::SendTaskBook(CDocument_Main *cDocument_Main_Ptr,SClient&
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
  }
- list<CTask> list_CTask=cDocument_Main_Ptr->GetAllTaskForUserGUID(sClient.UserGUID);
+ std::list<CTask> list_CTask=cDocument_Main_Ptr->GetAllTaskForUserGUID(sClient.UserGUID);
  SendTaskList(list_CTask,sClient,command,SERVER_ANSWER_TASK_BOOK,cEvent_Exit,on_exit);
 }
 //----------------------------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ void CTransceiver_Task::SendCommonTaskBook(CDocument_Main *cDocument_Main_Ptr,SC
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
  }
- list<CTask> list_CTask=cDocument_Main_Ptr->GetCommonTask();
+ std::list<CTask> list_CTask=cDocument_Main_Ptr->GetCommonTask();
  SendTaskList(list_CTask,sClient,command,SERVER_ANSWER_COMMON_TASK_BOOK,cEvent_Exit,on_exit);
 }
 //----------------------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ void CTransceiver_Task::ChangeTask(CDocument_Main *cDocument_Main_Ptr,SClient& s
 //----------------------------------------------------------------------------------------------------
 //передача списка заданий
 //----------------------------------------------------------------------------------------------------
-void CTransceiver_Task::SendTaskList(list<CTask> &list_CTask,SClient& sClient,SERVER_COMMAND command,SERVER_ANSWER answer,CEvent &cEvent_Exit,bool &on_exit)
+void CTransceiver_Task::SendTaskList(std::list<CTask> &list_CTask,SClient& sClient,SERVER_COMMAND command,SERVER_ANSWER answer,CEvent &cEvent_Exit,bool &on_exit)
 {
  on_exit=false;
  //отвечаем
@@ -276,8 +276,8 @@ void CTransceiver_Task::SendTaskList(list<CTask> &list_CTask,SClient& sClient,SE
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
  
- list<CTask>::iterator iterator=list_CTask.begin();
- list<CTask>::iterator iterator_end=list_CTask.end();
+ std::list<CTask>::iterator iterator=list_CTask.begin();
+ std::list<CTask>::iterator iterator_end=list_CTask.end();
  while(iterator!=iterator_end)
  {
   CTask &cTask=*iterator;  

@@ -39,7 +39,7 @@
 
 #include "crc.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -85,7 +85,7 @@ class CDocument_Main:public CDocument
    SServerSettings sServerSettings;//настройки сервера
    SCRC sCRC;//контрольные суммы программы и загрузчика
 
-   list <SConnected> list_SConnected;//подключённые пользователи
+   std::list<SConnected> list_SConnected;//подключённые пользователи
    bool ChangeConnectedList;//изменился ли список подключённх пользователей
 
    CCriticalSection cCriticalSection;//критическая секция для доступа к классу
@@ -98,14 +98,14 @@ class CDocument_Main:public CDocument
   //-Деструктор класса-------------------------------------------------------
   ~CDocument_Main();
   //-Функции класса----------------------------------------------------------
-  list<SConnected> GetConnectedList(void);//получить список подключённых пользователей
+  std::list<SConnected> GetConnectedList(void);//получить список подключённых пользователей
   bool GetChangeConnectedListAndResetState(void);//получить, изменился ли список подключённых пользователей и сбросить значение
   void SaveState(void);//сохранение состояния
   bool AddUser(CUser& cUser);//добавить пользователя
   bool ChangeUser(long index,const CUser& cUser);//задать пользователя
   bool GetUser(long index,CUser &cUser);//получить пользователя по индексу
   void DeleteUser(long index);//удалить пользователя по индексу
-  list<CUser> GetAllUser(void);//получить список всех пользователей
+  std::list<CUser> GetAllUser(void);//получить список всех пользователей
   bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser);//найти пользователя по логину и паролю
   bool FindUserByGUID(const CSafeString& guid,CUser& cUser);//найти пользователя по GUID
   bool ChangeUserByGUID(const CSafeString& guid,const CUser& cUser);//изменить пользователя по GUID
@@ -115,10 +115,10 @@ class CDocument_Main:public CDocument
   void GetCRC(SCRC &sCRC);//получить CRC программы и загрузчика
   void GetServerSettings(SServerSettings &sServerSettings);//получить настройки сервера
   void SetServerSettings(const SServerSettings &sServerSettings);//установить настройки сервера (сервер будет перезапущен)
-  list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
-  list<CTask> GetCommonTask();//получить все общие задания
-  list<CTask> GetAllTask(void);//получить все задания
-  list<CProject> GetAllProject(void);//получить все проекты
+  std::list<CTask> GetAllTaskForUserGUID(const CSafeString &guid);//получить все задания для и от пользователя с заданным GUID
+  std::list<CTask> GetCommonTask();//получить все общие задания
+  std::list<CTask> GetAllTask(void);//получить все задания
+  std::list<CProject> GetAllProject(void);//получить все проекты
 
   bool AddTask(CTask &cTask);//добавить задание
   bool DeleteTask(const CTask &cTask);//удалить задание

@@ -308,18 +308,19 @@ void CThreadServerUnit::LinkProcessing(SClient &sClient,bool &on_exit)
  size_t n;
 
  on_exit=false;
+
  //копируем данные, которые необходимо передать клиенту
- vector<CUser> vector_CUser_Deleted;//удалённые пользователи
- vector<CUser> vector_CUser_Changed;//изменённые пользователи
- vector<CUser> vector_CUser_Added;//добавленные пользователи
+ std::vector<CUser> vector_CUser_Deleted;//удалённые пользователи
+ std::vector<CUser> vector_CUser_Changed;//изменённые пользователи
+ std::vector<CUser> vector_CUser_Added;//добавленные пользователи
 
- vector<CTask> vector_CTask_Deleted;//удалённые задания
- vector<CTask> vector_CTask_Changed;//изменённые задания
- vector<CTask> vector_CTask_Added;//добавленные задания
+ std::vector<CTask> vector_CTask_Deleted;//удалённые задания
+ std::vector<CTask> vector_CTask_Changed;//изменённые задания
+ std::vector<CTask> vector_CTask_Added;//добавленные задания
 
- vector<CProject> vector_CProject_Deleted;//удалённые проекты
- vector<CProject> vector_CProject_Changed;//изменённые проекты
- vector<CProject> vector_CProject_Added;//добавленные проекты
+ std::vector<CProject> vector_CProject_Deleted;//удалённые проекты
+ std::vector<CProject> vector_CProject_Changed;//изменённые проекты
+ std::vector<CProject> vector_CProject_Added;//добавленные проекты
 
  bool send_ping;//требуется ли послать сообщение для проверки связи
 
@@ -445,7 +446,7 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
  long n;
  on_exit=false;
  SServerCommand::SHeader sServerCommand_sHeader; 
- //анализируем принятые данные 
+ //анализируем принятые данные
  for(n=0;n<length;n++)
  {
   unsigned char byte=static_cast<unsigned char>(data[n]);
@@ -467,8 +468,8 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
     //расшифровываем принятую команду
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_CRC) ExecuteCommand_GetClientProgrammCRC(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_CLIENT_PROGRAMM_AND_LOADER) ExecuteCommand_GetClientProgrammAndLoader(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
-    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_AUTORIZATION) ExecuteCommand_Autorization(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 	
-	if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_AUTORIZATION) ExecuteCommand_Autorization(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
+    if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_USER_BOOK) ExecuteCommand_GetUserBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_TASK_BOOK) ExecuteCommand_GetTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_PROJECT_BOOK) ExecuteCommand_GetProjectBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit); 
     if (sServerCommand_sHeader.CommandID==SERVER_COMMAND_GET_COMMON_TASK_BOOK) ExecuteCommand_GetCommonTaskBook(sClient,static_cast<SERVER_COMMAND>(sServerCommand_sHeader.CommandID),on_exit);
@@ -495,6 +496,7 @@ void CThreadServerUnit::NewDataFromClient(SClient& sClient,char *data,unsigned l
   size_t cmd_length=sClient.vector_Data.size();
   //if (cmd_length>=MAX_PACKAGE_LENGTH) sClient.vector_Data.clear();//превысили размер команды  
  }
+
 }
 //----------------------------------------------------------------------------------------------------
 //обработка команды получения CRC клиентской программы
@@ -515,14 +517,12 @@ void CThreadServerUnit::ExecuteCommand_GetClientProgrammAndLoader(SClient& sClie
  cTransceiver_File.SendClientProgrammAndLoaderFileToClient(sClient,sCRC,command,CLIENT_PROGRAMM_FILE_NAME,LOADER_FILE_NAME,cEvent_Exit,on_exit);
 }
 
-
 //----------------------------------------------------------------------------------------------------
 //обработка команды авторизации
 //----------------------------------------------------------------------------------------------------
 void CThreadServerUnit::ExecuteCommand_Autorization(SClient& sClient,SERVER_COMMAND command,bool &on_exit)
 {
- cTransceiver_Autorization.ExecuteAutorization(cDocument_Main_Ptr,sClient,command,cEvent_Exit,on_exit);
- cDocument_Main_Ptr->SetUserConnected(sClient.UserGUID,true);
+ cTransceiver_Autorization.ExecuteAutorization(cDocument_Main_Ptr,sClient,command,cEvent_Exit,on_exit);  
 }
 //----------------------------------------------------------------------------------------------------
 //обработка команды получения данных пользователей

@@ -9,6 +9,8 @@ CTaskDatabaseEngine_SQL::CTaskDatabaseEngine_SQL(const CString &task_list_table_
  TaskListTableName=task_list_table_name;
  TaskListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+TaskListTableName;
  cDatabaseEngine_SQL_Ptr=new CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_TaskList>,CTask>(TaskListTableName);
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -32,7 +34,7 @@ bool CTaskDatabaseEngine_SQL::FindTaskByGUID(const CSafeString &guid,CTask &cTas
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CSafeString &guid)
+std::list<CTask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
  CString sql_condition="FromUserGUID='"+guid+"') OR (ForUserGUID='"+guid+"'"; 
  return(cDatabaseEngine_SQL_Ptr->FindAll(sql_condition));
@@ -40,7 +42,7 @@ list<CTask> CTaskDatabaseEngine_SQL::GetAllTaskForUserGUID(const CSafeString &gu
 //----------------------------------------------------------------------------------------------------
 //получить все задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_SQL::GetAllTask(void)
+std::list<CTask> CTaskDatabaseEngine_SQL::GetAllTask(void)
 {
  return(cDatabaseEngine_SQL_Ptr->GetAll());
 }
@@ -48,12 +50,11 @@ list<CTask> CTaskDatabaseEngine_SQL::GetAllTask(void)
 //----------------------------------------------------------------------------------------------------
 //получить общие задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_SQL::GetCommonTask(void)
+std::list<CTask> CTaskDatabaseEngine_SQL::GetCommonTask(void)
 { 
- list<CTask> list_CTask_Local;  
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ std::list<CTask> list_CTask_Local;  
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CTask_Local);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
@@ -79,9 +80,8 @@ bool CTaskDatabaseEngine_SQL::AddTask(CTask &cTask)
 { 
  if (cDatabaseEngine_SQL_Ptr->Add(cTask)==false) return(false);
  //считаем задание заново, так как там есть автоинкрементное поле
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset.IsOk()==false) return(false);
@@ -117,9 +117,8 @@ bool CTaskDatabaseEngine_SQL::ChangeTask(const CTask &cTask,bool &for_user_chang
 {
  for_user_change=false;
  common_change=false;
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=TaskListTableName;

@@ -14,6 +14,7 @@ CSafeString::CSafeString(char* str)
 //====================================================================================================
 CSafeString::CSafeString(const CSafeString& cSafeString)
 {
+ if (&cSafeString==this) return;
  Size=cSafeString.Size;
  String_Ptr=new char[Size+1];
  strcpy(String_Ptr,cSafeString.String_Ptr);

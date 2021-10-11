@@ -20,7 +20,7 @@ CTaskExportCSV::~CTaskExportCSV()
 //----------------------------------------------------------------------------------------------------
 //экспорт заданий
 //----------------------------------------------------------------------------------------------------
-bool CTaskExportCSV::Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)
+bool CTaskExportCSV::Export(const CString &file_name,const std::list<CTask> &list_CTask,const std::list<CUser> &list_CUser,const std::list<CProject> &list_CProject)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL) return(false);
@@ -36,8 +36,8 @@ bool CTaskExportCSV::Export(const CString &file_name,const list<CTask> &list_CTa
  fprintf(file,"По проекту;");
  fprintf(file,"\r\n");
 
- list<CTask>::const_iterator iterator=list_CTask.begin();
- list<CTask>::const_iterator iterator_end=list_CTask.end();  
+ std::list<CTask>::const_iterator iterator=list_CTask.begin();
+ std::list<CTask>::const_iterator iterator_end=list_CTask.end();  
  long index=0;
  while(iterator!=iterator_end)
  {
@@ -46,8 +46,8 @@ bool CTaskExportCSV::Export(const CString &file_name,const list<CTask> &list_CTa
   CUser cUser_For; 
   CProject cProject; 
   
-  list<CUser>::const_iterator iterator_user=list_CUser.begin();
-  list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
+  std::list<CUser>::const_iterator iterator_user=list_CUser.begin();
+  std::list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
   while(iterator_user!=iterator_user_end)
   {
    const CUser &cUser=*iterator_user;
@@ -57,8 +57,8 @@ bool CTaskExportCSV::Export(const CString &file_name,const list<CTask> &list_CTa
   }
 
   cProject.SetProjectName("Без проекта");
-  list<CProject>::const_iterator iterator_project=list_CProject.begin();
-  list<CProject>::const_iterator iterator_project_end=list_CProject.end();    
+  std::list<CProject>::const_iterator iterator_project=list_CProject.begin();
+  std::list<CProject>::const_iterator iterator_project_end=list_CProject.end();    
   while(iterator_project!=iterator_project_end)
   {
    const CProject &cProject_local=*iterator_project;

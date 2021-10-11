@@ -103,7 +103,7 @@ void CTransceiver_Project::SendProjectBook(CDocument_Main *cDocument_Main_Ptr,SC
   SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
   return;
  }
- list<CProject> list_CProject=cDocument_Main_Ptr->GetAllProject();
+ std::list<CProject> list_CProject=cDocument_Main_Ptr->GetAllProject();
 //отвечаем
  //передаём список базы данных
  SendBeginPackage(sClient.Socket,cEvent_Exit,on_exit);
@@ -114,8 +114,8 @@ void CTransceiver_Project::SendProjectBook(CDocument_Main *cDocument_Main_Ptr,SC
  SendPart(sClient.Socket,reinterpret_cast<char*>(&sServerAnswer_sHeader),sizeof(SServerAnswer::SHeader),cEvent_Exit,on_exit);
  if (on_exit==true) return;
 
- list<CProject>::iterator iterator=list_CProject.begin();
- list<CProject>::iterator iterator_end=list_CProject.end();  
+ std::list<CProject>::iterator iterator=list_CProject.begin();
+ std::list<CProject>::iterator iterator_end=list_CProject.end();  
  while(iterator!=iterator_end)
  {
   CProject &cProject=*iterator;  

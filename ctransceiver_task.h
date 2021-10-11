@@ -18,7 +18,7 @@
 #include "protocol.h"
 #include "ctransceiver.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //класс приёмо-передатчика данных заданий
@@ -43,7 +43,7 @@ class CTransceiver_Task:public CTransceiver
   void DeleteTask(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//удаление задания
   void ChangeTask(CDocument_Main *cDocument_Main_Ptr,SClient& sClient,SERVER_COMMAND command,CEvent &cEvent_Exit,bool &on_exit);//изменение задания
  protected:
-  void SendTaskList(list<CTask> &list_CTask,SClient& sClient,SERVER_COMMAND command,SERVER_ANSWER answer,CEvent &cEvent_Exit,bool &on_exit);//передача списка заданий
+  void SendTaskList(std::list<CTask> &list_CTask,SClient& sClient,SERVER_COMMAND command,SERVER_ANSWER answer,CEvent &cEvent_Exit,bool &on_exit);//передача списка заданий
 };
 
 #endif

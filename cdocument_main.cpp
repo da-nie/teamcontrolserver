@@ -99,9 +99,9 @@ void CDocument_Main::SaveState(void)
 //----------------------------------------------------------------------------------------------------
 //получить список подключённых пользователей
 //----------------------------------------------------------------------------------------------------
-list<SConnected> CDocument_Main::GetConnectedList(void)
+std::list<SConnected> CDocument_Main::GetConnectedList(void)
 {
- list<SConnected> list_SConnected;
+ std::list<SConnected> list_SConnected;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -194,9 +194,9 @@ void CDocument_Main::DeleteUser(long index)
 //----------------------------------------------------------------------------------------------------
 //получить список всех пользователей
 //----------------------------------------------------------------------------------------------------
-list<CUser> CDocument_Main::GetAllUser(void)
+std::list<CUser> CDocument_Main::GetAllUser(void)
 { 
- list<CUser> list_CUser_Local; 
+ std::list<CUser> list_CUser_Local; 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -332,9 +332,9 @@ void CDocument_Main::SetServerSettings(const SServerSettings &sServerSettings)
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<CTask> CDocument_Main::GetAllTaskForUserGUID(const CSafeString &guid)
+std::list<CTask> CDocument_Main::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
- list<CTask> list_CTask_Local;  
+ std::list<CTask> list_CTask_Local;  
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -346,9 +346,9 @@ list<CTask> CDocument_Main::GetAllTaskForUserGUID(const CSafeString &guid)
 //----------------------------------------------------------------------------------------------------
 //получить все задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CDocument_Main::GetAllTask(void)
+std::list<CTask> CDocument_Main::GetAllTask(void)
 {
- list<CTask> list_CTask_Local; 
+ std::list<CTask> list_CTask_Local; 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -361,9 +361,9 @@ list<CTask> CDocument_Main::GetAllTask(void)
 //----------------------------------------------------------------------------------------------------
 //получить все общие задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CDocument_Main::GetCommonTask(void)
+std::list<CTask> CDocument_Main::GetCommonTask(void)
 { 
- list<CTask> list_CTask_Local;
+ std::list<CTask> list_CTask_Local;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -375,9 +375,9 @@ list<CTask> CDocument_Main::GetCommonTask(void)
 //----------------------------------------------------------------------------------------------------
 //получить все проекты
 //----------------------------------------------------------------------------------------------------
-list<CProject> CDocument_Main::GetAllProject(void)
+std::list<CProject> CDocument_Main::GetAllProject(void)
 {
- list<CProject> list_CProject_Local; 
+ std::list<CProject> list_CProject_Local; 
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -503,9 +503,9 @@ bool CDocument_Main::ChangeProject(const CProject &cProject)
 //----------------------------------------------------------------------------------------------------
 void CDocument_Main::ExportTaskBase(const CString &file_name)
 {
- list<CTask> list_CTask;
- list<CUser> list_CUser;
- list<CProject> list_CProject;
+ std::list<CTask> list_CTask;
+ std::list<CUser> list_CUser;
+ std::list<CProject> list_CProject;
  {
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {
@@ -565,8 +565,8 @@ void CDocument_Main::SetUserConnected(const CSafeString& guid,bool connected)
   CRAIICCriticalSection cRAIICCriticalSection(&sProtectedVariables.cCriticalSection);
   {   
    //найдём пользователя в списке
-   list<SConnected>::iterator iterator_current=sProtectedVariables.list_SConnected.begin();
-   list<SConnected>::iterator iterator_end=sProtectedVariables.list_SConnected.end();
+   std::list<SConnected>::iterator iterator_current=sProtectedVariables.list_SConnected.begin();
+   std::list<SConnected>::iterator iterator_end=sProtectedVariables.list_SConnected.end();
    while(iterator_current!=iterator_end)
    {
     SConnected &sConnected=*iterator_current;
@@ -625,7 +625,7 @@ void CDocument_Main::BackUpAllDatabase(void)
   }
   char path[MAX_PATH];
   GetCurrentDirectory(MAX_PATH,path);
-  string command_line="a ";
+  std::string command_line="a ";
   command_line+=filename; 
   command_line+=" TaskBase ProjBase UserBase";
   Execute("winrar.exe",command_line.c_str(),path);
@@ -639,8 +639,8 @@ void CDocument_Main::SaveCRC(void)
  unsigned short crc16_programm;
  unsigned short crc16_loader;
 
- vector<char> vector_programm;
- vector<char> vector_loader;
+ std::vector<char> vector_programm;
+ std::vector<char> vector_loader;
  if (LoadFileAndCreateCRC("TeamControlClient.exe",vector_programm,crc16_programm)==NULL)
  {
   MessageBox(NULL,"Не могу открыть файл программы TeamControlClient.exe!","Ошибка",MB_OK);

@@ -8,6 +8,8 @@ CTaskDatabaseEngine_Software::CTaskDatabaseEngine_Software(const CString &task_l
  //настраиваем подключение к базам данных
  TaskListTableName=task_list_table_name;
  TaskListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+TaskListTableName;
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -24,9 +26,8 @@ CTaskDatabaseEngine_Software::~CTaskDatabaseEngine_Software()
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CSafeString &guid,CTask &cTask)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
@@ -45,12 +46,11 @@ bool CTaskDatabaseEngine_Software::FindTaskByGUID(const CSafeString &guid,CTask 
 //----------------------------------------------------------------------------------------------------
 //получить все задания для и от пользователя с заданным GUID
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CSafeString &guid)
+std::list<CTask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CSafeString &guid)
 { 
- list<CTask> list_CTask_Local;  
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ std::list<CTask> list_CTask_Local;  
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CTask_Local);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
@@ -70,12 +70,11 @@ list<CTask> CTaskDatabaseEngine_Software::GetAllTaskForUserGUID(const CSafeStrin
 //----------------------------------------------------------------------------------------------------
 //получить все задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_Software::GetAllTask(void)
+std::list<CTask> CTaskDatabaseEngine_Software::GetAllTask(void)
 {
- list<CTask> list_CTask_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ std::list<CTask> list_CTask_Local; 
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CTask_Local);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
@@ -95,12 +94,11 @@ list<CTask> CTaskDatabaseEngine_Software::GetAllTask(void)
 //----------------------------------------------------------------------------------------------------
 //получить общие задания
 //----------------------------------------------------------------------------------------------------
-list<CTask> CTaskDatabaseEngine_Software::GetCommonTask(void)
+std::list<CTask> CTaskDatabaseEngine_Software::GetCommonTask(void)
 { 
- list<CTask> list_CTask_Local;  
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
+ std::list<CTask> list_CTask_Local;  
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CTask_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CTask_Local);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(list_CTask_Local);
@@ -126,9 +124,8 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
 {
  cTask.SetState(TASK_STATE_NO_READ);
  {
-  CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
   {
-   if (cRAIICDatabase.IsOpen()==false) return(false);
+   if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
    {
     CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
     if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
@@ -143,9 +140,8 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
   }
  }
  //считаем задание заново, так как там есть автоинкрементное поле
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
@@ -171,9 +167,8 @@ bool CTaskDatabaseEngine_Software::AddTask(CTask &cTask)
 //----------------------------------------------------------------------------------------------------
 bool CTaskDatabaseEngine_Software::DeleteTask(const CTask &cTask)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
@@ -201,9 +196,8 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_
 {
  for_user_change=false;
  common_change=false;
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   {
    CRAIICRecordset<CRecordset_TaskList> cRAIICRecordset_TaskList(&cDatabase_TaskList,TaskListTableName);
    if (cRAIICRecordset_TaskList.IsOk()==false) return(false);
@@ -241,8 +235,8 @@ bool CTaskDatabaseEngine_Software::ChangeTask(const CTask &cTask,bool &for_user_
 //----------------------------------------------------------------------------------------------------
 void CTaskDatabaseEngine_Software::ResetBase(void)
 { 
- CRAIICDatabase cRAIICDatabase(&cDatabase_TaskList,TaskListBaseInitString);
  {
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return;
   CSafeString sql_request="";
   sql_request+="DELETE * FROM ";
   sql_request+=TaskListTableName;

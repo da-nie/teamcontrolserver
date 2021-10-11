@@ -17,7 +17,7 @@
 #include "cdocument_main.h"
 #include "protocol.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -31,7 +31,7 @@ struct SClient
  CSafeString Password;//пароль
  CSafeString UserGUID;//назначенный по результатам активации по логину и паролю GUID 
  bool StuffingEnabled;//включён ли байтстаффинг
- vector<unsigned char> vector_Data;//принятые данные
+ std::vector<unsigned char> vector_Data;//принятые данные
 };
 
 //====================================================================================================

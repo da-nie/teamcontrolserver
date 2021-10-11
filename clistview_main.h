@@ -19,7 +19,7 @@
 #include "cdialog_usersettings.h"
 #include "cdialog_serversettings.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //класс представления
@@ -30,7 +30,7 @@ class CListView_Main:public CListView
  protected: 
   //-Переменные класса-------------------------------------------------------
   CMenu cMenu_List;//выпадающее меню в списке пользователей
-  vector<CSafeString> vector_CSafeString_UserGUID;//список GUID пользователей в списке
+  std::vector<CSafeString> vector_CSafeString_UserGUID;//список GUID пользователей в списке
   //-Прочее------------------------------------------------------------------
  public:
   //-Конструктор класса------------------------------------------------------

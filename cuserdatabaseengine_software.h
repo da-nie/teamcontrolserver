@@ -12,8 +12,9 @@
 //====================================================================================================
 
 #include "ciuserdatabaseengine.h"
+#include <memory>
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -30,6 +31,8 @@ class CUserDatabaseEngine_Software:public CIUserDatabaseEngine
   CString UserListTableName;//имя таблицы базы данных списка пользователей
   CString UserListBaseInitString;//строка инициализации базы данных пользователей
   CDatabase cDatabase_UserList;//база данных списка пользователей
+
+  std::shared_ptr<CRAIICDatabase> cRAIICDatabase_Ptr;//указатель на класс захвата базы данных
  public:
   //-Конструктор класса------------------------------------------------------
   CUserDatabaseEngine_Software(const CString &user_list_table_name);
@@ -40,7 +43,7 @@ class CUserDatabaseEngine_Software:public CIUserDatabaseEngine
   bool ChangeUser(long index,const CUser& cUser) override;//задать пользователя
   bool GetUser(long index,CUser &cUser) override;//получить пользователя по индексу
   bool DeleteUser(long index) override;//удалить пользователя по индексу
-  list<CUser> GetAllUser(void) override;//получить список всех пользователей
+  std::list<CUser> GetAllUser(void) override;//получить список всех пользователей
   bool FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser) override;//найти пользователя по логину и паролю
   bool FindUserByGUID(const CSafeString& guid,CUser& cUser) override;//найти пользователя по GUID
   bool ChangeUserByGUID(const CSafeString& guid,const CUser& cUser) override;//изменить пользователя по GUID

@@ -14,7 +14,7 @@
 #include "stdafx.h"
 #include "craiicdatabase.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //структуры
@@ -38,10 +38,10 @@ class CDatabaseEngine_SQL
   ~CDatabaseEngine_SQL();
   //-Функции класса----------------------------------------------------------
   bool Add(CUnit &cUnit);//добавить элемент
-  list<CUnit> GetAll(void);//получить все элементы
+  std::list<CUnit> GetAll(void);//получить все элементы
   bool Delete(const CString &sql_condition);//удалить элемент по условию sql_condition
   bool FindOne(const CString &sql_condition,CUnit &cUnit);//найти по условию sql_condition один элемент
-  list<CUnit> FindAll(const CString &sql_condition);//получить по условию sql_condition список элементов
+  std::list<CUnit> FindAll(const CString &sql_condition);//получить по условию sql_condition список элементов
   bool Change(const CString &sql_condition,const CUnit &cUnit);//изменить элемент по условию sql_condition
   void ResetBase(void);//очистить базу
 };
@@ -99,9 +99,9 @@ bool CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::Add(CUnit &cUnit)
 //получить все элементы
 //----------------------------------------------------------------------------------------------------
 template<class CRAIICRecordset,class CUnit>
-list<CUnit> CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::GetAll(void)
+std::list<CUnit> CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::GetAll(void)
 {
- list<CUnit> list_CUnit_Local; 
+ std::list<CUnit> list_CUnit_Local; 
  CRAIICDatabase cRAIICDatabase(&cDatabase,BaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(list_CUnit_Local);
@@ -174,9 +174,9 @@ bool CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::FindOne(const CString &sql_cond
 //получить по условию sql_condition список элементов
 //----------------------------------------------------------------------------------------------------
 template<class CRAIICRecordset,class CUnit>
-list<CUnit> CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::FindAll(const CString &sql_condition)
+std::list<CUnit> CDatabaseEngine_SQL<CRAIICRecordset,CUnit>::FindAll(const CString &sql_condition)
 { 
- list<CUnit> list_CUnit_Local;  
+ std::list<CUnit> list_CUnit_Local;  
  CRAIICDatabase cRAIICDatabase(&cDatabase,BaseInitString);
  {
   if (cRAIICDatabase.IsOpen()==false) return(list_CUnit_Local);

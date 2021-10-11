@@ -3,7 +3,7 @@
 //----------------------------------------------------------------------------------------------------
 //загрузить файл и вычислить CRC
 //----------------------------------------------------------------------------------------------------
-bool LoadFileAndCreateCRC(const CSafeString &file_name,vector<char> &vector_data,unsigned short &crc16)
+bool LoadFileAndCreateCRC(const CSafeString &file_name,std::vector<char> &vector_data,unsigned short &crc16)
 {
  vector_data.clear();
  crc16=0;

@@ -13,7 +13,9 @@
 
 #include "ciprojectdatabaseengine.h"
 
-using namespace std;
+#include <memory>
+
+
 
 //====================================================================================================
 //структуры
@@ -30,6 +32,8 @@ class CProjectDatabaseEngine_Software:public CIProjectDatabaseEngine
   CString ProjectListTableName;//имя таблицы базы данных списка проектов  
   CString ProjectListBaseInitString;//строка инициализации базы данных проектов
   CDatabase cDatabase_ProjectList;//база данных списка проектов
+
+  std::shared_ptr<CRAIICDatabase> cRAIICDatabase_Ptr;//указатель на класс захвата базы данных
  public:
   //-Конструктор класса------------------------------------------------------
   CProjectDatabaseEngine_Software(const CString &project_list_table_name);
@@ -37,7 +41,7 @@ class CProjectDatabaseEngine_Software:public CIProjectDatabaseEngine
   ~CProjectDatabaseEngine_Software();
   //-Функции класса----------------------------------------------------------
   bool FindProjectByGUID(const CSafeString &guid,CProject &cProject) override;//найти проект по GUID
-  list<CProject> GetAllProject(void) override;//получить все проекты
+  std::list<CProject> GetAllProject(void) override;//получить все проекты
   bool AddProject(CProject &cProject) override;//добавить проект
   bool DeleteProject(const CProject &cProject) override;//удалить проект
   bool ChangeProject(const CProject &cProject) override;//изменить проект

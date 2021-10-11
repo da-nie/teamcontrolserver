@@ -19,7 +19,7 @@
 #include "cthreadserverunit.h"
 #include "craiiccriticalsection.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //класс серверного потока
@@ -32,7 +32,7 @@ class CThreadServer
  protected:
   CEvent cEvent_Exit;//требование на выход из потока
   CWinThread *cWinThread_Thread;//поток обработки
-  list<CThreadServerUnit*> list_CThreadServerUnitPtr;//список указателей на классы обработки клиентов
+  std::list<CThreadServerUnit*> list_CThreadServerUnitPtr;//список указателей на классы обработки клиентов
   CDocument_Main *cDocument_Main_Ptr;//указатель на документ
  public:  
   //конструктор

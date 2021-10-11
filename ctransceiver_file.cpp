@@ -33,7 +33,7 @@ void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,const
   return;
  }
 
- vector<char> vector_programm_data;
+ std::vector<char> vector_programm_data;
  unsigned short programm_crc16;
  if (LoadFileAndCreateCRC(programm_file_name,vector_programm_data,programm_crc16)==false)
  {
@@ -41,7 +41,7 @@ void CTransceiver_File::SendCRCClientProgrammFileToClient(SClient &sClient,const
   return;
  }
 
- vector<char> vector_loader_data;
+ std::vector<char> vector_loader_data;
  unsigned short loader_crc16;
  if (LoadFileAndCreateCRC(loader_file_name,vector_loader_data,loader_crc16)==false)
  {
@@ -84,7 +84,7 @@ void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient
   return;
  }
 
- vector<char> vector_programm_data;
+ std::vector<char> vector_programm_data;
  unsigned short programm_crc16;
  if (LoadFileAndCreateCRC(programm_file_name,vector_programm_data,programm_crc16)==false)
  {
@@ -92,7 +92,7 @@ void CTransceiver_File::SendClientProgrammAndLoaderFileToClient(SClient &sClient
   return;
  }
 
- vector<char> vector_loader_data;
+ std::vector<char> vector_loader_data;
  unsigned short loader_crc16;
  if (LoadFileAndCreateCRC(loader_file_name,vector_loader_data,loader_crc16)==false)
  {

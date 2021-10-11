@@ -24,7 +24,7 @@
 #include "ctransceiver_file.h"
 #include "ctransceiver_ping.h"
 
-using namespace std;
+
 
 //====================================================================================================
 //класс серверного потока для одного клиента
@@ -40,22 +40,22 @@ class CThreadServerUnit
   char *Buffer;//буфер приёма/передачи
   SClient sClient_My;//клиент
   CDocument_Main *cDocument_Main_Ptr;//указатель на документ
-  
+
   //защищённые переменные класса
   struct SProtectedVariables
   {
    //данные для синхронизации с клиентами
-   vector<CUser> vector_CUser_Deleted;//удалённые пользователи
-   vector<CUser> vector_CUser_Changed;//изменённые пользователи
-   vector<CUser> vector_CUser_Added;//добавленные пользователи
+   std::vector<CUser> vector_CUser_Deleted;//удалённые пользователи
+   std::vector<CUser> vector_CUser_Changed;//изменённые пользователи
+   std::vector<CUser> vector_CUser_Added;//добавленные пользователи
 
-   vector<CTask> vector_CTask_Deleted;//удалённые задания
-   vector<CTask> vector_CTask_Changed;//изменённые задания 
-   vector<CTask> vector_CTask_Added;//добавленные задания
+   std::vector<CTask> vector_CTask_Deleted;//удалённые задания
+   std::vector<CTask> vector_CTask_Changed;//изменённые задания 
+   std::vector<CTask> vector_CTask_Added;//добавленные задания
 
-   vector<CProject> vector_CProject_Deleted;//удалённые проекты
-   vector<CProject> vector_CProject_Changed;//изменённые проекты
-   vector<CProject> vector_CProject_Added;//добавленные проекты
+   std::vector<CProject> vector_CProject_Deleted;//удалённые проекты
+   std::vector<CProject> vector_CProject_Changed;//изменённые проекты
+   std::vector<CProject> vector_CProject_Added;//добавленные проекты
 
    bool ClientOnLine;//подключён ли клиент (работает ли поток)
 

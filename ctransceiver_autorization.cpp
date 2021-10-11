@@ -75,8 +75,11 @@ void CTransceiver_Autorization::ExecuteAutorization(CDocument_Main *cDocument_Ma
   SendPart(sClient.Socket,cUser.GetUserGUID(),cUser.GetUserGUID().GetLength(),cEvent_Exit,on_exit);
   if (on_exit==true) return;
   SendEndPackage(sClient.Socket,cEvent_Exit,on_exit);
+  //добавляем в список подключённых
+  cDocument_Main_Ptr->SetUserConnected(sClient.UserGUID,true);
   return;
- } 
+ }
+ else Pause(1000);
  //отвечаем
  SendAnswer(sClient.Socket,SERVER_ANSWER_ERROR,command,NULL,0,cEvent_Exit,on_exit);
 }

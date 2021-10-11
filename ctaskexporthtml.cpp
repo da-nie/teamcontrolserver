@@ -20,7 +20,7 @@ CTaskExportHTML::~CTaskExportHTML()
 //----------------------------------------------------------------------------------------------------
 //экспорт заданий
 //----------------------------------------------------------------------------------------------------
-bool CTaskExportHTML::Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)
+bool CTaskExportHTML::Export(const CString &file_name,const std::list<CTask> &list_CTask,const std::list<CUser> &list_CUser,const std::list<CProject> &list_CProject)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL) return(false);
@@ -90,8 +90,8 @@ bool CTaskExportHTML::Export(const CString &file_name,const list<CTask> &list_CT
  fprintf(file,"  <td height=\"4%%\" width=\"10%%\">Состояние</td>\r\n");
  fprintf(file," </tr>\r\n");
 
- list<CTask>::const_iterator iterator=list_CTask.begin();
- list<CTask>::const_iterator iterator_end=list_CTask.end();  
+ std::list<CTask>::const_iterator iterator=list_CTask.begin();
+ std::list<CTask>::const_iterator iterator_end=list_CTask.end();  
  long index=0;
  while(iterator!=iterator_end)
  {
@@ -99,8 +99,8 @@ bool CTaskExportHTML::Export(const CString &file_name,const list<CTask> &list_CT
   CUser cUser_From;
   CUser cUser_For; 
   
-  list<CUser>::const_iterator iterator_user=list_CUser.begin();
-  list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
+  std::list<CUser>::const_iterator iterator_user=list_CUser.begin();
+  std::list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
   while(iterator_user!=iterator_user_end)
   {
    const CUser &cUser=*iterator_user;

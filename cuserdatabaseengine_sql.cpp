@@ -9,6 +9,8 @@ CUserDatabaseEngine_SQL::CUserDatabaseEngine_SQL(const CString &user_list_table_
  UserListTableName=user_list_table_name;
  UserListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+UserListTableName;
  cDatabaseEngine_SQL_Ptr=new CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_UserList>,CUser>(UserListTableName);
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_UserList,UserListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -33,9 +35,8 @@ bool CUserDatabaseEngine_SQL::AddUser(CUser& cUser)
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_SQL::ChangeUser(long index,const CUser& cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -51,9 +52,8 @@ bool CUserDatabaseEngine_SQL::ChangeUser(long index,const CUser& cUser)
 //----------------------------------------------------------------------------------------------------
 bool CUserDatabaseEngine_SQL::GetUser(long index,CUser &cUser)
 {
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);
@@ -69,9 +69,8 @@ bool CUserDatabaseEngine_SQL::DeleteUser(long index)
 {
  CUser cUser_Deleted; 
  if (GetUser(index,cUser_Deleted)==false) return(false);
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);  
@@ -83,12 +82,11 @@ bool CUserDatabaseEngine_SQL::DeleteUser(long index)
 //----------------------------------------------------------------------------------------------------
 //получить список всех пользователей
 //----------------------------------------------------------------------------------------------------
-list<CUser> CUserDatabaseEngine_SQL::GetAllUser(void)
+std::list<CUser> CUserDatabaseEngine_SQL::GetAllUser(void)
 { 
- list<CUser> list_CUser_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
+ std::list<CUser> list_CUser_Local; 
  {
-  if (cRAIICDatabase.IsOpen()==false) return(list_CUser_Local);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CUser_Local);
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=UserListTableName;
@@ -113,9 +111,8 @@ list<CUser> CUserDatabaseEngine_SQL::GetAllUser(void)
 bool CUserDatabaseEngine_SQL::FindUserByLoginAndPassword(const CSafeString& login,const CSafeString& password,CUser& cUser)
 { 
  //чтобы избежать SQL-инъекции, ищем пользователя самостоятельно
- CRAIICDatabase cRAIICDatabase(&cDatabase_UserList,UserListBaseInitString);
  {
-  if (cRAIICDatabase.IsOpen()==false) return(false);
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(false);
   CRAIICRecordset<CRecordset_UserList> cRAIICRecordset_UserList(&cDatabase_UserList,UserListTableName);
   if (cRAIICRecordset_UserList.IsOk()==false) return(false);
   if (cRAIICRecordset_UserList.GetMainObject().GetRecordCount()==0) return(false);

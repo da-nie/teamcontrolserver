@@ -10,6 +10,8 @@ CProjectDatabaseEngine_SQL::CProjectDatabaseEngine_SQL(const CString &project_li
  ProjectListBaseInitString="ODBC;DRIVER=Microsoft Paradox Driver (*.db );FIL=Paradox 5.X;DBQ="+ProjectListTableName;
 
  cDatabaseEngine_SQL_Ptr=new CDatabaseEngine_SQL<CRAIICRecordset<CRecordset_ProjectList>,CProject>(ProjectListTableName);
+
+ cRAIICDatabase_Ptr.reset(new CRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString));
 }
 //====================================================================================================
 //деструктор класса
@@ -34,11 +36,11 @@ bool CProjectDatabaseEngine_SQL::FindProjectByGUID(const CSafeString &guid,CProj
 //----------------------------------------------------------------------------------------------------
 //получить все проекты
 //----------------------------------------------------------------------------------------------------
-list<CProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
+std::list<CProject> CProjectDatabaseEngine_SQL::GetAllProject(void)
 {
- list<CProject> list_CProject_Local; 
- CRAIICDatabase cRAIICDatabase(&cDatabase_ProjectList,ProjectListBaseInitString);
+ std::list<CProject> list_CProject_Local; 
  {
+  if (cRAIICDatabase_Ptr->IsOpen()==false) return(list_CProject_Local);
   CString sql_request="";
   sql_request+="SELECT * FROM ";
   sql_request+=ProjectListTableName;

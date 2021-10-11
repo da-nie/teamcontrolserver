@@ -20,21 +20,21 @@ CTaskExportTXT::~CTaskExportTXT()
 //----------------------------------------------------------------------------------------------------
 //экспорт заданий
 //----------------------------------------------------------------------------------------------------
-bool CTaskExportTXT::Export(const CString &file_name,const list<CTask> &list_CTask,const list<CUser> &list_CUser,const list<CProject> &list_CProject)
+bool CTaskExportTXT::Export(const CString &file_name,const std::list<CTask> &list_CTask,const std::list<CUser> &list_CUser,const std::list<CProject> &list_CProject)
 {
  FILE *file=fopen(file_name,"wb");
  if (file==NULL) return(false);
 	
- list<CTask>::const_iterator iterator=list_CTask.begin();
- list<CTask>::const_iterator iterator_end=list_CTask.end();  
+ std::list<CTask>::const_iterator iterator=list_CTask.begin();
+ std::list<CTask>::const_iterator iterator_end=list_CTask.end();  
  while(iterator!=iterator_end)
  {
   const CTask &cTask=*iterator;  
   CUser cUser_From;
   CUser cUser_For; 
   
-  list<CUser>::const_iterator iterator_user=list_CUser.begin();
-  list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
+  std::list<CUser>::const_iterator iterator_user=list_CUser.begin();
+  std::list<CUser>::const_iterator iterator_user_end=list_CUser.end();  
   while(iterator_user!=iterator_user_end)
   {
    const CUser &cUser=*iterator_user;
